@@ -1,4 +1,3 @@
-const { trusted } = require('mongoose');
 const db = require('./db');
 
 const profileSchema = new db.Schema({

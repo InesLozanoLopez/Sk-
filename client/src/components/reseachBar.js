@@ -1,6 +1,5 @@
 function ReseachBar(){
 
-
     return (
         <div>
     <input type='text' placeholder='Runner name'></input>
