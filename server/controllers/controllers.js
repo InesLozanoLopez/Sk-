@@ -6,7 +6,13 @@ exports.createARunner = async (req, res) => {
         const newRunner = req.body;
         const runnerProfile = await RunnerProfile.create({
             name: newRunner.name,
-            race: newRunner.race,
+            race: {
+                dateRace: newRunner.race.date,
+                distanceRace: newRunner.race.distanceRace,
+                timeObj: newRunner.race.timeObj,
+                timeObjPerKm: newRunner.race.timeObjPerKm,
+                elevation: newRunner.race.elevation
+            },
             currentCondition:{
                 longDistance: newRunner.currentCondition.longDistance,
                 sprintTime: newRunner.currentCondition.sprintTime,
