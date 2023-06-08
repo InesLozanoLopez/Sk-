@@ -11,7 +11,7 @@ const [timeObj, setTimeObj] = useState('00:00:00');
 const [elevation, setElevation] = useState(0);
 const [longDistance, setLongDistance] = useState(0);
 const [sprintTime, setSprintTime] = useState('00:00:00');
-const [sprintDistance, setSprintDistance] = useState('00:00:00');
+const [sprintDistance, setSprintDistance] = useState(0);
 const [daysPerWeek, setDaysPerWeek] = useState(0);
 const [daysOff, setDaysOff] = useState([]);
 const [holidaysFrom, setHolidaysFrom] = useState('');
@@ -30,15 +30,15 @@ const daysOffPerWeek = [
 
 function timeObjInMins(time){
     const [hours, minutes] = time.split(':');
-    return hours*60 + minutes
+    return hours*60 + parseInt(minutes, 10);
 }
-const minsPerMeters = timeObjInMins(timeObj)/parseFloat(distanceRace)
+const minsPerKm = timeObjInMins(timeObj)/ distanceRace
 
 const race = {
     dateRace,
     distanceRace,
     timeObj,
-    minsPerMeters,
+    minsPerKm,
     elevation,
 }
 const currentValues = {
@@ -48,9 +48,10 @@ const currentValues = {
 }
 
 function holidays(holidaysFrom, holidaysTo){
-    const days = new Date(holidaysFrom)
+    const days = new Date(holidaysFrom);
+    const endDay = new Date(holidaysTo)
     const holidayDays = [];
-    while(days <= holidaysTo){
+    while(days <= endDay){
         holidayDays.push(new Date(days));
         days.setDate(days.getDate() + 1);
     }
@@ -77,7 +78,7 @@ function createNewProfile(){
             <h2>Race and Objectives</h2>
             <small>When is is the race taking place?</small>
             <input type='date' value={dateRace} onChange={(event) => setDateRace(event.target.value)}></input>
-            <small>How long is this race? (distance in meters)</small>
+            <small>How long is this race? (distance in km)</small>
             <input type='text' value={distanceRace} onChange={(event) => setDistanceRace(event.target.value)}></input>
             <small>In how many hours you would like to complete the run</small>
             <input type='time' value={timeObj} onChange={(event) => setTimeObj(event.target.value)}></input>
@@ -85,12 +86,12 @@ function createNewProfile(){
             <input type='text' value={elevation} onChange={(event) => setElevation(event.target.value)}></input>
 
             <h2>Your current numbers</h2>
-            <small>How long was your most recent longest run? (distance in meters)</small>
+            <small>How long was your most recent longest run? (distance in km)</small>
             <input type='text' value={longDistance} onChange={(event) => setLongDistance(event.target.value)}></input>
-            <small>What is you most recent best mark? (distance of your faster short distance run)</small>
-            <input type='text' value={sprintTime} onChange={(event) => setSprintTime(event.target.value)}></input>
+            <small>What is you most recent best mark? (distance in km of your faster short distance run)</small>
+            <input type='text' value={sprintDistance} onChange={(event) => setSprintDistance(event.target.value)}></input>
             <small>How fast that sprint was? (time to complete)</small>
-            <input type='time' value={sprintDistance} onChange={(event) => setSprintDistance(event.target.value)}></input>
+            <input type='time' value={sprintTime} onChange={(event) => setSprintTime(event.target.value)}></input>
 
             <h2>Planning your trainings</h2>
             <small>How many days per week you would like to training? (Min recommended 4, max recommended 6)</small>

@@ -7,36 +7,36 @@ exports.createARunner = async (req, res) => {
         const runnerProfile = await RunnerProfile.create({
             name: newRunner.name,
             race: {
-                dateRace: newRunner.race.date,
-                distanceRace: newRunner.race.distanceRace,
-                timeObj: newRunner.race.timeObj,
-                minsPerMeters: newRunner.race.minsPerMeters,
-                elevation: newRunner.race.elevation
+                dateRace: newRunner.race.race.dateRace,
+                distanceRace: newRunner.race.race.distanceRace,
+                timeObj: newRunner.race.race.timeObj,
+                minsPerKm: newRunner.race.race.minsPerKm,
+                elevation: newRunner.race.race.elevation
             },
-            currentCondition:{
-                longDistance: newRunner.currentCondition.longDistance,
-                sprintTime: newRunner.currentCondition.sprintTime,
-                sprintDistance: newRunner.currentCondition.sprintDistance
+            currentValues:{
+                longDistance: newRunner.currentValues.currentValues.longDistance,
+                sprintTime: newRunner.currentValues.currentValues.sprintTime,
+                sprintDistance: newRunner.currentValues.currentValues.sprintDistance
             },
             trainingAvailability:{
-                daysPerWeek: newRunner.trainingAvailability.daysPerWeek,
-                daysOff: newRunner.trainingAvailability.daysOff,
-                holidays: newRunner.trainingAvailability.holidays,
+                daysPerWeek: newRunner.trainingAvailability.trainingAvailability.daysPerWeek,
+                daysOff: newRunner.trainingAvailability.trainingAvailability.daysOff,
+                holidays: newRunner.trainingAvailability.trainingAvailability.holidays,
             }
         })
 
         res.status(201).send(runnerProfile);
 
     } catch(e){
-        console.log('Error from controllers')
+        console.log('Error from controllers', e)
     }
 };
 
 exports.runnerProfile = async (req, res) => {
     try{
-        const runnerInfo = await RunnerProfile.findOne(req.body);
+        const runnerInfo = await RunnerProfile.find();
         if (!runnerInfo){
-            res.status(400).send(`${req.body} doesn't exit, please, register a runner`)
+            res.status(400).send(`There is not runners at the database, please, register a runner`)
         }
         res.status(201).send(runnerInfo);
     }catch(e){

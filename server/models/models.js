@@ -6,21 +6,54 @@ const profileSchema = new db.Schema({
         require: true
     },
     race:{
-        dateRace: Date,
-        distanceRace: Number,
-        timeObj: Number,
-        minsPerMeters: Number,
-        elevation: Number
+        dateRace: {
+            type: Date,
+            require: true
+        },
+        distanceRace: {
+            type: Number,
+            require: true
+        },
+        timeObj: {
+            type: String,
+            require: true
+        },
+        minsPerKm: {
+            type: Number,
+            require: true
+        },
+        elevation: {
+            type: Number,
+            require: true
+        }
     },
-    currentCondition:{
-        longDistance: Number,
-        sprintTime: Number,
-        sprintDistance: Number,
+    currentValues:{
+        longDistance: {
+            type: Number,
+            require: true
+        },
+        sprintTime: {
+            type: String,
+            require: true
+        },
+        sprintDistance: {
+            type: Number,
+            require: true
+        }
     },
     trainingAvailability:{
-        daysPerWeek: Number,
-        daysOff: [Date],
-        holidays: [Date]
+        daysPerWeek: {
+            type: Number,
+            require: true
+        },
+        daysOff: {
+            type : [String],
+            require: true
+        },
+        holidays: {
+            type: [Date],
+            require: true
+        },
     }
 })
 
