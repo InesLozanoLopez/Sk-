@@ -10,7 +10,7 @@ exports.createARunner = async (req, res) => {
                 dateRace: newRunner.race.date,
                 distanceRace: newRunner.race.distanceRace,
                 timeObj: newRunner.race.timeObj,
-                timeObjPerKm: newRunner.race.timeObjPerKm,
+                minsPerMeters: newRunner.race.minsPerMeters,
                 elevation: newRunner.race.elevation
             },
             currentCondition:{

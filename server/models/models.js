@@ -9,7 +9,7 @@ const profileSchema = new db.Schema({
         dateRace: Date,
         distanceRace: Number,
         timeObj: Number,
-        timeObjPerKm: Number,
+        minsPerMeters: Number,
         elevation: Number
     },
     currentCondition:{

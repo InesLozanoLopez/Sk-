@@ -1,7 +1,24 @@
 .form{
-    position: absolute;
+    position: relative;
     display: flex;
     flex-direction: column;
+    height: auto;
+    width: auto;
     align-items: center;
+    border: 3px solid lightblue;
+    margin: 100px;
+    padding: 10px;
+    padding-bottom: 150px;
     gap: 10px;
+
+
+
+}
+
+h2{
+    color: lightblue;
+}
+
+small{
+    font-weight: 500;
 }

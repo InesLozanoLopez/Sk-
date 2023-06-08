@@ -1,0 +1,13 @@
+.App{
+    min-height: 400px;
+    min-width: auto;    
+    background-image: url("../public/SkylineMontainCONSombra.png");
+    background-repeat: no-repeat;
+    background-position-y: 111%;
+    background-size: contain;
+}
+
+h1{
+    margin: 60px;
+    color: steelblue;
+}
