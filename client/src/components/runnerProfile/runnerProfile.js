@@ -1,6 +1,7 @@
 import './runnerProfile.css';
 import {getRunnerInfo} from '../../apiServices';
 import { useEffect, useState } from 'react';
+import Weeklytraining from '../weeklytraining/weeklytraining';
 
 function RunnerProfile(){
     const [runnerInfo, setRunnerInfo] = useState([]);
@@ -36,10 +37,10 @@ function RunnerProfile(){
         return dayLetter(day) + ' of ' + monthLetter[month]
     }
 
-
 if (runnerInfo.length > 0) {
     return(
         <div>
+            <Weeklytraining/>
         <div className='race'>
             <div className='yourRace'>
             <h2>Your race...</h2>

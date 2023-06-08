@@ -1,9 +1,11 @@
 import {useState} from 'react';
 import './newRunner.css';
-import {newRunner} from '../../apiServices'
+import {newRunner, runnerTrainings} from '../../apiServices'
+
 
 
 function NewRunner(){
+
 let profileAtDb = true;
 
 const [runnerName, setRunnerName] = useState('');
@@ -45,8 +47,8 @@ const race = {
 }
 const currentValues = {
     longDistance,
-    sprintTime,
-    sprintDistance,
+    // sprintTime,
+    // sprintDistance,
 }
 
 function holidays(holidaysFrom, holidaysTo){
@@ -72,6 +74,44 @@ function createNewProfile(){
     } else{
         console.log('max user register')
     }
+}
+
+let trainingsDaysFilteredHolidays = [];
+
+function kmsPerDay(){
+    const raceDay = new Date(dateRace);
+    const currentDay = new Date();
+    const daysUntilRaceArr = [];
+
+    while(currentDay <= raceDay){
+        daysUntilRaceArr.push(new Date(currentDay));
+        currentDay.setDate(currentDay.getDate() + 1);
+    }
+
+    const kmToIncrease = distanceRace - longDistance;
+
+    const trainingsDaysFilteredDaysOff = daysUntilRaceArr.filter((day) => !daysOff.includes(day.getDay()));
+
+    trainingsDaysFilteredHolidays = trainingsDaysFilteredDaysOff.filter((day) => !holidays(holidaysFrom, holidaysTo).includes(day));
+
+    const kmPerDay = kmToIncrease/trainingsDaysFilteredHolidays.length;
+
+    return kmPerDay;
+
+}
+
+function createTraining(){
+    if (trainingsDaysFilteredHolidays.length === 0){
+        console.log('No training days available')
+    }
+    const trainingDate = trainingsDaysFilteredHolidays;
+
+   while (trainingDate.length > 0 ){
+
+    const kmToRun = kmsPerDay();
+
+    runnerTrainings(trainingDate.shift(), kmToRun).then(console.log('training created'))
+}
 }
 
 
@@ -123,7 +163,9 @@ function createNewProfile(){
 
             <input type='submit' value='Create training' onClick={(event)=>{
                 event.preventDefault();
-                createNewProfile()
+                createNewProfile();
+                kmsPerDay();
+                createTraining();
             }}/>
         </div>
     )

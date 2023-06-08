@@ -2,9 +2,9 @@ const router = require('express').Router();
 const controllers = require('./controllers/controllers');
 
 router.get('/runner', controllers.runnerProfile);
-router.post('/newrunner', controllers.createARunner);
-router.post('/runner', controllers.editTraining);
-router.get('/runner', controllers.runnerTrainings);
+router.post('/runner', controllers.createARunner);
+router.post('/training', controllers.editTraining);
+router.get('/training', controllers.runnerTrainings);
 
 
 

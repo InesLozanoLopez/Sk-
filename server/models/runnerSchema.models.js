@@ -32,14 +32,14 @@ const profileSchema = new db.Schema({
             type: Number,
             require: true
         },
-        sprintTime: {
-            type: String,
-            require: true
-        },
-        sprintDistance: {
-            type: Number,
-            require: true
-        }
+        // sprintTime: {
+        //     type: String,
+        //     require: true
+        // },
+        // sprintDistance: {
+        //     type: Number,
+        //     require: true
+        // }
     },
     trainingAvailability:{
         daysPerWeek: {

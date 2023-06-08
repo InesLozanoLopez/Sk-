@@ -16,8 +16,8 @@ exports.createARunner = async (req, res) => {
             },
             currentValues:{
                 longDistance: newRunner.currentValues.currentValues.longDistance,
-                sprintTime: newRunner.currentValues.currentValues.sprintTime,
-                sprintDistance: newRunner.currentValues.currentValues.sprintDistance
+                // sprintTime: newRunner.currentValues.currentValues.sprintTime,
+                // sprintDistance: newRunner.currentValues.currentValues.sprintDistance
             },
             trainingAvailability:{
                 daysPerWeek: newRunner.trainingAvailability.trainingAvailability.daysPerWeek,
@@ -52,7 +52,7 @@ exports.editTraining = async (req, res) => {
         const trainings = await TrainingSchema.create({
             date: newTraining.date,
             distance: newTraining.distance,
-            timePerKm: newTraining.timePerKm,
+            // timePerKm: newTraining.timePerKm,
             feedback: newTraining.feedback
         });
         res.status(201).send(trainings);
