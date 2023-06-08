@@ -4,6 +4,8 @@ import {newRunner} from '../../apiServices'
 
 
 function NewRunner(){
+let profileAtDb = true;
+
 const [runnerName, setRunnerName] = useState('');
 const [dateRace, setDateRace] = useState('');
 const [distanceRace, setDistanceRace] = useState(0);
@@ -65,7 +67,11 @@ const trainingAvailability = {
 }
 
 function createNewProfile(){
-    newRunner(runnerName, {race}, {currentValues}, {trainingAvailability})
+    if(profileAtDb){
+    newRunner(runnerName, {race}, {currentValues}, {trainingAvailability}).then(profileAtDb = false).then(console.log(profileAtDb, 'new runner created'))
+    } else{
+        console.log('max user register')
+    }
 }
 
 
