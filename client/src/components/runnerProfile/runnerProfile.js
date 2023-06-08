@@ -1,17 +1,29 @@
 import './runnerProfile.css';
 import {getRunnerInfo} from '../../apiServices';
 import { useEffect, useState } from 'react';
+import {runnerTrainings} from '../../apiServices'
 import Weeklytraining from '../weeklytraining/weeklytraining';
 
 function RunnerProfile(){
     const [runnerInfo, setRunnerInfo] = useState([]);
+    const [allTrainings, setAllTrainings] = useState([]);
 
-    useEffect(() =>{
+        useEffect(() => {
         getRunnerInfo()
-        .then((runner) => setRunnerInfo(runner));
-
-        console.log(runnerInfo)
+        .then((runner) => setRunnerInfo(runner))
+        .then(runnerInfo);
+        
+        // eslint-disable-next-line
         }, []);
+
+
+    useEffect(() => {
+        runnerTrainings()
+        .then((training) => setAllTrainings(training))
+        .then(console.log('allTrainings', allTrainings))
+// eslint-disable-next-line
+    }, []);
+    
 
     function getDate(date){
         const day = date.getDate();
@@ -37,10 +49,15 @@ function RunnerProfile(){
         return dayLetter(day) + ' of ' + monthLetter[month]
     }
 
+
 if (runnerInfo.length > 0) {
     return(
         <div>
-            <Weeklytraining/>
+        <div>
+            {allTrainings.map((training, id) => {
+                return <Weeklytraining key={id} training={training} getDate={getDate}/>
+            })}
+        </div>  
         <div className='race'>
             <div className='yourRace'>
             <h2>Your race...</h2>

@@ -1,21 +1,13 @@
 import './weeklytraining.css';
-import {runnerTrainings} from '../../apiServices'
-import { useState } from 'react';
 
 
-function WeeklyTraining(){
-    const [allTrainings, setAllTrainings] = useState([]);
+function WeeklyTraining({training, getDate}){
 
-    useEffect(() => {
-        runnerTrainings()
-        .then((training) => setAllTrainings(training))
-    })
-
-    }
 
     return(
-        <div>
-
+        <div className='training'>
+            <div>{getDate(training.date)}</div>
+            <div>{training.distance} km</div>
         </div>
     )
 }

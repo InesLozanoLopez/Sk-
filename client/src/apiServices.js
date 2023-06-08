@@ -33,8 +33,11 @@ exports.runnerTrainings = async (training) =>{
             headers: {'Content-Type' :'application/json'},
             body: JSON.stringify({training})
         }
-        const trainingCreated = await fetch(baseURL + '/training', trainingProfile);
+console.log('trainingProfile post', trainingProfile)        
+const trainingCreated = await fetch(baseURL + '/training', trainingProfile);
         const data = await trainingCreated.json();
+        console.log('data post', data)        
+
         return data;
 
     }catch(e){

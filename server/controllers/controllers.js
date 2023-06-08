@@ -49,12 +49,14 @@ exports.runnerProfile = async (req, res) => {
 exports.editTraining = async (req, res) => {
     try{
         const newTraining = req.body;
+        console.log('newTraining', newTraining)
         const trainings = await TrainingSchema.create({
             date: newTraining.date,
             distance: newTraining.distance,
             // timePerKm: newTraining.timePerKm,
             feedback: newTraining.feedback
         });
+        console.log('trainings', trainings)
         res.status(201).send(trainings);
 
     }catch(e){

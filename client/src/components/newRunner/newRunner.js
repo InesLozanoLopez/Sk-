@@ -23,13 +23,13 @@ const [holidaysTo, setHolidaysTo] = useState('');
 
 
 const daysOffPerWeek = [
-    {id:'monday', label: 'Monday'},
-    {id:'tuesday', label: 'Tuesday'},
-    {id:'wednesday', label: 'Wednesday'},
-    {id:'thursday', label: 'Thursday'},
-    {id:'friday', label: 'Friday'},
-    {id:'saturday', label: 'Monday'},
-    {id:'sunday', label: 'Sunday'}
+    {id:'1', label: 'Monday'},
+    {id:'2', label: 'Tuesday'},
+    {id:'3', label: 'Wednesday'},
+    {id:'4', label: 'Thursday'},
+    {id:'5', label: 'Friday'},
+    {id:'6', label: 'Monday'},
+    {id:'7', label: 'Sunday'}
 ];
 
 function timeObjInMins(time){
@@ -89,10 +89,11 @@ function kmsPerDay(){
     }
 
     const kmToIncrease = distanceRace - longDistance;
+    
+    const trainingsDaysFilteredDaysOff = daysUntilRaceArr.filter((day) => !daysOff.includes(day.getDay().toString()));
 
-    const trainingsDaysFilteredDaysOff = daysUntilRaceArr.filter((day) => !daysOff.includes(day.getDay()));
+    trainingsDaysFilteredHolidays = trainingsDaysFilteredDaysOff.filter((day) => day < new Date(holidaysFrom) || day > new Date(holidaysTo));
 
-    trainingsDaysFilteredHolidays = trainingsDaysFilteredDaysOff.filter((day) => !holidays(holidaysFrom, holidaysTo).includes(day));
 
     const kmPerDay = kmToIncrease/trainingsDaysFilteredHolidays.length;
 
@@ -105,11 +106,8 @@ function createTraining(){
         console.log('No training days available')
     }
     const trainingDate = trainingsDaysFilteredHolidays;
-
    while (trainingDate.length > 0 ){
-
-    const kmToRun = kmsPerDay();
-
+    const kmToRun = longDistance + kmsPerDay();
     runnerTrainings(trainingDate.shift(), kmToRun).then(console.log('training created'))
 }
 }
