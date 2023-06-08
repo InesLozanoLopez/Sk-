@@ -1,4 +1,6 @@
 const db = require('./db');
+const Training = require('./trainingSchema.models')
+
 
 const profileSchema = new db.Schema({
     name:{
@@ -54,6 +56,10 @@ const profileSchema = new db.Schema({
             type: [Date],
             require: true
         },
+    },
+    trainings:{
+        type: [Training.Types.ObjectId],
+        require: false
     }
 })
 

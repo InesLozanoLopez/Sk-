@@ -1,4 +1,5 @@
-const RunnerProfile = require('../models/models')
+const RunnerProfile = require('../models/runnerSchema.models');
+const TrainingSchema = require('../models/trainingSchema.models');
 
 
 exports.createARunner = async (req, res) => {
@@ -45,5 +46,31 @@ exports.runnerProfile = async (req, res) => {
     
 };
 
+exports.editTraining = async (req, res) => {
+    try{
+        const newTraining = req.body;
+        const trainings = await TrainingSchema.create({
+            date: newTraining.date,
+            distance: newTraining.distance,
+            timePerKm: newTraining.timePerKm,
+            feedback: newTraining.feedback
+        });
+        res.status(201).send(trainings);
+
+    }catch(e){
+        console.log('Error from controllers', e)
+    }
+}
+
+exports.runnerTrainings = async (req, res) => {
+    try{
+        const trainingInfo = await TrainingSchema.find();
+
+        res.status(201).send(trainingInfo);
+        
+    }catch(e){
+        console.log('Error from controllers', e)
+    }
+}
 
 
