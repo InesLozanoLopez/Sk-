@@ -1,8 +1,8 @@
-import './weeklyTraining.css';
+import './runnerProfile.css';
 import {getRunnerInfo} from '../../apiServices';
 import { useEffect, useState } from 'react';
 
-function WeeklyTraining(){
+function RunnerProfile(){
     const [runnerInfo, setRunnerInfo] = useState([]);
 
     useEffect(() =>{
@@ -10,7 +10,7 @@ function WeeklyTraining(){
         .then((runner) => setRunnerInfo(runner));
 
         console.log(runnerInfo)
-        },[]);
+        }, []);
 
     function getDate(date){
         const day = date.getDate();
@@ -74,4 +74,4 @@ if (runnerInfo.length > 0) {
 
 }
 
-export default WeeklyTraining;
+export default RunnerProfile;

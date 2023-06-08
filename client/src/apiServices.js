@@ -22,6 +22,22 @@ exports.getRunnerInfo = async () => {
         return data;
         
     }catch(e){
-        console.log('Error from ApiServices')
+        console.log('Error from ApiServices', e)
+    }
+}
+
+exports.runnerTrainings = async (training) =>{
+    try{
+        const training = {
+            method: 'POST',
+            headers: {'Content-Type' :'application/json'},
+            body: JSON.stringify({training})
+        }
+        const trainingCreated = await fetch(baseURL + '/runner');
+        const data = await trainingCreated.json();
+        return data;
+
+    }catch(e){
+        console.log('Error from ApiServices', e)
     }
 }
