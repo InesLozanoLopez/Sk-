@@ -72,4 +72,28 @@ exports.runnerTrainings = async (req, res) => {
     }
 }
 
+exports.editTrainings = async (req, res) => {
+    try{
+        const IdToEdit = req.params.id;
+        const feedback = req.body;
+        const findTraining = await Training.findById(IdToEdit).exec();
+        const currentDistance = Number(findTraining.distance);
+
+        function updatedDistance(feedback){
+            if(feedback === 'light'){
+                return currentDistance * 0.1;
+            } else if(feedback === 'hard'){
+                return currentDistance * -0.1;
+            }else{
+                return currentDistance;
+            }
+        }
+
+        const edited = Training.updateOne({distance: updatedDistance(feedback)});
+        res.status(201).send(edited);
+
+    }catch(e){
+        console.log('Error from controllers', e)
+    }
+}
 

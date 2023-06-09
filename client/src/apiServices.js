@@ -28,17 +28,13 @@ exports.getRunnerInfo = async () => {
 
 exports.runnerCreateTrainings = async (trainingDate, kmToRun) =>{
     try{
-        console.log('here')
         const trainingProfile = {
             method: 'POST',
             headers: {'Content-Type' :'application/json'},
             body: JSON.stringify({date: trainingDate, distance: kmToRun})
         }
-console.log('trainingProfile post', trainingProfile)        
-const trainingCreated = await fetch(baseURL + '/training', trainingProfile);
+        const trainingCreated = await fetch(baseURL + '/training', trainingProfile);
         const data = await trainingCreated.json();
-        console.log('data post', data)        
-
         return data;
 
     }catch(e){
@@ -52,6 +48,22 @@ exports.runnerTrainings = async () => {
         const data = await trainings.json();
         return data;
         
+    }catch(e){
+        console.log('Error from ApiServices', e)
+    }
+}
+
+exports.editATraining = async (feedback, id) => {
+    try{
+        const editTrainings = {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(feedback)
+        }
+        const update = await fetch(baseURL + '/training' + `${id}`, editTrainings)
+        const data = await update.json();
+        return data;
+
     }catch(e){
         console.log('Error from ApiServices', e)
     }
