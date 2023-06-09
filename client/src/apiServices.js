@@ -17,7 +17,7 @@ exports.newRunner = async (runnerName, {race}, {currentValues}, {trainingAvailab
 
 exports.getRunnerInfo = async () => {
     try{
-        const getInfo = await fetch(baseURL + `/runner`);
+        const getInfo = await fetch(baseURL + '/runner');
         const data = await getInfo.json();
         return data;
         
@@ -26,12 +26,13 @@ exports.getRunnerInfo = async () => {
     }
 }
 
-exports.runnerTrainings = async (training) =>{
+exports.runnerCreateTrainings = async (trainingDate, kmToRun) =>{
     try{
+        console.log('here')
         const trainingProfile = {
             method: 'POST',
             headers: {'Content-Type' :'application/json'},
-            body: JSON.stringify({training})
+            body: JSON.stringify({date: trainingDate, distance: kmToRun})
         }
 console.log('trainingProfile post', trainingProfile)        
 const trainingCreated = await fetch(baseURL + '/training', trainingProfile);
@@ -47,7 +48,7 @@ const trainingCreated = await fetch(baseURL + '/training', trainingProfile);
 
 exports.runnerTrainings = async () => {
     try{
-        const trainings = await fetch(baseURL + `/training`);
+        const trainings = await fetch(baseURL + '/training');
         const data = await trainings.json();
         return data;
         

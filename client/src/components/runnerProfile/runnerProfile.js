@@ -11,7 +11,7 @@ function RunnerProfile(){
         useEffect(() => {
         getRunnerInfo()
         .then((runner) => setRunnerInfo(runner))
-        .then(runnerInfo);
+
         
         // eslint-disable-next-line
         }, []);
@@ -20,12 +20,13 @@ function RunnerProfile(){
     useEffect(() => {
         runnerTrainings()
         .then((training) => setAllTrainings(training))
-        .then(console.log('allTrainings', allTrainings))
+
 // eslint-disable-next-line
     }, []);
     
 
-    function getDate(date){
+    function getDate(dates){
+        const date = new Date(dates)
         const day = date.getDate();
         const month = date.getMonth();
 
@@ -49,13 +50,16 @@ function RunnerProfile(){
         return dayLetter(day) + ' of ' + monthLetter[month]
     }
 
+    const allTrainingsSorted = allTrainings.sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime()
+    })
 
 if (runnerInfo.length > 0) {
     return(
         <div>
-        <div>
-            {allTrainings.map((training, id) => {
-                return <Weeklytraining key={id} training={training} getDate={getDate}/>
+        <div className='trainingsContainer'>
+            {allTrainingsSorted.map((training, id) => {
+                return <Weeklytraining key={id} training={training} getDate={getDate} runnerInfo={runnerInfo}/>
             })}
         </div>  
         <div className='race'>

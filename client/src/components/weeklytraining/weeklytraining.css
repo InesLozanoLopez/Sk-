@@ -1,0 +1,41 @@
+.training{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex start;
+    color: black;
+    background-color: cornflowerblue;
+    border: 4px solid lightblue;
+    border-radius: 10px;
+    padding: 30px 40px;
+    font-size: 30px;
+    line-height: 2;
+    min-width: 200px;
+    min-height: 300px;
+    width: 100%;
+    height: 100%;
+}
+
+.feedback{
+    display: flex;
+    position: absolute;
+    bottom: 20%;
+    gap: 10px;
+    align-self: space-around;
+
+}
+
+button{
+    font-size: 40px;
+    border-radius: 25px;
+}
+
+small{
+    display: flex;
+    position: absolute;
+    bottom: 0px;
+    right: 15%;
+    font-size: 20px;
+
+}

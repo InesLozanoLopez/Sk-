@@ -1,3 +1,13 @@
+.trainingsContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 10px;
+    overflow: hidden;
+    overflow-x: scroll;
+    
+}
+
 .race{
     background-color: cornflowerblue;
     color: black;
