@@ -62,7 +62,6 @@ exports.editATraining = async (feedback, id) => {
         }
         const update = await fetch(baseURL + `/training/${id}`, editTrainings);
         const data = await update.json();
-        console.log(data)
         return data;
 
     }catch(e){

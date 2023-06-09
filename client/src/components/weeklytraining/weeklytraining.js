@@ -1,26 +1,15 @@
-import { useEffect, useState } from 'react';
 import './weeklytraining.css';
 import {editATraining, runnerTrainings} from './../../apiServices';
 
 
 function WeeklyTraining({training, getDate, runnerInfo, setAllTrainings}){
-    const [feedback, setFeedback] = useState('');
-
     const daysToRace = new Date(runnerInfo[0].race.dateRace).getTime() - new Date(training.date).getTime();
     const differenceDays = Math.floor(daysToRace/ (1000 * 60 *60 *24));
 
-    // useEffect(()=> {
-    //     if (feedback){
-    //     editATraining(feedback, training._id)
-    //     .then(runnerTrainings())
-    //     .then((training) => setAllTrainings([...training]))
-    // }},[clickedFeedback])
-
     function clickedFeedback(value){
-        // setFeedback(value);
         if(value){
             editATraining(value, training._id)
-            .then(runnerTrainings())
+            .then(runnerTrainings)
             .then((training) => setAllTrainings([...training]))
         }
     }

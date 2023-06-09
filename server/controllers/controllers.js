@@ -98,7 +98,7 @@ exports.editTrainings = async (req, res) => {
             {_id: IdToEdit},
             {feedback: newFeedback.feedback}
         )
-        res.status(201).send([{findTraining}]);
+        res.status(201).send([{editedDistance, editedFeedback}]);
     }catch(e){
         console.log('Error from controllers', e)
     }
