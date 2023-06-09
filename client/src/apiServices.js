@@ -56,11 +56,11 @@ exports.runnerTrainings = async () => {
 exports.editATraining = async (feedback, id) => {
     try{
         const editTrainings = {
-            method: 'POST',
+            method: 'PUT',
             headers: {'Content-Type':'application/json'},
-            body: JSON.stringify(feedback)
+            body: JSON.stringify({feedback : feedback})
         }
-        const update = await fetch(baseURL + '/training' + `${id}`, editTrainings)
+        const update = await fetch(baseURL + `/training/${id}`, editTrainings)
         const data = await update.json();
         return data;
 

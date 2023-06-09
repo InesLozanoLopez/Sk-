@@ -59,7 +59,7 @@ if (runnerInfo.length > 0) {
         <div>
         <div className='trainingsContainer'>
             {allTrainingsSorted.map((training, id) => {
-                return <Weeklytraining key={id} training={training} getDate={getDate} runnerInfo={runnerInfo}/>
+                return <Weeklytraining key={id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings} allTrainings={allTrainings}/>
             })}
         </div>  
         <div className='race'>

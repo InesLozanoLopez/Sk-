@@ -89,7 +89,7 @@ exports.editTrainings = async (req, res) => {
             }
         }
 
-        const edited = Training.updateOne({distance: updatedDistance(feedback)});
+        const edited = await Training.updateOne({distance: updatedDistance(feedback)});
         res.status(201).send(edited);
 
     }catch(e){

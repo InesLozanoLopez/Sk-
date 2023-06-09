@@ -26,6 +26,16 @@
 
 }
 
+.light{
+    background-color: lightgreen;
+}
+.hard{
+    background-color: lightpink;
+}
+.ok{
+    background-color: lightskyblue;
+}
+
 button{
     font-size: 40px;
     border-radius: 25px;
