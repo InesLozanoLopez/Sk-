@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './newRunner.css';
-import { newRunner, runnerCreateTrainings } from '../../apiServices'
+import { newRunner, runnerCreateTrainings } from '../../apiServices';
+// import 
 
 
 
@@ -174,6 +175,7 @@ function NewRunner() {
                 createNewProfile();
                 kmsPerDay();
                 createTraining();
+                // history.push('/runner');
             }} />
         </div>
     )

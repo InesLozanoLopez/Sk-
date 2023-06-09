@@ -6,8 +6,13 @@ function Home(){
     return (
         <div>
              <Link to='/newrunner'>
-        <input className="newRunnerButton" type='button' value='New Runner'/>
+        <input className="homeButton" type='button' value='New Runner'/>
         </Link>
+
+        <Link to='/runner'>
+        <input className='homeButton' type='button' value='Training programme' />
+        </Link>
+        
         </div>
     )
 

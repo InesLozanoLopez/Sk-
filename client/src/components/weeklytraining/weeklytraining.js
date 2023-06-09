@@ -1,30 +1,38 @@
 import { useEffect, useState } from 'react';
 import './weeklytraining.css';
-import {editATraining} from './../../apiServices';
+import {editATraining, runnerTrainings} from './../../apiServices';
 
 
-function WeeklyTraining({training, getDate, runnerInfo, setAllTrainings, allTrainings}){
+function WeeklyTraining({training, getDate, runnerInfo, setAllTrainings}){
     const [feedback, setFeedback] = useState('');
 
     const daysToRace = new Date(runnerInfo[0].race.dateRace).getTime() - new Date(training.date).getTime();
     const differenceDays = Math.floor(daysToRace/ (1000 * 60 *60 *24));
 
-    useEffect(()=> {
-        editATraining(feedback, training._id)
-        .then((trainings) => {
-            setAllTrainings([...allTrainings, trainings])
-        })
-            // eslint-disable-next-line
-    },[feedback])
+    // useEffect(()=> {
+    //     if (feedback){
+    //     editATraining(feedback, training._id)
+    //     .then(runnerTrainings())
+    //     .then((training) => setAllTrainings([...training]))
+    // }},[clickedFeedback])
 
     function clickedFeedback(value){
-        setFeedback(value);
+        // setFeedback(value);
+        if(value){
+            editATraining(value, training._id)
+            .then(runnerTrainings())
+            .then((training) => setAllTrainings([...training]))
+        }
+    }
+
+    function distanceKm(km){
+        return km? km.toFixed(2) : '';
     }
 
     return(
-        <div className={`training ${feedback}`}>
+        <div className={`training ${training.feedback}`}>
             <div><h2>{getDate(training.date)}</h2></div>
-            <div>{training.distance} km</div>
+            <div>{distanceKm(training.distance)} km</div>
             <div className='feedback'>
                 <button onClick={() => clickedFeedback('light')}>😃</button>
                 <button onClick={() => clickedFeedback('ok')}>😐</button>

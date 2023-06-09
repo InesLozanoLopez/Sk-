@@ -10,9 +10,6 @@
     padding: 10px;
     padding-bottom: 150px;
     gap: 10px;
-
-
-
 }
 
 h2{
@@ -21,4 +18,5 @@ h2{
 
 small{
     font-weight: 500;
+    color: aliceblue;
 }

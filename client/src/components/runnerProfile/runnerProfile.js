@@ -11,17 +11,13 @@ function RunnerProfile(){
         useEffect(() => {
         getRunnerInfo()
         .then((runner) => setRunnerInfo(runner))
-
-        
-        // eslint-disable-next-line
         }, []);
 
 
     useEffect(() => {
+        console.log('hi')
         runnerTrainings()
         .then((training) => setAllTrainings(training))
-
-// eslint-disable-next-line
     }, []);
     
 
@@ -54,12 +50,15 @@ function RunnerProfile(){
         return new Date(a.date).getTime() - new Date(b.date).getTime()
     })
 
+
 if (runnerInfo.length > 0) {
     return(
         <div>
         <div className='trainingsContainer'>
+
             {allTrainingsSorted.map((training, id) => {
-                return <Weeklytraining key={id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings} allTrainings={allTrainings}/>
+                return <Weeklytraining key={id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings}/>
+
             })}
         </div>  
         <div className='race'>
