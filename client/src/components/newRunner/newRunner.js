@@ -5,7 +5,6 @@ import { newRunner, runnerCreateTrainings } from '../../apiServices';
 import {useNavigate} from 'react-router-dom';
 
 
-
 function NewRunner() {
   const navigate = useNavigate();
   let profileAtDb = true;
@@ -87,11 +86,11 @@ function NewRunner() {
       currentDay.setDate(currentDay.getDate() + 1);
     }
 
-    const kmToIncrease = distanceRace - longDistance;
+    const kmToIncreaseIntTotal = distanceRace - longDistance;
     const trainingsDaysFilteredDaysOff = daysUntilRaceArr.filter((day) => !daysOff.includes(day.getDay().toString()));
 
     trainingsDaysFilteredHolidays = trainingsDaysFilteredDaysOff.filter((day) => day < new Date(holidaysFrom) || day > new Date(holidaysTo));
-    const kmPerDay = kmToIncrease / trainingsDaysFilteredHolidays.length;
+    const kmPerDay = kmToIncreaseIntTotal / trainingsDaysFilteredHolidays.length;
 
     return kmPerDay;
   }
@@ -106,18 +105,23 @@ function NewRunner() {
 
     function increaseKm() {
       if (kmToRun < Number(distanceRace)) {
-        kmToRun += kmToIncrease
+        kmToRun += kmToIncrease;
+      } else if(kmToRun >= Number(distanceRace)*1.5 && Number(distanceRace) < 75){
+        kmToRun += longDistance;
       } else {
         kmToRun = longDistance;
       }
     }
+    const copyOfTrainingsDate = [...trainingDate]
 
     while (trainingDate.length > 0) {
-      runnerCreateTrainings(trainingDate.shift().toISOString().split('T')[0], kmToRun)
+      runnerCreateTrainings(copyOfTrainingsDate.shift().toISOString().split('T')[0], kmToRun, kmToIncrease)
         .then(increaseKm())
     }
     navigate('/runner')
   }
+
+
 
 
   return (

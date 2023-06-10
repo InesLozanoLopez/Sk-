@@ -32,8 +32,6 @@ function WeeklyTraining({ training, getDate, runnerInfo, setAllTrainings }) {
   function deleteTraining() {
     deleteATraining(training._id)
       .then(runnerTrainings)
-      .then((training) => setAllTrainings([...training]))
-
   }
 
   return (

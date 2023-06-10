@@ -47,6 +47,7 @@ exports.createTraining = async (req, res) => {
     const trainings = await Training.create({
       date: newTraining.date,
       distance: newTraining.distance,
+      kmToIncrease: newTraining.kmToIncrease,
       feedback: null
     });
     res.status(201).send(trainings);
@@ -77,6 +78,14 @@ exports.editTrainings = async (req, res) => {
       { feedback: newFeedback.feedback }
     );
 
+    if (newFeedback.feedback !== 'hard') {
+      await RunnerProfile.updateOne(
+        {},
+        { $set: { 'currentValues.longDistance': findTraining.distance } }
+      );
+    }
+
+
     function updatedDistance(distance, string) {
       if (string.feedback === 'light') {
         return distance * 1.1;
@@ -105,11 +114,32 @@ exports.editTrainings = async (req, res) => {
 
 exports.deleteTraining = async (req, res) => {
   try {
-    const toDelete = req.params.id;
-    const TrainingDeleted = await Training.findByIdAndRemove(toDelete)
-    res.status(201).send({TrainingDeleted});
+    const toDeleteId = req.params.id;
+    const toDelete = await Training.findById(toDeleteId).exec();
 
-  }catch(e){
+
+    const trainingToUpdateDistance = await Training.find({ date: { $gt: TrainingDeleted.date } }).exec();
+
+    function newDistance(distance, kmToIncrease, length){
+      const addDistance = kmToIncrease / length;
+      return addDistance + distance;
+    }
+
+    for (let i = 0; i < trainingToUpdateDistance.length; i++) {
+      const training = trainingToUpdateDistance[i];
+      const id = training._id;
+      const currentDistance = training.distance;
+
+      await Training.updateOne(
+        { _id: id },
+        { $set: { distance: newDistance(currentDistance, toDelete.kmToIncrease, trainingToUpdateDistance.length) } }
+      );
+    }
+    const TrainingDeleted = await Training.findByIdAndRemove(toDeleteId);
+
+    res.status(201).send({ TrainingDeleted });
+
+  } catch (e) {
     console.log('Error from controllers', e)
   }
 }

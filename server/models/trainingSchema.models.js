@@ -9,6 +9,10 @@ const trainingsSchema = new db.Schema({
     type: Number,
     require: true
   },
+  kmToIncrease: {
+    type: Number,
+    require: true
+  },
   feedback: {
     type: String,
     require: false
