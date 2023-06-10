@@ -9,7 +9,7 @@ function NewRunner() {
   const navigate = useNavigate();
   let profileAtDb = true;
 
-  const [runnerName, setRunnerName] = useState('');
+  const [runnerName, setRunnerName] = useState(null);
   const [dateRace, setDateRace] = useState('');
   const [distanceRace, setDistanceRace] = useState(0);
   const [timeObj, setTimeObj] = useState('00:00:00');
@@ -67,6 +67,7 @@ function NewRunner() {
   function createNewProfile() {
     if (profileAtDb) {
       newRunner(runnerName, { race }, { currentValues }, { trainingAvailability }).then(profileAtDb = false).then(console.log(profileAtDb, 'new runner created'))
+        .then(console.log('Runner Created'))
     } else {
       console.log('max user register')
     }

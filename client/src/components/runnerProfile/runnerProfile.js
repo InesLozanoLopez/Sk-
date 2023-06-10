@@ -48,10 +48,11 @@ function RunnerProfile() {
 
   const today = new Date();
 
+  console.log(runnerInfo[0])
   if (runnerInfo.length > 0) {
     return (
       <div>
-        <h2 className='hello'><span className="wave">👋</span> Hi {runnerInfo.name}❗ Ready for your training⁉️ </h2>
+        <h2 className='hello'><span className="wave">👋</span> Hi {runnerInfo[0].name}❗ Ready for your training⁉️ </h2>
 
         {allTrainingsSorted.some((training) => today > new Date(training.date) && !training.feedback) ?
           (
