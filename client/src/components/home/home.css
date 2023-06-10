@@ -1,9 +1,13 @@
+.buttonContainer{
+background-image:none;
+}
 .homeButton{
     background-color: lightblue;
-    color: steelblue;
+    color: darkblue;
     font-weight: bold;
-    font-size: medium;
-    margin: 0px 100px;
+    font-size: xx-large;
+    margin: 10% 15%;
     padding: 12px;
-    border-radius: 5px;
+    border-radius: 20px;
+    border: 2px solid darkblue;
 }

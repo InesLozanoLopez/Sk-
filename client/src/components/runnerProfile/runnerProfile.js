@@ -15,7 +15,6 @@ function RunnerProfile(){
 
 
     useEffect(() => {
-        console.log('hi')
         runnerTrainings()
         .then((training) => setAllTrainings(training))
     }, []);
@@ -50,17 +49,31 @@ function RunnerProfile(){
         return new Date(a.date).getTime() - new Date(b.date).getTime()
     })
 
+    const today = new Date();
 
 if (runnerInfo.length > 0) {
     return(
         <div>
+            <h2 className='hello'>Hi {runnerInfo.name}! </h2>
+        <div className='display-trainings'>
+            Future trainings:
         <div className='trainingsContainer'>
-
             {allTrainingsSorted.map((training, id) => {
                 return <Weeklytraining key={id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings}/>
 
             })}
-        </div>  
+        </div>
+        </div>
+        <div className='display-trainings'>
+            Past trainings:
+        <div className='trainingsContainer'>
+            {allTrainingsSorted.map((training, id) => {
+                return <Weeklytraining key={id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings}/>
+
+            })}
+        </div>
+        </div>
+ 
         <div className='race'>
             <div className='yourRace'>
             <h2>Your race...</h2>

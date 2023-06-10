@@ -8,19 +8,21 @@
     background-color: cornflowerblue;
     border: 4px solid lightblue;
     border-radius: 10px;
-    padding: 30px 40px;
+    padding: 20px 40px;
     font-size: 30px;
-    line-height: 2;
+    line-height: 1.5;
     min-width: 200px;
     min-height: 300px;
     width: 100%;
     height: 100%;
 }
-
+.training h2{
+    color: black;
+}
 .feedback{
     display: flex;
     position: absolute;
-    bottom: 20%;
+    bottom: 15%;
     gap: 10px;
     align-self: space-around;
 
@@ -41,11 +43,14 @@ button{
     border-radius: 25px;
 }
 
-small{
+.training small{
     display: flex;
     position: absolute;
     bottom: 0px;
     right: 15%;
     font-size: 20px;
-
+}
+p{
+    font-size: medium;
+    padding-bottom: 10px;
 }

@@ -4,6 +4,7 @@ import './home.css'
 function Home(){
 
     return (
+        <div className='buttonContainer'>
         <div>
              <Link to='/newrunner'>
         <input className="homeButton" type='button' value='New Runner'/>
@@ -13,6 +14,7 @@ function Home(){
         <input className='homeButton' type='button' value='Training programme' />
         </Link>
         
+        </div>
         </div>
     )
 
