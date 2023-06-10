@@ -95,8 +95,9 @@ exports.editTrainings = async (req, res) => {
         return distance
       }
     }
+    const today = new Date()
 
-    const trainingToUpdateDistance = await Training.find({ date: { $gt: findTraining.date } }).exec();
+    const trainingToUpdateDistance = await Training.find({ date: { $gt: findTraining.date, $gt: today } }).exec();
     for (let i = 0; i < trainingToUpdateDistance.length; i++) {
       const training = trainingToUpdateDistance[i];
       const id = training._id;
@@ -132,7 +133,7 @@ exports.deleteTraining = async (req, res) => {
 
       await Training.updateOne(
         { _id: id },
-        { $set: { distance: newDistance(currentDistance, toDelete.kmToIncrease, trainingToUpdateDistance.length) } }
+        { $set: { distance: newDistance(currentDistance, training.kmToIncrease, trainingToUpdateDistance.length) } }
       );
     }
     const TrainingDeleted = await Training.findByIdAndRemove(toDeleteId);
