@@ -9,7 +9,7 @@ async function bootstrap() {
     await mongoose.connect(db);
     return console.log(`Mongoose connected and running`)
   } catch (e) {
-    console.log('Error connecting Mongoose', error)
+    console.log('Error connecting Mongoose', e)
   }
 }
 

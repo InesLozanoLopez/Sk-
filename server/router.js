@@ -6,6 +6,7 @@ router.post('/runner', controllers.createARunner);
 router.post('/training', controllers.createTraining);
 router.get('/training', controllers.runnerTrainings);
 router.put('/training/:id', controllers.editTrainings);
+router.delete('/training/:id', controllers.deleteTraining);
 
 
 module.exports = router;

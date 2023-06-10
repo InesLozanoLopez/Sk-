@@ -1,13 +1,28 @@
 .buttonContainer{
-background-image:none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 0px 10%;
+    align-items: center;
+    margin-bottom: 3%;
 }
+
 .homeButton{
     background-color: lightblue;
     color: darkblue;
     font-weight: bold;
     font-size: xx-large;
-    margin: 10% 15%;
     padding: 12px;
     border-radius: 20px;
     border: 2px solid darkblue;
+
 }
+
+@media (max-width : 900px){
+    .buttonContainer{
+        flex-direction: column;
+        margin-top: 100px;
+        gap: 30px;
+    }
+  }
+

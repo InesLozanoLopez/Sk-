@@ -9,7 +9,7 @@ exports.newRunner = async (runnerName, { race }, { currentValues }, { trainingAv
     }
     const runner = await fetch(baseURL + '/runner', newRunner);
     const data = await runner.json();
-      return data;
+    return data;
   } catch (e) {
     console.log('Error from apiServices', e)
   }
@@ -49,7 +49,7 @@ exports.runnerTrainings = async () => {
     return data;
 
   } catch (e) {
-      console.log('Error from ApiServices', e);
+    console.log('Error from ApiServices', e);
   }
 }
 
@@ -60,11 +60,25 @@ exports.editATraining = async (feedback, id) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ feedback: feedback })
     }
-      const update = await fetch(baseURL + `/training/${id}`, editTrainings);
-      const data = await update.json();
-      return data;
+    const update = await fetch(baseURL + `/training/${id}`, editTrainings);
+    const data = await update.json();
+    return data;
 
   } catch (e) {
-      console.log('Error from ApiServices', e);
+    console.log('Error from ApiServices', e);
+  }
+}
+
+exports.deleteATraining = async (id) => {
+  try{
+    const deletedTraining = {
+      method: 'DELETE',
+      headers: { 'Content-Type' : 'application/json'},
+    }
+    const deleted = await fetch(baseURL + `/training/${id}`, deletedTraining);
+    const data = await deleted.json();
+    return data;
+  } catch (e){
+    console.log('Error from APIServices', e)
   }
 }

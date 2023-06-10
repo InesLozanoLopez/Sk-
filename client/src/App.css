@@ -1,10 +1,5 @@
 .App {
-  min-height: 440px;
-  min-width: auto;
-  background-image: url("../public/SkylineMontainCONSombra.png");
-  background-repeat: no-repeat;
-  background-position-y: 111%;
-  background-size: contain;
+  background-color: black;
 }
 
 h1 {
@@ -12,3 +7,16 @@ h1 {
   color: steelblue;
   font-size: 100px;
 }
+img{
+  display: block;
+  margin: auto;
+}
+
+@media (max-width : 900px){
+  h1{
+    margin: 20px;
+    font-size: xx-large;
+    justify-content: center;  
+  }
+}
+

@@ -1,22 +1,22 @@
+import React from 'react';
 import { Link } from "react-router-dom";
 import './home.css'
 
-function Home(){
-
-    return (
-        <div className='buttonContainer'>
-        <div>
-             <Link to='/newrunner'>
-        <input className="homeButton" type='button' value='New Runner'/>
+function Home() {
+  return (
+    <div className='buttonContainer' >
+      <div>
+        <Link to='/newrunner'>
+          <input className="homeButton" type='button' value='New Runner' />
         </Link>
-
+      </div>
+      <div>
         <Link to='/runner'>
-        <input className='homeButton' type='button' value='Training programme' />
+          <input className='homeButton' type='button' value='Training programme' />
         </Link>
-        
-        </div>
-        </div>
-    )
+      </div>
+    </div >
+  )
 
 }
 

@@ -33,7 +33,7 @@ exports.runnerProfile = async (req, res) => {
     const runnerInfo = await RunnerProfile.find();
     if (!runnerInfo) {
       res.status(400).send(`There is not runners at the database, please, register a runner`)
-    };
+    }
     res.status(201).send(runnerInfo);
 
   } catch (e) {
@@ -83,9 +83,9 @@ exports.editTrainings = async (req, res) => {
       } else if (string.feedback === 'hard') {
         return distance / 1.1;
       } else {
-        return distance;
+        return distance
       }
-    };
+    }
 
     const trainingToUpdateDistance = await Training.find({ date: { $gt: findTraining.date } }).exec();
     for (let i = 0; i < trainingToUpdateDistance.length; i++) {
@@ -95,11 +95,22 @@ exports.editTrainings = async (req, res) => {
         { _id: id },
         { $set: { distance: updatedDistance(training.distance, newFeedback) } }
       );
-    };
+    }
     res.status(201).send([{ editedFeedback }]);
 
   } catch (e) {
     console.log('Error from controllers', e)
   }
 };
+
+exports.deleteTraining = async (req, res) => {
+  try {
+    const toDelete = req.params.id;
+    const TrainingDeleted = await Training.findByIdAndRemove(toDelete)
+    res.status(201).send({TrainingDeleted});
+
+  }catch(e){
+    console.log('Error from controllers', e)
+  }
+}
 

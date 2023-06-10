@@ -7,10 +7,11 @@
     align-items: center;
     border: 3px solid lightblue;
     margin: 100px;
+    margin-bottom: 10px;
     padding: 10px;
-    padding-bottom: 150px;
     gap: 10px;
     color: aliceblue;
+    text-align: center;
 }
 
 h2{
@@ -19,5 +20,18 @@ h2{
 
 small{
     font-weight: 500;
-
 }
+
+@media (max-width : 900px){
+    .form{
+      margin: 30px 20px;
+      gap: 10px;
+      padding-bottom: 3px;
+    }
+    h2{
+        margin-bottom: 0px;
+    }
+    small{
+        line-height: 1;
+    }
+  }
