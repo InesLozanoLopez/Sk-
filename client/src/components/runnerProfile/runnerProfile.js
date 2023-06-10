@@ -8,6 +8,7 @@ import Weeklytraining from '../weeklytraining/weeklytraining';
 function RunnerProfile() {
   const [runnerInfo, setRunnerInfo] = useState([]);
   const [allTrainings, setAllTrainings] = useState([]);
+
   useEffect(() => {
     getRunnerInfo()
       .then((runner) => setRunnerInfo(runner))
@@ -51,7 +52,7 @@ function RunnerProfile() {
     return (
       <div>
         <h2 className='hello'><span className="wave">👋</span> Hi {runnerInfo.name}❗ Ready for your training⁉️ </h2>
-        
+
         {allTrainingsSorted.some((training) => today > new Date(training.date) && !training.feedback) ?
           (
             <div className='display-trainings'>
@@ -60,51 +61,50 @@ function RunnerProfile() {
                 <h3>  Please, give a feedback to update your trainings:</h3>
               </div>
               <div className='trainingsContainer'>
-                {allTrainingsSorted.map((training, id) => {
-                  if (today > new Date(training.date) && !training.feedback) {
-                    return (
-                      <Weeklytraining key={id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings} />
-                    )}
-                })}
+                {allTrainingsSorted.filter((training) =>
+                  today > new Date(training.date) && !training.feedback)
+                  .map((training) => (
+                    <Weeklytraining key={training._id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings} />
+                  ))}
               </div>
             </div>
-          ): null}
-        
+          ) : null}
+
         <div className='display-trainings'>
           This month trainings:
           <div className='trainingsContainer'>
-            {allTrainingsSorted.map((training, id) => {
-              if (new Date(training.date) > today && today.getMonth() === new Date(training.date).getMonth()) {
-                return <Weeklytraining key={id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings} />
-              }
-            })}
+            {allTrainingsSorted.filter((training) =>
+              new Date(training.date) > today && today.getMonth() === new Date(training.date).getMonth())
+              .map((training) => (
+                <Weeklytraining key={training._id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings} />
+              ))}
           </div>
         </div>
 
         <div className='display-trainings'>
-        This month trainings completed:
+          This month trainings completed:
           <div className='trainingsContainer'>
-            {allTrainingsSorted.map((training, id) => {
-              if (today > new Date(training.date) && today.getMonth() === new Date(training.date).getMonth()) {
-                return <Weeklytraining key={id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings} />
-              }
-            })}
+            {allTrainingsSorted.filter((training) =>
+              today > new Date(training.date) && today.getMonth() === new Date(training.date).getMonth())
+              .map((training) => (
+                <Weeklytraining key={training._id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings} />
+              ))}
           </div>
         </div>
 
-        {allTrainingsSorted.some((training) => today > new Date(training.date) && today.getMonth()+1 === new Date(training.date).getMonth()) ?
+        {allTrainingsSorted.some((training) => today > new Date(training.date) && today.getMonth() + 1 === new Date(training.date).getMonth()) ?
           (
             <div className='display-trainings'>
-        Last months trainings completed:
+              Last month trainings completed:
               <div className='trainingsContainer'>
-                {allTrainingsSorted.map((training, id) => {
-                  if (today > new Date(training.date) && today.getMonth()+1 === new Date(training.date).getMonth()) {
-                    return <Weeklytraining key={id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings} />
-                  }
-                })}
+                {allTrainingsSorted.filter((training) =>
+                  today > new Date(training.date) && today.getMonth() + 1 === new Date(training.date).getMonth())
+                  .map((training) => (
+                    <Weeklytraining key={training._id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings} />
+                  ))}
               </div>
             </div>
-          ): null}
+          ) : null}
 
         <div className='race'>
           <div className='yourRace'>

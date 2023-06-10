@@ -118,8 +118,11 @@ exports.deleteTraining = async (req, res) => {
     const toDeleteId = req.params.id;
     const toDelete = await Training.findById(toDeleteId).exec();
 
+    if(!toDelete){
+      return res.status(404).send({message: 'Tranining not found'})
+    }
 
-    const trainingToUpdateDistance = await Training.find({ date: { $gt: TrainingDeleted.date } }).exec();
+    const trainingToUpdateDistance = await Training.find({ date: { $gt: toDelete.date } }).exec();
 
     function newDistance(distance, kmToIncrease, length){
       const addDistance = kmToIncrease / length;

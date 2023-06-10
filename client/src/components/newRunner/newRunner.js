@@ -1,8 +1,8 @@
 import React from 'react'
-import { useState} from 'react';
+import { useState } from 'react';
 import './newRunner.css';
 import { newRunner, runnerCreateTrainings } from '../../apiServices';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 function NewRunner() {
@@ -26,7 +26,7 @@ function NewRunner() {
     { id: '3', label: 'Wednesday' },
     { id: '4', label: 'Thursday' },
     { id: '5', label: 'Friday' },
-    { id: '6', label: 'Monday' },
+    { id: '6', label: 'Saturday' },
     { id: '7', label: 'Sunday' }
   ];
 
@@ -63,7 +63,7 @@ function NewRunner() {
     return holidayDays;
   }
 
-   
+
   function createNewProfile() {
     if (profileAtDb) {
       newRunner(runnerName, { race }, { currentValues }, { trainingAvailability }).then(profileAtDb = false).then(console.log(profileAtDb, 'new runner created'))
@@ -75,7 +75,7 @@ function NewRunner() {
   //CREATE TRAININGS
 
   let trainingsDaysFilteredHolidays = [];
-  
+
   function kmsPerDay() {
     const raceDay = new Date(dateRace);
     const currentDay = new Date();
@@ -106,17 +106,17 @@ function NewRunner() {
     function increaseKm() {
       if (kmToRun < Number(distanceRace)) {
         kmToRun += kmToIncrease;
-      } else if(kmToRun >= Number(distanceRace)*1.5 && Number(distanceRace) < 75){
+      } else if (kmToRun >= Number(distanceRace) * 1.5 && Number(distanceRace) < 75) {
         kmToRun += longDistance;
       } else {
         kmToRun = longDistance;
       }
     }
-    const copyOfTrainingsDate = [...trainingDate]
+
 
     while (trainingDate.length > 0) {
-      runnerCreateTrainings(copyOfTrainingsDate.shift().toISOString().split('T')[0], kmToRun, kmToIncrease)
-        .then(increaseKm())
+      runnerCreateTrainings(trainingDate.shift().toISOString().split('T')[0], kmToRun, kmToIncrease)
+        .then(increaseKm)
     }
     navigate('/runner')
   }
@@ -127,19 +127,19 @@ function NewRunner() {
   return (
     <div className='form'>
       <h2>Name</h2>
-      <input type='text' placeholder='Your name...' pattern= "[A-Za-z]+" value={runnerName} onChange={(event) => setRunnerName(event.target.value)} />
+      <input type='text' placeholder='Your name...' pattern="[A-Za-z]+" value={runnerName} onChange={(event) => setRunnerName(event.target.value)} />
 
       <h2>Race and Objectives</h2>
       <small>When is is the race taking place?</small>
-      <input type='date' value={dateRace} onChange={(event) => setDateRace(event.target.value)}/>
+      <input type='date' value={dateRace} onChange={(event) => setDateRace(event.target.value)} />
       <small>How long is this race? (distance in km)</small>
-      <input type='text' value={distanceRace} pattern= "[0-9]" onChange={(event) => setDistanceRace(event.target.value)}/>
+      <input type='text' value={distanceRace} pattern="[0-9]" onChange={(event) => setDistanceRace(event.target.value)} />
       <small>In how many hours you would like to complete the run</small>
-      <input type='time' value={timeObj} onChange={(event) => setTimeObj(event.target.value)}/>
-    
+      <input type='time' value={timeObj} onChange={(event) => setTimeObj(event.target.value)} />
+
       <h2>Your current numbers</h2>
       <small>How long was your most recent longest run? (distance in km)</small>
-      <input type='text' value={longDistance} pattern= "[0-9]" onChange={(event) => setLongDistance(event.target.value)}/>
+      <input type='text' value={longDistance} pattern="[0-9]" onChange={(event) => setLongDistance(event.target.value)} />
 
       <h2>Planning your trainings</h2>
       <small>Which days of the week you do NOT want to training?</small>
@@ -165,7 +165,7 @@ function NewRunner() {
         createNewProfile();
         kmsPerDay();
         createTraining();
-      }}/>
+      }} />
     </div>
   )
 
