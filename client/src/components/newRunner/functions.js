@@ -14,27 +14,36 @@ export function holidays(holidaysFrom, holidaysTo) {
   return holidayDays;
 }
 
-export function increaseKm(kmToRun, kmToIncrease, distanceRace, longDistance) {
-  if (kmToRun < Number(distanceRace)) {
-    kmToRun += kmToIncrease;
-  } else if (kmToRun >= Number(distanceRace) * 1.5 && Number(distanceRace) < 75) {
-    kmToRun += longDistance;
+export function increaseKm(distanceRace, longDistance, daysToTraining) {
+  const kmToIncreaseIntTotal = distanceRace - longDistance;
+  const kmPerDayToIncrease = kmToIncreaseIntTotal / daysToTraining;
+  return kmPerDayToIncrease;
+}
+
+export function kmsPerDay(ableToRun, kmToIncrease, distanceRace) {
+  let dailyRun = ableToRun;
+  if (ableToRun < Number(distanceRace)) {
+    dailyRun += kmToIncrease;
+  } else if (ableToRun >= Number(distanceRace) * 1.5 && Number(distanceRace) < 75) {
+    dailyRun += kmToIncrease;
   } else {
-    kmToRun = longDistance;
+    return dailyRun;
   }
 }
 
-export function kmsPerDay(dateRace, distanceRace, longDistance, daysOff, holidaysFrom, holidaysTo, trainingsDaysFilteredHolidays) {
+export function daysAvailable(dateRace, daysOff, holidaysFrom, holidaysTo) {
   const raceDay = new Date(dateRace);
   const currentDay = new Date();
   const daysUntilRaceArr = [];
+
+  let trainingsDaysFilteredHolidays = [];
+
 
   while (currentDay <= raceDay) {
     daysUntilRaceArr.push(new Date(currentDay));
     currentDay.setDate(currentDay.getDate() + 1);
   }
 
-  const kmToIncreaseIntTotal = distanceRace - longDistance;
   const trainingsDaysFilteredDaysOff = daysUntilRaceArr.filter((day) => !daysOff.includes(day.getDay().toString()));
 
   if (holidaysFrom && holidaysTo) {
@@ -42,6 +51,5 @@ export function kmsPerDay(dateRace, distanceRace, longDistance, daysOff, holiday
   } else {
     trainingsDaysFilteredHolidays = trainingsDaysFilteredDaysOff
   }
-  const kmPerDay = kmToIncreaseIntTotal / trainingsDaysFilteredHolidays.length;
-  return kmPerDay;
+  return trainingsDaysFilteredHolidays
 }

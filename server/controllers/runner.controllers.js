@@ -50,7 +50,7 @@ exports.createARunner = async (req, res) => {
         res.status(404).send({message: 'Runner not found'})
       };
   
-      const trainingsId = toDelete.trainings;
+      const trainingsId = toDelete.trainings || [];
       await Training.deleteMany({_id: {$in: trainingsId}})
   
       await RunnerProfile.findByIdAndDelete(toDeleteId)

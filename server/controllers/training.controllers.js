@@ -11,7 +11,7 @@ exports.createTraining = async (req, res) => {
       kmToIncrease: newTraining.kmToIncrease,
       feedback: null
     });
-    const runnerName = req.body.runnerName;
+    const runnerName = newTraining.runnerName;
     await RunnerProfile.findOneAndUpdate(
       {name: runnerName},
       {$push: {trainings: trainings._id}},

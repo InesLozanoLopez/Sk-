@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 function RunnerProfile() {
   const [runnerInfo, setRunnerInfo] = useState([]);
   const [allTrainings, setAllTrainings] = useState([]);
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
   useEffect(() => {
     getRunnerInfo()
@@ -51,7 +51,7 @@ function RunnerProfile() {
 
 
   function deleteRunnerProfile() {
-    deleteProfile(runnerInfo[0]._id).then(console.log('deleted'));
+    deleteProfile(runnerInfo[0]._id);
     navigate('/newrunner');
   }
 
@@ -116,8 +116,8 @@ function RunnerProfile() {
           ) : null}
 
         <div className='previousTrainings'>
-          <input className="runnerProfileButton" type='button' value='Past Trainings'/>
-          <input className="runnerProfileButton" type='button' value='Delete Runner Profile' onClick={deleteRunnerProfile()}/>
+          <input className="runnerProfileButton" type='button' value='Past Trainings' />
+          <input className="runnerProfileButton" type='button' value='Delete Runner Profile' onClick={() => deleteRunnerProfile()} />
         </div>
 
         <div className='race'>

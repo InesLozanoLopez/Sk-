@@ -3,8 +3,7 @@ import { useState } from 'react';
 import './newRunner.css';
 import { newRunner, runnerCreateTrainings } from '../../apiServices';
 import { useNavigate } from 'react-router-dom';
-import { timeObjInMins, holidays, increaseKm, kmsPerDay } from './functions';
-
+import { timeObjInMins, holidays, increaseKm, kmsPerDay, daysAvailable } from './functions';
 
 function NewRunner() {
   const navigate = useNavigate();
@@ -51,30 +50,37 @@ function NewRunner() {
     if (runnerName === '' || dateRace === '' || distanceRace === 0 || timeObj === '00:00:00' || longDistance === 0) {
       alert('Please complete all the required form field')
     } else if (profileAtDb) {
-      newRunner(runnerName, { race }, { currentValues }, { trainingAvailability }).then(profileAtDb = false).then(console.log(profileAtDb, 'new runner created'))
-        .then(console.log('Runner Created'))
+      newRunner(runnerName, { race }, { currentValues }, { trainingAvailability })
+        .then(profileAtDb = false)
+        .then(console.log(profileAtDb, 'new runner created'))
+        .then(() => {
+          createTraining();
+        })
     } else {
       console.log('max user register')
     }
   }
 
 
-  //CREATE TRAININGS
+  //CREATE TRAININGSs
 
-  let trainingsDaysFilteredHolidays = [];
+  let ableToRun = Number(longDistance);
 
-  let kmToRun = Number(longDistance);
-  const kmToIncrease = kmsPerDay(distanceRace, longDistance, daysOff, holidaysFrom, holidaysTo, trainingsDaysFilteredHolidays);
-
+  const holidaysFiltered = daysAvailable(dateRace, daysOff, holidaysFrom, holidaysTo);
+  const daysToTraining = holidaysFiltered.length;
+  const kmToIncrease = Number(increaseKm(distanceRace, longDistance, daysToTraining));
 
   function createTraining() {
-    if (trainingsDaysFilteredHolidays.length === 0) {
+    const trainingsDaysFilteredHolidays = holidaysFiltered;
+    if (trainingsDaysFilteredHolidays === 0) {
       console.log('No training days available')
     }
     const trainingDate = trainingsDaysFilteredHolidays;
+
     while (trainingDate.length > 0) {
-      runnerCreateTrainings(trainingDate.shift().toISOString().split('T')[0], kmToRun, kmToIncrease, runnerName)
-        .then(() => increaseKm(kmToRun, kmToIncrease, distanceRace, longDistance))
+      runnerCreateTrainings(trainingDate.shift().toISOString().split('T')[0], kmToIncrease, kmsPerDay(ableToRun, kmToIncrease, distanceRace), runnerName)
+        .then(ableToRun = kmsPerDay(ableToRun, kmToIncrease, distanceRace))
+        .then(console.log('training Created'))
     }
     navigate('/runner')
   }
@@ -119,10 +125,6 @@ function NewRunner() {
       <input className='newRunnerButton' type='submit' value='Create training' onClick={(event) => {
         event.preventDefault();
         createNewProfile();
-        if (!profileAtDb) {
-          kmsPerDay();
-          createTraining();
-        }
       }} />
     </div>
   )
