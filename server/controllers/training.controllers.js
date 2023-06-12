@@ -93,7 +93,7 @@ exports.deleteTraining = async (req, res) => {
     const trainingToUpdateDistance = await Training.find({ date: { $gt: toDelete.date } }).exec();
 
     function newDistance(distance, kmToIncrease, length) {
-      const addDistance = kmToIncrease / length;
+      const addDistance = kmToIncrease / (length -1);
       return addDistance + distance;
     }
 
