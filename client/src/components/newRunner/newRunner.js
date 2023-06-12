@@ -78,8 +78,11 @@ function NewRunner() {
     const trainingDate = trainingsDaysFilteredHolidays;
 
     while (trainingDate.length > 0) {
-      runnerCreateTrainings(trainingDate.shift().toISOString().split('T')[0], kmToIncrease, kmsPerDay(ableToRun, kmToIncrease, distanceRace), runnerName)
-        .then(ableToRun = kmsPerDay(ableToRun, kmToIncrease, distanceRace))
+      let kmsToRunPerDay = Number(kmsPerDay(ableToRun, kmToIncrease, distanceRace));
+      console.log(kmsPerDay(ableToRun, kmToIncrease, distanceRace));
+
+      runnerCreateTrainings(trainingDate.shift().toISOString().split('T')[0], kmsToRunPerDay, kmToIncrease, runnerName)
+        .then(ableToRun = kmsToRunPerDay)
         .then(console.log('training Created'))
     }
     navigate('/runner')

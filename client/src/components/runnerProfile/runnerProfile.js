@@ -94,10 +94,14 @@ function RunnerProfile() {
           This month trainings completed:
           <div className='trainingsContainer'>
             {allTrainingsSorted.filter((training) =>
-              today > new Date(training.date) && today.getMonth() === new Date(training.date).getMonth())
-              .map((training) => (
-                <Weeklytraining key={training._id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings} />
-              ))}
+              today > new Date(training.date) && today.getMonth() === new Date(training.date).getMonth()).length > 0 ? (
+                allTrainingsSorted.filter((training) =>
+                  today > new Date(training.date) && today.getMonth() === new Date(training.date).getMonth()).map((training) => (
+                  <Weeklytraining key={training._id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings} />
+                )))
+              :
+              <div className='noTrainingCompleted'>No trainings completed yet</div>
+            }
           </div>
         </div>
 

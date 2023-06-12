@@ -21,13 +21,12 @@ export function increaseKm(distanceRace, longDistance, daysToTraining) {
 }
 
 export function kmsPerDay(ableToRun, kmToIncrease, distanceRace) {
-  let dailyRun = ableToRun;
   if (ableToRun < Number(distanceRace)) {
-    dailyRun += kmToIncrease;
+    return ableToRun += kmToIncrease;
   } else if (ableToRun >= Number(distanceRace) * 1.5 && Number(distanceRace) < 75) {
-    dailyRun += kmToIncrease;
+    return ableToRun += kmToIncrease;
   } else {
-    return dailyRun;
+    return ableToRun;
   }
 }
 
