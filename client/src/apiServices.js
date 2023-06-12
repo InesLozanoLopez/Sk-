@@ -31,7 +31,7 @@ exports.runnerCreateTrainings = async (trainingDate, kmToRun, kmToIncrease) => {
     const trainingProfile = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ date: trainingDate, distance: kmToRun, kmToIncrease: kmToIncrease})
+      body: JSON.stringify({ date: trainingDate, distance: kmToRun, kmToIncrease: kmToIncrease })
     }
     const trainingCreated = await fetch(baseURL + '/training', trainingProfile);
     const data = await trainingCreated.json();
@@ -70,15 +70,29 @@ exports.editATraining = async (feedback, id) => {
 }
 
 exports.deleteATraining = async (id) => {
-  try{
+  try {
     const deletedTraining = {
       method: 'DELETE',
-      headers: { 'Content-Type' : 'application/json'},
+      headers: { 'Content-Type': 'application/json' }
     }
     const deleted = await fetch(baseURL + `/training/${id}`, deletedTraining);
     const data = await deleted.json();
     return data;
-  } catch (e){
+  } catch (e) {
+    console.log('Error from APIServices', e)
+  }
+}
+
+exports.deleteProfile = async (id) => {
+  try {
+    const deleteRunner = {
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json'}
+    }
+    const deleted = await fetch(baseURL + `/runner/${id}`, deleteRunner);
+    const data = await deleted.json();
+    return data;
+  }catch(e){
     console.log('Error from APIServices', e)
   }
 }

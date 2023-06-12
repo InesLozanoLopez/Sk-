@@ -118,13 +118,13 @@ exports.deleteTraining = async (req, res) => {
     const toDeleteId = req.params.id;
     const toDelete = await Training.findById(toDeleteId).exec();
 
-    if(!toDelete){
-      return res.status(404).send({message: 'Tranining not found'})
+    if (!toDelete) {
+      return res.status(404).send({ message: 'Tranining not found' })
     }
 
     const trainingToUpdateDistance = await Training.find({ date: { $gt: toDelete.date } }).exec();
 
-    function newDistance(distance, kmToIncrease, length){
+    function newDistance(distance, kmToIncrease, length) {
       const addDistance = kmToIncrease / length;
       return addDistance + distance;
     }
@@ -139,7 +139,7 @@ exports.deleteTraining = async (req, res) => {
         { $set: { distance: newDistance(currentDistance, training.kmToIncrease, trainingToUpdateDistance.length) } }
       );
     }
-    const TrainingDeleted = await Training.findByIdAndRemove(toDeleteId);
+    const TrainingDeleted = await Training.findByIdAndDelete(toDeleteId);
 
     res.status(201).send({ TrainingDeleted });
 
@@ -148,3 +148,12 @@ exports.deleteTraining = async (req, res) => {
   }
 }
 
+exports.deleteRunner = async (req, res) => {
+  try {
+    const toDeleteId = req.params.id;
+    const toDelete = await RunnerProfile.findByIdAndDelete(toDeleteId);
+    res.status(201).send({ toDelete });
+  } catch (e) {
+    console.log('Error from controllers', e)
+  }
+}

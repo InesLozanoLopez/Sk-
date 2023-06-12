@@ -4,10 +4,13 @@ import { getRunnerInfo } from '../../apiServices';
 import { useEffect, useState } from 'react';
 import { runnerTrainings } from '../../apiServices'
 import Weeklytraining from '../weeklytraining/weeklytraining';
+import { useNavigate } from 'react-router-dom';
+
 
 function RunnerProfile() {
   const [runnerInfo, setRunnerInfo] = useState([]);
   const [allTrainings, setAllTrainings] = useState([]);
+  const navigate = useNavigate;
 
   useEffect(() => {
     getRunnerInfo()
@@ -46,9 +49,14 @@ function RunnerProfile() {
     return new Date(a.date).getTime() - new Date(b.date).getTime()
   })
 
+
+  function deleteProfile() {
+    deleteProfile(runnerInfo._id).then(navigate('/newrunner')
+    )
+  }
+
   const today = new Date();
 
-  console.log(runnerInfo[0])
   if (runnerInfo.length > 0) {
     return (
       <div>
@@ -63,7 +71,7 @@ function RunnerProfile() {
               </div>
               <div className='trainingsContainer'>
                 {allTrainingsSorted.filter((training) =>
-                  today > new Date(training.date) && !training.feedback)
+                  today >= new Date(training.date) && !training.feedback)
                   .map((training) => (
                     <Weeklytraining key={training._id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings} />
                   ))}
@@ -75,7 +83,7 @@ function RunnerProfile() {
           This month trainings:
           <div className='trainingsContainer'>
             {allTrainingsSorted.filter((training) =>
-              new Date(training.date) > today && today.getMonth() === new Date(training.date).getMonth())
+              today < new Date(training.date) && today.getMonth() === new Date(training.date).getMonth())
               .map((training) => (
                 <Weeklytraining key={training._id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings} />
               ))}
@@ -99,13 +107,18 @@ function RunnerProfile() {
               Last month trainings completed:
               <div className='trainingsContainer'>
                 {allTrainingsSorted.filter((training) =>
-                  today > new Date(training.date) && today.getMonth() + 1 === new Date(training.date).getMonth())
+                  today > new Date(training.date).getMonth() + 1 && today.getMonth() === new Date(training.date).getMonth())
                   .map((training) => (
                     <Weeklytraining key={training._id} training={training} getDate={getDate} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings} />
                   ))}
               </div>
             </div>
           ) : null}
+
+        <div className='previousTrainings'>
+          <input className="runnerProfileButton" type='button' value='Past Trainings'/>
+          <input className="runnerProfileButton" type='button' value='Delete Runner Profile' onClick={deleteProfile}/>
+        </div>
 
         <div className='race'>
           <div className='yourRace'>

@@ -57,15 +57,13 @@
     padding: 10px;
     overflow: hidden;
     overflow-x: scroll;
-    
-    
 }
 
 .race{
     background-color: rgba(100, 149, 237, 0.7);
     color: black;
     border-radius: 100px;
-    margin: 10% 10%;
+    margin: 5% 10%;
     padding: 0px 60px;
     padding-bottom: 30px;
 }
@@ -118,12 +116,22 @@ p{
     margin: 0px;
 }
 
-.newRunnerButton{
-    background-color: lightblue;
-    color: steelblue;
+.previousTrainings{
+    display: flex;
+    flex-direction: row;
+    justify-content:  flex-end;
+    gap: 2%;
+    margin: 0px 10%;
+    align-items: center;
+}
+
+.runnerProfileButton{
+    background-color: lightcoral;
+    color: red;
     font-weight: bold;
-    font-size: medium;
-    margin: 20px 100px;
-    padding: 12px;
-    border-radius: 5px;
+    font-size: xx-large;
+    padding: 18px;
+    border-radius: 20px;
+    border: 2px solid red;
+
 }
