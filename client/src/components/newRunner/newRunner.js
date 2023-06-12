@@ -3,13 +3,14 @@ import { useState } from 'react';
 import './newRunner.css';
 import { newRunner, runnerCreateTrainings } from '../../apiServices';
 import { useNavigate } from 'react-router-dom';
+import { timeObjInMins, holidays, increaseKm, kmsPerDay } from './functions';
 
 
 function NewRunner() {
   const navigate = useNavigate();
   let profileAtDb = true;
 
-  const [runnerName, setRunnerName] = useState(null);
+  const [runnerName, setRunnerName] = useState('');
   const [dateRace, setDateRace] = useState('');
   const [distanceRace, setDistanceRace] = useState(0);
   const [timeObj, setTimeObj] = useState('00:00:00');
@@ -17,8 +18,6 @@ function NewRunner() {
   const [daysOff, setDaysOff] = useState([]);
   const [holidaysFrom, setHolidaysFrom] = useState('');
   const [holidaysTo, setHolidaysTo] = useState('');
-
-  //CREATE A PROFILE
 
   const daysOffPerWeek = [
     { id: '1', label: 'Monday' },
@@ -29,11 +28,6 @@ function NewRunner() {
     { id: '6', label: 'Saturday' },
     { id: '7', label: 'Sunday' }
   ];
-
-  function timeObjInMins(time) {
-    const [hours, minutes] = time.split(':');
-    return hours * 60 + parseInt(minutes, 10);
-  }
 
   const minsPerKm = timeObjInMins(timeObj) / distanceRace;
 
@@ -51,21 +45,12 @@ function NewRunner() {
     holidays: holidays(holidaysFrom, holidaysTo)
   }
 
-
-  function holidays(holidaysFrom, holidaysTo) {
-    const days = new Date(holidaysFrom);
-    const endDay = new Date(holidaysTo)
-    const holidayDays = [];
-    while (days <= endDay) {
-      holidayDays.push(new Date(days));
-      days.setDate(days.getDate() + 1);
-    }
-    return holidayDays;
-  }
-
+  //CREATE A PROFILE
 
   function createNewProfile() {
-    if (profileAtDb) {
+    if (runnerName === '' || dateRace === '' || distanceRace === 0 || timeObj === '00:00:00' || longDistance === 0) {
+      alert('Please complete all the required form field')
+    } else if (profileAtDb) {
       newRunner(runnerName, { race }, { currentValues }, { trainingAvailability }).then(profileAtDb = false).then(console.log(profileAtDb, 'new runner created'))
         .then(console.log('Runner Created'))
     } else {
@@ -73,56 +58,26 @@ function NewRunner() {
     }
   }
 
+
   //CREATE TRAININGS
 
   let trainingsDaysFilteredHolidays = [];
 
-  function kmsPerDay() {
-    const raceDay = new Date(dateRace);
-    const currentDay = new Date();
-    const daysUntilRaceArr = [];
+  let kmToRun = Number(longDistance);
+  const kmToIncrease = kmsPerDay(distanceRace, longDistance, daysOff, holidaysFrom, holidaysTo, trainingsDaysFilteredHolidays);
 
-    while (currentDay <= raceDay) {
-      daysUntilRaceArr.push(new Date(currentDay));
-      currentDay.setDate(currentDay.getDate() + 1);
-    }
-
-    const kmToIncreaseIntTotal = distanceRace - longDistance;
-    const trainingsDaysFilteredDaysOff = daysUntilRaceArr.filter((day) => !daysOff.includes(day.getDay().toString()));
-
-    trainingsDaysFilteredHolidays = trainingsDaysFilteredDaysOff.filter((day) => day < new Date(holidaysFrom) || day > new Date(holidaysTo));
-    const kmPerDay = kmToIncreaseIntTotal / trainingsDaysFilteredHolidays.length;
-
-    return kmPerDay;
-  }
 
   function createTraining() {
     if (trainingsDaysFilteredHolidays.length === 0) {
       console.log('No training days available')
     }
     const trainingDate = trainingsDaysFilteredHolidays;
-    let kmToRun = Number(longDistance);
-    const kmToIncrease = kmsPerDay()
-
-    function increaseKm() {
-      if (kmToRun < Number(distanceRace)) {
-        kmToRun += kmToIncrease;
-      } else if (kmToRun >= Number(distanceRace) * 1.5 && Number(distanceRace) < 75) {
-        kmToRun += longDistance;
-      } else {
-        kmToRun = longDistance;
-      }
-    }
-
-
     while (trainingDate.length > 0) {
-      runnerCreateTrainings(trainingDate.shift().toISOString().split('T')[0], kmToRun, kmToIncrease)
-        .then(increaseKm)
+      runnerCreateTrainings(trainingDate.shift().toISOString().split('T')[0], kmToRun, kmToIncrease, runnerName)
+        .then(() => increaseKm(kmToRun, kmToIncrease, distanceRace, longDistance))
     }
     navigate('/runner')
   }
-
-
 
 
   return (
@@ -164,8 +119,10 @@ function NewRunner() {
       <input className='newRunnerButton' type='submit' value='Create training' onClick={(event) => {
         event.preventDefault();
         createNewProfile();
-        kmsPerDay();
-        createTraining();
+        if (!profileAtDb) {
+          kmsPerDay();
+          createTraining();
+        }
       }} />
     </div>
   )

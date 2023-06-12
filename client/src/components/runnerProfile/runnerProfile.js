@@ -2,7 +2,7 @@ import React from 'react';
 import './runnerProfile.css';
 import { getRunnerInfo } from '../../apiServices';
 import { useEffect, useState } from 'react';
-import { runnerTrainings } from '../../apiServices'
+import { runnerTrainings, deleteProfile } from '../../apiServices'
 import Weeklytraining from '../weeklytraining/weeklytraining';
 import { useNavigate } from 'react-router-dom';
 
@@ -50,9 +50,9 @@ function RunnerProfile() {
   })
 
 
-  function deleteProfile() {
-    deleteProfile(runnerInfo._id).then(navigate('/newrunner')
-    )
+  function deleteRunnerProfile() {
+    deleteProfile(runnerInfo[0]._id).then(console.log('deleted'));
+    navigate('/newrunner');
   }
 
   const today = new Date();
@@ -117,7 +117,7 @@ function RunnerProfile() {
 
         <div className='previousTrainings'>
           <input className="runnerProfileButton" type='button' value='Past Trainings'/>
-          <input className="runnerProfileButton" type='button' value='Delete Runner Profile' onClick={deleteProfile}/>
+          <input className="runnerProfileButton" type='button' value='Delete Runner Profile' onClick={deleteRunnerProfile()}/>
         </div>
 
         <div className='race'>

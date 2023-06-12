@@ -26,12 +26,12 @@ exports.getRunnerInfo = async () => {
   }
 };
 
-exports.runnerCreateTrainings = async (trainingDate, kmToRun, kmToIncrease) => {
+exports.runnerCreateTrainings = async (trainingDate, kmToRun, kmToIncrease, runnerName) => {
   try {
     const trainingProfile = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ date: trainingDate, distance: kmToRun, kmToIncrease: kmToIncrease })
+      body: JSON.stringify({ date: trainingDate, distance: kmToRun, kmToIncrease: kmToIncrease, runnerName: runnerName })
     }
     const trainingCreated = await fetch(baseURL + '/training', trainingProfile);
     const data = await trainingCreated.json();

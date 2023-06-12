@@ -1,13 +1,16 @@
 const router = require('express').Router();
-const controllers = require('./controllers/controllers');
+const trainingControllers = require('./controllers/training.controllers');
+const runnerControllers = require('./controllers/runner.controllers')
 
-router.get('/runner', controllers.runnerProfile);
-router.post('/runner', controllers.createARunner);
-router.post('/training', controllers.createTraining);
-router.get('/training', controllers.runnerTrainings);
-router.put('/training/:id', controllers.editTrainings);
-router.delete('/training/:id', controllers.deleteTraining);
-router.delete('/runner/:id', controllers.deleteRunner);
+router.get('/runner', runnerControllers.runnerProfile);
+router.post('/runner', runnerControllers.createARunner);
+router.delete('/runner/:id', runnerControllers.deleteRunner);
+
+router.get('/training', trainingControllers.runnerTrainings);
+router.post('/training', trainingControllers.createTraining);
+router.put('/training/:id', trainingControllers.editTrainings);
+router.delete('/training/:id', trainingControllers.deleteTraining);
+
 
 
 module.exports = router;

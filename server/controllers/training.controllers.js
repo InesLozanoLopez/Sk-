@@ -1,45 +1,6 @@
 const RunnerProfile = require('../models/runnerSchema.models');
 const Training = require('../models/trainingSchema.models');
 
-exports.createARunner = async (req, res) => {
-  try {
-    const newRunner = req.body;
-    const runnerProfile = await RunnerProfile.create({
-      name: newRunner.name,
-      race: {
-        dateRace: newRunner.race.race.dateRace,
-        distanceRace: newRunner.race.race.distanceRace,
-        timeObj: newRunner.race.race.timeObj,
-        minsPerKm: newRunner.race.race.minsPerKm,
-      },
-      currentValues: {
-        longDistance: newRunner.currentValues.currentValues.longDistance,
-      },
-      trainingAvailability: {
-        daysPerWeek: newRunner.trainingAvailability.trainingAvailability.daysPerWeek,
-        daysOff: newRunner.trainingAvailability.trainingAvailability.daysOff,
-        holidays: newRunner.trainingAvailability.trainingAvailability.holidays,
-      }
-    });
-    res.status(201).send(runnerProfile);
-
-  } catch (e) {
-    console.log('Error from controllers', e);
-  }
-};
-
-exports.runnerProfile = async (req, res) => {
-  try {
-    const runnerInfo = await RunnerProfile.find();
-    if (!runnerInfo) {
-      res.status(400).send(`There is not runners at the database, please, register a runner`)
-    }
-    res.status(201).send(runnerInfo);
-
-  } catch (e) {
-    console.log('Error from controllers');
-  }
-};
 
 exports.createTraining = async (req, res) => {
   try {
@@ -50,6 +11,13 @@ exports.createTraining = async (req, res) => {
       kmToIncrease: newTraining.kmToIncrease,
       feedback: null
     });
+    const runnerName = req.body.runnerName;
+    await RunnerProfile.findOneAndUpdate(
+      {name: runnerName},
+      {$push: {trainings: trainings._id}},
+      {new: true}
+    );
+
     res.status(201).send(trainings);
 
   } catch (e) {
@@ -143,16 +111,6 @@ exports.deleteTraining = async (req, res) => {
 
     res.status(201).send({ TrainingDeleted });
 
-  } catch (e) {
-    console.log('Error from controllers', e)
-  }
-}
-
-exports.deleteRunner = async (req, res) => {
-  try {
-    const toDeleteId = req.params.id;
-    const toDelete = await RunnerProfile.findByIdAndDelete(toDeleteId);
-    res.status(201).send({ toDelete });
   } catch (e) {
     console.log('Error from controllers', e)
   }
