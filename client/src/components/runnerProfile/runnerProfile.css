@@ -159,3 +159,53 @@ p{
 .hidden{
     display: none;
 }
+
+
+@media (max-width : 900px){
+    .hello{
+        font-size: 25px;
+        line-height: 1.5;
+        text-align: center;
+        font-weight: bold;
+    }
+    .wave{
+        font-size: 20px;
+    }
+    .attentionContainer{
+        font-size: 17px;
+    }
+    .attention{
+        font-size: 20px;
+    }
+    
+    .display-trainings{
+        margin: 2%;;
+    }
+    .runnerProfileButton{
+        font-size: 20px;
+    }
+    .noTrainingCompleted{
+        font-size: 20px;
+    }
+    .previousTrainings{
+        flex-direction: column;
+        gap: 20px;
+
+    }
+    .yourRace h2{
+        font-size: 21px;
+        padding-top: 20px;
+    }
+
+    .raceDetails{
+        margin-left: 0px;
+        padding-top: 10px;
+    }
+    .raceInfo{
+        align-items: flex-start;
+    }
+    .raceObjetives{
+        margin: -20px -40px;
+    }
+
+  }
