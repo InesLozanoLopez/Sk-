@@ -1,0 +1,14 @@
+.pastTrainings{
+    margin: 60px;
+}
+
+.pastTrainingsButton{
+    margin-left: 70%;
+    background-color: lightgreen;
+    color: green;
+    font-weight: bold;
+    font-size: xx-large;
+    padding: 18px;
+    border-radius: 20px;
+    border: 2px solid greenyellow;
+}

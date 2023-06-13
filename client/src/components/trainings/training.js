@@ -1,9 +1,10 @@
 import React from 'react';
-import './weeklytraining.css';
-import { editATraining, runnerTrainings, deleteATraining } from './../../apiServices';
+import './training.css';
+import { editATraining, runnerTrainings, deleteATraining } from '../../apiServices';
+import {getDate} from '../runnerProfile/functions';
 
 
-function WeeklyTraining({ training, getDate, runnerInfo, setAllTrainings }) {
+function Training({ training, runnerInfo, setAllTrainings }) {
   const daysToRace = new Date(runnerInfo[0].race.dateRace).getTime() - new Date(training.date).getTime();
   const differenceDays = Math.floor(daysToRace / (1000 * 60 * 60 * 24));
 
@@ -35,8 +36,19 @@ function WeeklyTraining({ training, getDate, runnerInfo, setAllTrainings }) {
       .then((training) => setAllTrainings([...training]))
   }
 
+  function addClass(event) {
+    const element = event.currentTarget;
+    element.classList.add('flipped');
+
+    const endOfAnimation = () => {
+      element.classList.remove('flipped');
+      element.removeEventListener('animationend', endOfAnimation)
+    };
+    element.addEventListener('animationend', endOfAnimation)
+  }
+
   return (
-    <div className={`training ${training.feedback}`}>
+    <div className={`training ${training.feedback}`} onClick={addClass}>
       <div className='delete'>
         <p>{daysOfWeek(training.date)}</p> {!training.feedback && (
           <span onClick={() => deleteTraining()}>❌</span>)}
@@ -61,4 +73,4 @@ function WeeklyTraining({ training, getDate, runnerInfo, setAllTrainings }) {
 
 }
 
-export default WeeklyTraining;
+export default Training;

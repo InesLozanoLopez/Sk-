@@ -59,6 +59,26 @@
     overflow-x: scroll;
 }
 
+
+
+.noTrainingCompleted{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: orange;
+    color: black;
+    padding: 0px 60px;
+    border-radius: 20px;
+    font-size: 40px;
+    font-weight: bold;
+    min-width: 200px;
+    min-height: 150px;
+    height: 40%;
+    max-width: 50%;
+    margin-top: 3%;
+    margin-left:20%;
+}
+
 .race{
     background-color: rgba(100, 149, 237, 0.7);
     color: black;
@@ -134,4 +154,8 @@ p{
     border-radius: 20px;
     border: 2px solid red;
 
+}
+
+.hidden{
+    display: none;
 }
