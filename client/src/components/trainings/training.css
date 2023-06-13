@@ -73,3 +73,26 @@ p{
     font-size: medium;
     padding-bottom: 10px;
 }
+
+@media (max-width : 900px){
+    .training{
+        padding: 20px 40px;
+        font-size: 25px;
+        line-height: 1.5;
+        min-width: 150px;
+        min-height: 200px;
+    }
+    .training small{
+        font-size: 18px;
+        margin: 0;
+        text-align: center;
+    }
+    h2{
+        font-size: 25px;
+    }
+
+    .feedback{
+        bottom: 10%;
+    }
+
+}

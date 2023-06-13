@@ -172,14 +172,15 @@ p{
         font-size: 20px;
     }
     .attentionContainer{
-        font-size: 17px;
+        font-size: 20px;
     }
     .attention{
-        font-size: 20px;
+        font-size: 25px;
     }
     
     .display-trainings{
         margin: 2%;;
+        font-size: 25px;
     }
     .runnerProfileButton{
         font-size: 20px;
