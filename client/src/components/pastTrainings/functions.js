@@ -5,7 +5,7 @@ export function allTrainingByMonth(allTrainings) {
     const date = new Date(training.date);
     const month = date.getMonth();
     const year = date.getFullYear();
-    const monthLetter = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const monthLetter = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const key = `${monthLetter[month]}-${year}`;
     
     if(!trainingsByMonth[key]) {
