@@ -1,12 +1,11 @@
 # Sk-
 (Solo project)
 
-Sk - is a running app to help user to determinate how long their trainings should be in order to training for a specific run.
+Sk- is a running app designed to assist users in determining the optimal duration of their training sessions for a specific race. The app collects user data through a form and analyses it to calculate training recommendations based o factors such as available training days, the users current running ability, and feedback from previous workouts. The app dynamically updates the data bases on user interactions. For example, if a training session is deleted, the remaining training sessions between the current day and the race day are equally adjusted to ensure the user stays on track to achieve their goal.
 
-The data is collected through a form and analyses to determinate the trainings and their km bases on the days available to training, for how long the user can currently run and the feedback from previous trainings.
-All data is being updated depending on the interaction of the user with the app. For example, if a training is deleted, the trainings from the today and the race day are equally increased in order to ensure the goal is met.
+SK- accessibility and SEO to ensure a seamless experience across different devices. It has undergone rigorous testing and validation, resulting in 0 issues identified by Axe Dev Tools.
+Additionally, the app has achieved high accessibility and SEO scores in Lighthouse. Sk- excels in both desktop and mobile environments, demonstrating a commitment to providing an inclusive and optimized experience to users. These high scores reflect the app's adherence to best practices for accessibility and SEO, ensuring that it can be easily discovered by search engines and accessed by users of all abilities.
 
-It is a unique user app and most of the code logic takes place at the back end.
 
 --- FRONT END ---
 React
