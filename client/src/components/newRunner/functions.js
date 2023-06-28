@@ -3,7 +3,7 @@ export function timeObjInMins(time) {
   return hours * 60 + parseInt(minutes, 10);
 }
 
-export function holidays(holidaysFrom, holidaysTo) {
+export function holidays({holidaysFrom, holidaysTo}) {
   const days = new Date(holidaysFrom);
   const endDay = new Date(holidaysTo)
   const holidayDays = [];
@@ -14,13 +14,13 @@ export function holidays(holidaysFrom, holidaysTo) {
   return holidayDays;
 }
 
-export function increaseKm(distanceRace, longDistance, daysToTraining) {
+export function increaseKm({distanceRace, longDistance, daysToTraining}) {
   const kmToIncreaseIntTotal = distanceRace - longDistance;
   const kmPerDayToIncrease = kmToIncreaseIntTotal / daysToTraining;
   return kmPerDayToIncrease;
 }
 
-export function kmsPerDay(ableToRun, kmToIncrease, distanceRace) {
+export function kmsPerDay({ableToRun, kmToIncrease, distanceRace}) {
   if (ableToRun < Number(distanceRace)) {
     return ableToRun += kmToIncrease;
   } else if (ableToRun >= Number(distanceRace) * 1.5 && Number(distanceRace) < 75) {
@@ -30,7 +30,7 @@ export function kmsPerDay(ableToRun, kmToIncrease, distanceRace) {
   }
 }
 
-export function daysAvailable(dateRace, daysOff, holidaysFrom, holidaysTo) {
+export function daysAvailable({dateRace, daysOff, holidaysFrom, holidaysTo}) {
   const raceDay = new Date(dateRace);
   const currentDay = new Date();
   const daysUntilRaceArr = [];

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { runnerTrainings, deleteProfile, getRunnerInfo } from '../../apiServices'
 import Training from '../trainings/training';
 import { useNavigate, Link } from 'react-router-dom';
-import PastTrainings from '../pastTrainings/pastTrainings';
+import PastTrainings from '../allTrainings/allTrainings';
 import { getDate } from './functions';
 
 
@@ -41,11 +41,9 @@ function RunnerProfile() {
       <div>
         <h2 className='hello'><span className="wave">👋</span> Hi {runnerInfo[0].name}❗</h2><h2 className='readyForYourTraining'> Ready for your training⁉️ </h2>
 
-        {/* <div className='othersButtons'> */}
         <Link to='/allTrainings'>
           <input className="allTrainingsButton" type='button' value='All Trainings' />
         </Link>
-        {/* </div> */}
 
         {allTrainingsSorted.some((training) => today > new Date(training.date) && !training.feedback) ?
           (
@@ -54,7 +52,7 @@ function RunnerProfile() {
                 <span className='attention'> 🚫 </span>
                 <h3>  Please, give a feedback to update your trainings:</h3>
               </div>
-              <div className='trainingsContainer'>
+              <div className='trainingsContainer' tabIndex='0' role='region' aria-label='Tranining without feedback'>
                 {allTrainingsSorted.filter((training) =>
                   today >= new Date(training.date) && !training.feedback)
                   .map((training) => (
@@ -66,7 +64,7 @@ function RunnerProfile() {
 
         <div className='display-trainings'>
           This month trainings:
-          <div className='trainingsContainer'>
+          <div className='trainingsContainer' tabIndex='0' role='region' aria-label='All trainings of this month'>
             {allTrainingsSorted.filter((training) =>
               today < new Date(training.date) && today.getMonth() === new Date(training.date).getMonth())
               .map((training) => (
@@ -77,7 +75,7 @@ function RunnerProfile() {
 
         <div className='display-trainings'>
           This month trainings completed:
-          <div className='trainingsContainer'>
+          <div className='trainingsContainer' tabIndex='0' role='region' aria-label='This month completed trainings'>
             {allTrainingsSorted.filter((training) =>
               today > new Date(training.date) && today.getMonth() === new Date(training.date).getMonth()).length > 0 ? (
                 allTrainingsSorted.filter((training) =>

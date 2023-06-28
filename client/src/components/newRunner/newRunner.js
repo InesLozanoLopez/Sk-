@@ -29,6 +29,7 @@ function NewRunner() {
   ];
 
   const minsPerKm = timeObjInMins(timeObj) / distanceRace;
+  const dateRange = { holidaysFrom, holidaysTo };
 
   const race = {
     dateRace,
@@ -41,7 +42,7 @@ function NewRunner() {
   }
   const trainingAvailability = {
     daysOff,
-    holidays: holidays(holidaysFrom, holidaysTo)
+    holidays: holidays(dateRange)
   }
 
   //CREATE A PROFILE
@@ -50,9 +51,8 @@ function NewRunner() {
     if (runnerName === '' || dateRace === '' || distanceRace === 0 || timeObj === '00:00:00' || longDistance === 0) {
       alert('Please complete all the required form field')
     } else if (profileAtDb) {
-      newRunner(runnerName, { race }, { currentValues }, { trainingAvailability })
+      newRunner({runnerName, race, currentValues, trainingAvailability })
         .then(profileAtDb = false)
-        .then(console.log(profileAtDb, 'new runner created'))
         .then(() => {
           createTraining();
         })
@@ -66,24 +66,22 @@ function NewRunner() {
 
   let ableToRun = Number(longDistance);
 
-  const holidaysFiltered = daysAvailable(dateRace, daysOff, holidaysFrom, holidaysTo);
+  const holidaysFiltered = daysAvailable({dateRace, daysOff, dateRange});
   const daysToTraining = holidaysFiltered.length;
   const kmToIncrease = Number(increaseKm(distanceRace, longDistance, daysToTraining));
 
   function createTraining() {
     const trainingsDaysFilteredHolidays = holidaysFiltered;
     if (trainingsDaysFilteredHolidays === 0) {
-      console.log('No training days available')
+      alert('No training days available')
     }
     const trainingDate = trainingsDaysFilteredHolidays;
 
     while (trainingDate.length > 0) {
-      let kmsToRunPerDay = Number(kmsPerDay(ableToRun, kmToIncrease, distanceRace));
-      console.log(kmsPerDay(ableToRun, kmToIncrease, distanceRace));
+      let kmsToRunPerDay = Number(kmsPerDay({ableToRun, kmToIncrease, distanceRace}));
 
       runnerCreateTrainings(trainingDate.shift().toISOString().split('T')[0], kmsToRunPerDay, kmToIncrease, runnerName)
         .then(ableToRun = kmsToRunPerDay)
-        .then(console.log('training Created'))
     }
     navigate('/runner')
   }
@@ -92,23 +90,23 @@ function NewRunner() {
   return (
     <div className='form'>
       <h2>Name</h2>
-      <input type='text' placeholder='Your name...' pattern="[A-Za-z]+" value={runnerName} onChange={(event) => setRunnerName(event.target.value)} />
+      <input type='text' aria-label='Your name' placeholder='Your name...' pattern="[A-Za-z]+" value={runnerName} onChange={(event) => setRunnerName(event.target.value)} />
 
       <h2>Race and Objectives</h2>
       <small>When is is the race taking place?</small>
-      <input type='date' value={dateRace} onChange={(event) => setDateRace(event.target.value)} />
+      <input type='date' aria-label='When your race is' value={dateRace} onChange={(event) => setDateRace(event.target.value)} />
       <small>How long is this race? (distance in km)</small>
-      <input type='text' value={distanceRace} pattern="[0-9]" onChange={(event) => setDistanceRace(event.target.value)} />
+      <input type='text' aria-label='how long your race is' value={distanceRace} pattern="[0-9]" onChange={(event) => setDistanceRace(event.target.value)} />
       <small>In how many hours you would like to complete the run</small>
-      <input type='time' value={timeObj} onChange={(event) => setTimeObj(event.target.value)} />
+      <input type='time' aria-label='what if you time objective' value={timeObj} onChange={(event) => setTimeObj(event.target.value)} />
 
       <h2>Your current numbers</h2>
       <small>How long was your most recent longest run? (distance in km)</small>
-      <input type='text' value={longDistance} pattern="[0-9]" onChange={(event) => setLongDistance(event.target.value)} />
+      <input type='text' aria-label='Your most recent longest run' value={longDistance} pattern="[0-9]" onChange={(event) => setLongDistance(event.target.value)} />
 
       <h2>Planning your trainings</h2>
       <small>Which days of the week you do NOT want to training?</small>
-      <select multiple value={daysOff} onChange={(event) => {
+      <select multiple aria-label='which days of the week you do not want to training' value={daysOff} onChange={(event) => {
         const newValue = Array.from(event.target.selectedOptions, option => option.value);
         setDaysOff((prevState) => [...prevState, ...newValue])
       }}>
@@ -122,9 +120,9 @@ function NewRunner() {
 
       <small>Have you planned any holidays before the race?</small>
       <small>From (first day you cannot training):</small>
-      <input type='date' value={holidaysFrom} onChange={(event) => setHolidaysFrom(event.target.value)} />
+      <input type='date' aria-label='from when you would be on holidays' value={holidaysFrom} onChange={(event) => setHolidaysFrom(event.target.value)} />
       <small>To (including):</small>
-      <input type='date' value={holidaysTo} onChange={(event) => setHolidaysTo(event.target.value)} />
+      <input type='date' aria-label='until when you would be on holidays' value={holidaysTo} onChange={(event) => setHolidaysTo(event.target.value)} />
       <input className='newRunnerButton' type='submit' value='Create training' onClick={(event) => {
         event.preventDefault();
         createNewProfile();

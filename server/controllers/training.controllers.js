@@ -53,7 +53,6 @@ exports.editTrainings = async (req, res) => {
       );
     }
 
-
     function updatedDistance(distance, string) {
       if (string.feedback === 'light') {
         return distance * 1.1;

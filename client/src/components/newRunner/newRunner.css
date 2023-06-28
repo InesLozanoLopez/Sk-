@@ -23,14 +23,14 @@ small{
 }
 
 .newRunnerButton{
-    background-color: #688AA5;
-    color: #0368A0;
+    background-color: #3B638D;
+    color: #FFFFFF;
     font-weight: bold;
     font-size: small;
     padding: 5px;
     margin: 5px;
     border-radius: 20px;
-    border: 2px solid #1C4D6B;
+    border: 2px solid #FFFFFF;
 }
 
 @media (max-width : 900px){

@@ -1,5 +1,5 @@
 import React from 'react';
-import './pastTraining.css';
+import './allTrainings.css';
 import Training from '../trainings/training';
 import { useEffect, useState } from 'react';
 import { runnerTrainings, getRunnerInfo } from '../../apiServices';
@@ -7,7 +7,7 @@ import { allTrainingByMonth } from './functions';
 import { Link } from "react-router-dom";
 
 
-function PastTrainings() {
+function AllTrainings() {
   const [runnerInfo, setRunnerInfo] = useState([]);
   const [allTrainings, setAllTrainings] = useState([]);
 
@@ -32,15 +32,15 @@ function PastTrainings() {
   return (
     <div>
       <Link to='/runner'>
-        <input className="pastTrainingsButton" type='button' value='Back to Runner Profile' />
+        <input className="allTrainingsButton" type='button' value='Back to Runner Profile' />
       </Link>
-      <div className='pastTrainings'>
+      <div className='allTraining'>
         {Object.entries(allTrainingByMonth(allTrainingsSorted)).map(([monthYear, trainings]) => {
           const [month, year] = monthYear.split('-');
           return (
             <div key={monthYear}>
               <h2>{month} {year}</h2>
-              <div className='trainingsContainer'>
+              <div className='trainingsContainer' tabIndex='0' role='region' aria-label='All trainings per month'>
                 {trainings.map((training) => (
                   <Training key={training._id} training={training} runnerInfo={runnerInfo} setAllTrainings={setAllTrainings} />
                 ))
@@ -54,4 +54,4 @@ function PastTrainings() {
   )
 }
 
-export default PastTrainings;
+export default AllTrainings;

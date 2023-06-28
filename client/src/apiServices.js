@@ -1,11 +1,11 @@
 const baseURL = 'http://localhost:3001'
 
-exports.newRunner = async (runnerName, { race }, { currentValues }, { trainingAvailability }) => {
+exports.newRunner = async ({ runnerName, race, currentValues, trainingAvailability }) => {
   try {
     const newRunner = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: runnerName, race: { race }, currentValues: { currentValues }, trainingAvailability: { trainingAvailability } })
+      body: JSON.stringify({ name: runnerName, race: race, currentValues: currentValues, trainingAvailability: trainingAvailability })
     }
     const runner = await fetch(baseURL + '/runner', newRunner);
     const data = await runner.json();
@@ -26,7 +26,7 @@ exports.getRunnerInfo = async () => {
   }
 };
 
-exports.runnerCreateTrainings = async (trainingDate, kmToRun, kmToIncrease, runnerName) => {
+exports.runnerCreateTrainings = async ({trainingDate, kmToRun, kmToIncrease, runnerName}) => {
   try {
     const trainingProfile = {
       method: 'POST',
