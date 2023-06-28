@@ -136,24 +136,37 @@ p{
     margin: 0px;
 }
 
-.previousTrainings{
+.othersButtons{
     display: flex;
     flex-direction: row;
     justify-content:  flex-end;
-    gap: 2%;
     margin: 0px 10%;
     align-items: center;
 }
 
-.runnerProfileButton{
-    background-color: lightcoral;
-    color: red;
+.allTrainingsButton{
+    position: absolute;
+    right: 8%;
+    top: 35%;
+    background-color: #688AA5;
+    color: #0368A0;
     font-weight: bold;
-    font-size: xx-large;
-    padding: 18px;
+    font-size: larger;
+    padding: 15px;
+    margin: 5px;
     border-radius: 20px;
-    border: 2px solid red;
+    border: 2px solid #1C4D6B;
+}
 
+.runnerDeleteButton{
+    background-color: #F6AFBA; 
+    color: #F35B6E;
+    font-weight: bold;
+    font-size: small;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 20px;
+    border: 2px solid #F35B6E;
 }
 
 .hidden{
@@ -165,8 +178,11 @@ p{
     .hello{
         font-size: 25px;
         line-height: 1.5;
-        text-align: center;
+        text-align: left;
         font-weight: bold;
+    }
+    .readyForYourTraining{
+        display: none;
     }
     .wave{
         font-size: 20px;
@@ -182,8 +198,15 @@ p{
         margin: 2%;;
         font-size: 25px;
     }
-    .runnerProfileButton{
+    .othersButtons{
         font-size: 20px;
+    }
+    .allTrainingsButton{
+        font-size: 20px;
+        top: 10%;
+        font-size: small;
+        padding: 10px;
+        background-color: #BCE8F3;
     }
     .noTrainingCompleted{
         font-size: 20px;

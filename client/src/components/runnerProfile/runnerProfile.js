@@ -39,7 +39,13 @@ function RunnerProfile() {
   if (runnerInfo.length > 0) {
     return (
       <div>
-        <h2 className='hello'><span className="wave">👋</span> Hi {runnerInfo[0].name}❗ Ready for your training⁉️ </h2>
+        <h2 className='hello'><span className="wave">👋</span> Hi {runnerInfo[0].name}❗</h2><h2 className='readyForYourTraining'> Ready for your training⁉️ </h2>
+
+        {/* <div className='othersButtons'> */}
+        <Link to='/allTrainings'>
+          <input className="allTrainingsButton" type='button' value='All Trainings' />
+        </Link>
+        {/* </div> */}
 
         {allTrainingsSorted.some((training) => today > new Date(training.date) && !training.feedback) ?
           (
@@ -84,14 +90,6 @@ function RunnerProfile() {
           </div>
         </div>
 
-
-        <div className='previousTrainings'>
-          <Link to='/allTrainings'>
-            <input className="runnerProfileButton" type='button' value='All Trainings' />
-          </Link>
-          <input className="runnerProfileButton" type='button' value='Delete Runner Profile' onClick={() => deleteRunnerProfile()} />
-        </div>
-
         <div className='race'>
           <div className='yourRace'>
             <h2>Your race...</h2>
@@ -114,6 +112,11 @@ function RunnerProfile() {
         <div className="hidden">
           <PastTrainings getDate={getDate} runnerInfo={runnerInfo} />
         </div>
+
+        <div className='othersButtons'>
+          <input className="runnerDeleteButton" type='button' value='Delete Runner Profile' onClick={() => deleteRunnerProfile()} />
+        </div>
+
       </div>
     )
   }

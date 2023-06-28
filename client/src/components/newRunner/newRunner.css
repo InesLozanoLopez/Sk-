@@ -10,16 +10,27 @@
     margin-bottom: 10px;
     padding: 10px;
     gap: 10px;
-    color: aliceblue;
+    color: #0368A0;
     text-align: center;
 }
 
 h2{
-    color: lightblue;
+    color: #1C4D6B;
 }
 
 small{
     font-weight: 500;
+}
+
+.newRunnerButton{
+    background-color: #688AA5;
+    color: #0368A0;
+    font-weight: bold;
+    font-size: small;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 20px;
+    border: 2px solid #1C4D6B;
 }
 
 @media (max-width : 900px){
