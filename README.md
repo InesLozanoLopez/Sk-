@@ -12,7 +12,7 @@ Additionally, the app has achieved high accessibility and SEO scores in Lighthou
 3. Install the necessary dependencies:
     `npm install`
 4. Start the server using nodemon:
-    `nodemon server.ts`
+    `nodemon index.js`
 5. Open another terminal tab or window.
 6. Navigate to the client folder:
     `cd client`
