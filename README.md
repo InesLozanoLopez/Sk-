@@ -25,7 +25,7 @@ Additionally, the app has achieved high accessibility and SEO scores in Lighthou
 ### FRONT-END
   - React
 
-### FRONT-END
+### BACK-END
   - Node.js
   - Express
   - Mongo-DB - Mongoose
