@@ -5,6 +5,12 @@ Sk- is a running app designed to assist users in determining the optimal duratio
 SK- accessibility and SEO to ensure a seamless experience across different devices. It has undergone rigorous testing and validation, resulting in 0 issues identified by Axe Dev Tools.
 Additionally, the app has achieved high accessibility and SEO scores in Lighthouse. Sk- excels in both desktop and mobile environments, demonstrating a commitment to providing an inclusive and optimized experience to users. These high scores reflect the app's adherence to best practices for accessibility and SEO, ensuring that it can be easily discovered by search engines and accessed by users of all abilities.
 
+![alt runner profile](./img/RunnerProfile.png)
+![alt all trainings](./img/allTrainings.png)
+![alt new runner form](./img/newRunnerForm.png)
+
+
+
 ## To run this app:
 1. Clone the repository and open it in your preferred source code editor.
 2. Open your terminal and navigate to the server folder:
