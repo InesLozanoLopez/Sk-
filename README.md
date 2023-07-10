@@ -6,9 +6,9 @@ SK- accessibility and SEO to ensure a seamless experience across different devic
 Additionally, the app has achieved high accessibility and SEO scores in Lighthouse. Sk- excels in both desktop and mobile environments, demonstrating a commitment to providing an inclusive and optimized experience to users. These high scores reflect the app's adherence to best practices for accessibility and SEO, ensuring that it can be easily discovered by search engines and accessed by users of all abilities.
 
 <div style="display: flex; align-items: flex-start" content-justify: flex-start">
-  <img src="./img/RunnerProfile.png" alt="runner profile" width="200" border="solid 2px black">
-  <img src="./img/allTrainings.png" alt="runner profile" width="200" border="solid 2px black">
-  <img src="./img/newRunnerForm.png" alt="runner profile" width="200" border="solid 2px black">
+  <img src="./img/RunnerProfile.png" alt="runner profile" width="200" border="solid black 2px">
+  <img src="./img/allTrainings.png" alt="runner profile" width="200" border="solid black 2px">
+  <img src="./img/newRunnerForm.png" alt="runner profile" width="200" border="solid black 2px">
 </div>
 
 ## To run this app:
