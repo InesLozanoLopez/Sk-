@@ -17,9 +17,9 @@ function App() {
         </section>
         <Routes>
           <Route path='/' element={<Home />} Route={Route}></Route>
-          <Route path='newrunner' element={<NewRunner />}></Route>
-          <Route path='runner' element={<RunnerProfile />}></Route>
-          <Route path='allTrainings' element={<AllTrainings/>}></Route>
+          <Route path='/newrunner' element={<NewRunner />}></Route>
+          <Route path='/runner' element={<RunnerProfile />}></Route>
+          <Route path='/allTrainings' element={<AllTrainings/>}></Route>
         </Routes>
       </div>
 

@@ -3,6 +3,7 @@ import "./newRunner.css";
 import { newRunner, runnerCreateTrainings } from "../../apiServices";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
+import * as  Yup from "yup";
 import {
   timeObjInMins,
   holidays,
@@ -26,6 +27,13 @@ function NewRunner() {
       holidaysFrom: "",
       holidaysTo: "",
     },
+    validationSchema: Yup.object({
+      runnerName: Yup.string().required,
+      dateRace: Yup.string().required,
+      distanceRace: Yup.string().required,
+      timeObj:  Yup.string().required,
+      longDistance:  Yup.number().required,
+    }),
     onSubmit: (values) => {
       createNewProfile(values)
     }
@@ -61,22 +69,12 @@ function NewRunner() {
   //CREATE A PROFILE
 
   function createNewProfile() {
-    if (
-      formik.values.runnerName === "" ||
-      formik.values.dateRace === "" ||
-      formik.values.distanceRace === 0 ||
-      formik.values.timeObj === "00:00:00" ||
-      formik.values.longDistance === 0
-    ) {
-      alert("Please complete all the required form field");
-    } else if (profileAtDb) {
+    if (profileAtDb) {
+      profileAtDb = false;
       newRunner({ runnerName: formik.values.runnerName, race, currentValues, trainingAvailability })
-        .then((profileAtDb = false))
         .then(() => {
           createTraining();
         });
-    } else {
-      console.log("max user register");
     }
   }
 
@@ -87,7 +85,7 @@ function NewRunner() {
   const holidaysFiltered = daysAvailable({ dateRace: formik.values.dateRace, daysOff: formik.values.daysOff, dateRange });
   const daysToTraining = holidaysFiltered.length;
   const kmToIncrease = Number(
-    increaseKm(formik.values.distanceRace, formik.values.longDistance, daysToTraining)
+    increaseKm(formik.values.distanceRace, ableToRun, daysToTraining)
   );
 
   function createTraining() {
