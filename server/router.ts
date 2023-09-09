@@ -1,6 +1,8 @@
-const router = require('express').Router();
-const trainingControllers = require('./controllers/training.controllers');
-const runnerControllers = require('./controllers/runner.controllers')
+import { Router } from 'express';
+import * as trainingControllers from './controllers/training.controllers';
+import * as runnerControllers from './controllers/runner.controllers';
+
+const router = Router();
 
 router.get('/runner', runnerControllers.runnerProfile);
 router.post('/runner', runnerControllers.createARunner);
@@ -13,4 +15,4 @@ router.delete('/training/:id', trainingControllers.deleteTraining);
 
 
 
-module.exports = router;
+export default router;

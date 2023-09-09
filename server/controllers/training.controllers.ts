@@ -1,8 +1,10 @@
-const RunnerProfile = require('../models/runnerSchema.models');
-const Training = require('../models/trainingSchema.models');
+import {Request, Response } from 'express';
+import RunnerProfile from '../models/runnerSchema.models';
+import Training from '../models/trainingSchema.models';
+import { newTraining } from '../interfaces';
 
 
-exports.createTraining = async (req, res) => {
+export const createTraining = async (req: Request, res: Response): Promise<void> => {
   try {
     const newTraining = req.body;
     const trainings = await Training.create({
@@ -25,7 +27,7 @@ exports.createTraining = async (req, res) => {
   }
 };
 
-exports.runnerTrainings = async (req, res) => {
+export const runnerTrainings = async (req: Request, res: Response): Promise<void> => {
   try {
     const trainingInfo = await Training.find();
     res.status(201).send(trainingInfo);
@@ -35,7 +37,7 @@ exports.runnerTrainings = async (req, res) => {
   }
 };
 
-exports.editTrainings = async (req, res) => {
+export const editTrainings = async (req: Request, res: Response): Promise<void> => {
   try {
     const IdToEdit = req.params.id;
     const newFeedback = req.body;
@@ -53,7 +55,7 @@ exports.editTrainings = async (req, res) => {
       );
     }
 
-    function updatedDistance(distance, string) {
+    function updatedDistance(distance: number, string: newTraining) {
       if (string.feedback === 'light') {
         return distance * 1.1;
       } else if (string.feedback === 'hard') {
@@ -64,7 +66,7 @@ exports.editTrainings = async (req, res) => {
     }
     const today = new Date()
 
-    const trainingToUpdateDistance = await Training.find({ date: { $gt: findTraining.date, $gt: today } }).exec();
+    const trainingToUpdateDistance = await Training.find({ date: { $gt: findTraining.date}}, {date: { $gt: today } }).exec();
     for (let i = 0; i < trainingToUpdateDistance.length; i++) {
       const training = trainingToUpdateDistance[i];
       const id = training._id;
@@ -80,18 +82,19 @@ exports.editTrainings = async (req, res) => {
   }
 };
 
-exports.deleteTraining = async (req, res) => {
+export const deleteTraining = async (req: Request, res: Response): Promise<void> => {
   try {
     const toDeleteId = req.params.id;
     const toDelete = await Training.findById(toDeleteId).exec();
 
     if (!toDelete) {
-      return res.status(404).send({ message: 'Tranining not found' })
+      res.status(404).send({ message: 'Training not found' });
+      return;
     }
 
     const trainingToUpdateDistance = await Training.find({ date: { $gt: toDelete.date } }).exec();
 
-    function newDistance(distance, kmToIncrease, length) {
+    function newDistance(distance: number, kmToIncrease: number, length: number) {
       const addDistance = kmToIncrease / (length -1);
       return addDistance + distance;
     }
