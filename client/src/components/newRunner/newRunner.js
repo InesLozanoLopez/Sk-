@@ -3,7 +3,7 @@ import "./newRunner.css";
 import { newRunner, runnerCreateTrainings } from "../../apiServices";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import * as  Yup from "yup";
+import * as Yup from "yup";
 import {
   timeObjInMins,
   holidays,
@@ -31,12 +31,31 @@ function NewRunner() {
       runnerName: Yup.string().required,
       dateRace: Yup.string().required,
       distanceRace: Yup.string().required,
-      timeObj:  Yup.string().required,
-      longDistance:  Yup.number().required,
+      timeObj: Yup.string().required,
+      longDistance: Yup.number().required,
     }),
     onSubmit: (values) => {
-      createNewProfile(values)
-    }
+      const minsPerKm = timeObjInMins(values.timeObj) / values.distanceRace;
+      const dateRange = {
+        holidaysFrom: values.holidaysFrom,
+        holidaysTo: values.holidaysTo,
+      };
+
+      const race = {
+        dateRace: formik.values.dateRace,
+        distanceRace: formik.values.distanceRace,
+        timeObj: formik.values.timeObj,
+        minsPerKm: minsPerKm,
+      };
+      const currentValues = {
+        longDistance: formik.values.longDistance,
+      };
+      const trainingAvailability = {
+        daysOff: formik.values.daysOff,
+        holidays: holidays(dateRange),
+      };
+      createNewProfile(values, race, currentValues, trainingAvailability);
+    },
   });
 
   const daysOffPerWeek = [
@@ -49,32 +68,19 @@ function NewRunner() {
     { id: "7", label: "Sunday" },
   ];
 
-  const minsPerKm = timeObjInMins(formik.values.timeObj) / formik.values.distanceRace;
-  const dateRange = { holidaysFrom: formik.values.holidaysFrom, holidaysTo: formik.values.holidaysTo };
-
-  const race = {
-    dateRace: formik.values.dateRace,
-    distanceRace: formik.values.distanceRace,
-    timeObj: formik.values.timeObj,
-    minsPerKm: minsPerKm,
-  };
-  const currentValues = {
-    longDistance: formik.values.longDistance,
-  };
-  const trainingAvailability = {
-    daysOff: formik.values.daysOff,
-    holidays: holidays(dateRange),
-  };
-
   //CREATE A PROFILE
 
-  function createNewProfile() {
+  function createNewProfile(values, race, currentValues, trainingAvailability) {
     if (profileAtDb) {
       profileAtDb = false;
-      newRunner({ runnerName: formik.values.runnerName, race, currentValues, trainingAvailability })
-        .then(() => {
-          createTraining();
-        });
+      newRunner({
+        runnerName: values.runnerName,
+        race,
+        currentValues,
+        trainingAvailability,
+      }).then(() => {
+        createTraining();
+      });
     }
   }
 
@@ -82,7 +88,14 @@ function NewRunner() {
 
   let ableToRun = Number(formik.values.longDistance);
 
-  const holidaysFiltered = daysAvailable({ dateRace: formik.values.dateRace, daysOff: formik.values.daysOff, dateRange });
+  const holidaysFiltered = daysAvailable({
+    dateRace: formik.values.dateRace,
+    daysOff: formik.values.daysOff,
+    dateRange: {
+      holidaysFrom: formik.values.holidaysFrom,
+      holidaysTo: formik.values.holidaysTo,
+    }
+  });
   const daysToTraining = holidaysFiltered.length;
   const kmToIncrease = Number(
     increaseKm(formik.values.distanceRace, ableToRun, daysToTraining)
@@ -97,7 +110,11 @@ function NewRunner() {
 
     while (trainingDate.length > 0) {
       let kmsToRunPerDay = Number(
-        kmsPerDay({ ableToRun, kmToIncrease, distanceRace: formik.values.distanceRace })
+        kmsPerDay({
+          ableToRun,
+          kmToIncrease,
+          distanceRace: formik.values.distanceRace,
+        })
       );
 
       runnerCreateTrainings(
@@ -207,7 +224,7 @@ function NewRunner() {
         <input
           className="newRunnerButton"
           type="submit"
-          name='submit'
+          name="submit"
           value="Create training"
           onClick={formik.handleSubmit}
         />
