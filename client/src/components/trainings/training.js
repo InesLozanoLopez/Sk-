@@ -51,7 +51,7 @@ function Training({ training, runnerInfo, setAllTrainings }) {
     <div className={`training ${training.feedback}`} onClick={addClass}>
       <div className='delete'>
         <p>{daysOfWeek(training.date)}</p> {!training.feedback && (
-          <span onClick={() => deleteTraining()}>❌</span>)}
+          <span onClick={() => deleteTraining()} role="img" aria-label='delete training'>❌</span>)}
       </div>
 
       <div><h2>{getDate(training.date)}</h2></div>
@@ -59,9 +59,9 @@ function Training({ training, runnerInfo, setAllTrainings }) {
 
       {new Date(training.date) <= today && (
         <div className='feedback'>
-          <span onClick={() => clickedFeedback('light')}>😃</span>
-          <span onClick={() => clickedFeedback('ok')}>😐</span>
-          <span onClick={() => clickedFeedback('hard')}>🥵</span>
+          <span onClick={() => clickedFeedback('light')} role="img" aria-label='no-effort training'>😃</span>
+          <span onClick={() => clickedFeedback('ok')} role="img" aria-label='medium-effort training'>😐</span>
+          <span onClick={() => clickedFeedback('hard')} role="img" aria-label='hard training'>🥵</span>
         </div>
       )}
 

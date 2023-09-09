@@ -1,6 +1,6 @@
-const baseURL = 'http://localhost:3001'
+const baseURL = 'http://localhost:3001';
 
-exports.newRunner = async ({ runnerName, race, currentValues, trainingAvailability }) => {
+export async function newRunner({ runnerName, race, currentValues, trainingAvailability }) {
   try {
     const newRunner = {
       method: 'POST',
@@ -15,7 +15,7 @@ exports.newRunner = async ({ runnerName, race, currentValues, trainingAvailabili
   }
 }
 
-exports.getRunnerInfo = async () => {
+export async function getRunnerInfo() {
   try {
     const getInfo = await fetch(baseURL + '/runner');
     const data = await getInfo.json();
@@ -24,9 +24,9 @@ exports.getRunnerInfo = async () => {
   } catch (e) {
     console.log('Error from ApiServices', e);
   }
-};
+}
 
-exports.runnerCreateTrainings = async ({trainingDate, kmToRun, kmToIncrease, runnerName}) => {
+export async function runnerCreateTrainings({trainingDate, kmToRun, kmToIncrease, runnerName}) {
   try {
     const trainingProfile = {
       method: 'POST',
@@ -40,9 +40,9 @@ exports.runnerCreateTrainings = async ({trainingDate, kmToRun, kmToIncrease, run
   } catch (e) {
     console.log('Error from ApiServices', e);
   }
-};
+}
 
-exports.runnerTrainings = async () => {
+export async function runnerTrainings() {
   try {
     const trainings = await fetch(baseURL + '/training');
     const data = await trainings.json();
@@ -53,7 +53,7 @@ exports.runnerTrainings = async () => {
   }
 }
 
-exports.editATraining = async (feedback, id) => {
+export async function editATraining(feedback, id) {
   try {
     const editTrainings = {
       method: 'PUT',
@@ -69,7 +69,7 @@ exports.editATraining = async (feedback, id) => {
   }
 }
 
-exports.deleteATraining = async (id) => {
+export async function deleteATraining(id) {
   try {
     const deletedTraining = {
       method: 'DELETE',
@@ -83,7 +83,7 @@ exports.deleteATraining = async (id) => {
   }
 }
 
-exports.deleteProfile = async (id) => {
+export async function deleteProfile(id) {
   try {
     const deleteRunner = {
       method: 'DELETE',

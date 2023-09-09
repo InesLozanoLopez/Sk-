@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css';
 import Home from './components/home/home';
-import NewRunner from './components/newRunner/newRunner';
+import ANewRunner from './components/newRunner/newRunner';
 import RunnerProfile from './components/runnerProfile/runnerProfile';
 import AllTrainings from './components/allTrainings/allTrainings';
 import { Routes, Route } from 'react-router-dom';
@@ -17,7 +17,7 @@ function App() {
         </section>
         <Routes>
           <Route path='/' element={<Home />} Route={Route}></Route>
-          <Route path='/newrunner' element={<NewRunner />}></Route>
+          <Route path='/newrunner' element={<ANewRunner />}></Route>
           <Route path='/runner' element={<RunnerProfile />}></Route>
           <Route path='/allTrainings' element={<AllTrainings/>}></Route>
         </Routes>

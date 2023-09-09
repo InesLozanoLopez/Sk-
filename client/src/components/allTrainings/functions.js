@@ -1,7 +1,7 @@
 export function allTrainingByMonth(allTrainings) {
   const trainingsByMonth = {};
 
-  allTrainings.map((training) => {
+  allTrainings.forEach((training) => {
     const date = new Date(training.date);
     const month = date.getMonth();
     const year = date.getFullYear();

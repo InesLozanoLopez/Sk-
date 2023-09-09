@@ -12,7 +12,7 @@ import {
   daysAvailable,
 } from "./functions";
 
-function NewRunner() {
+function ANewRunner() {
   const navigate = useNavigate();
   let profileAtDb = true;
 
@@ -233,4 +233,4 @@ function NewRunner() {
   );
 }
 
-export default NewRunner;
+export default ANewRunner;
