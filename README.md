@@ -30,6 +30,7 @@ Additionally, the app has achieved high accessibility and SEO scores in Lighthou
 ## Tech Stack
 ### FRONT-END
   - React
+  - Formik
 
 ### BACK-END
   - Node.js
