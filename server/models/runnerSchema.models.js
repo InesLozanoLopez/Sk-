@@ -1,50 +1,51 @@
-const db = require('./db');
-
-const profileSchema = new db.Schema({
-  name: {
-    type: String,
-    require: true
-  },
-  race: {
-    dateRace: {
-      type: Date,
-      require: true
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const db_1 = __importDefault(require("./db"));
+const profileSchema = new db_1.default.Schema({
+    name: {
+        type: String,
+        required: true,
     },
-    distanceRace: {
-      type: Number,
-      require: true
+    race: {
+        dateRace: {
+            type: Date,
+            required: true,
+        },
+        distanceRace: {
+            type: Number,
+            required: true,
+        },
+        timeObj: {
+            type: String,
+            required: true,
+        },
+        minsPerKm: {
+            type: Number,
+            required: true,
+        },
     },
-    timeObj: {
-      type: String,
-      require: true
+    currentValues: {
+        longDistance: {
+            type: Number,
+            required: true,
+        },
     },
-    minsPerKm: {
-      type: Number,
-      require: true
+    trainingAvailability: {
+        daysOff: {
+            type: [String],
+            required: true,
+        },
+        holidays: {
+            type: [Date],
+            required: true,
+        },
     },
-  },
-  currentValues: {
-    longDistance: {
-      type: Number,
-      require: true
+    trainings: {
+        type: [db_1.default.Schema.Types.ObjectId],
     },
-  },
-  trainingAvailability: {
-    daysOff: {
-      type: [String],
-      require: true
-    },
-    holidays: {
-      type: [Date],
-      require: true
-    },
-  },
-  trainings: {
-    type: [db.Schema.Types.ObjectId],
-    require: false
-  }
-})
-
-const RunnerProfile = db.model('RunnerProfile', profileSchema)
-
-module.exports = RunnerProfile;
+});
+const RunnerProfile = db_1.default.model("RunnerProfile", profileSchema);
+exports.default = RunnerProfile;

@@ -1,7 +1,7 @@
 import {Request, Response } from 'express';
 import RunnerProfile from '../models/runnerSchema.models';
 import Training from '../models/trainingSchema.models';
-import { newTraining } from '../interfaces';
+import { INewTraining } from '../interfaces';
 
 
 export const createTraining = async (req: Request, res: Response): Promise<void> => {
@@ -51,11 +51,11 @@ export const editTrainings = async (req: Request, res: Response): Promise<void> 
     if (newFeedback.feedback !== 'hard') {
       await RunnerProfile.updateOne(
         {},
-        { $set: { 'currentValues.longDistance': findTraining.distance } }
+        { $set: { 'currentValues.longDistance': findTraining!.distance } }
       );
     }
 
-    function updatedDistance(distance: number, string: newTraining) {
+    function updatedDistance(distance: number, string: INewTraining) {
       if (string.feedback === 'light') {
         return distance * 1.1;
       } else if (string.feedback === 'hard') {
@@ -66,7 +66,7 @@ export const editTrainings = async (req: Request, res: Response): Promise<void> 
     }
     const today = new Date()
 
-    const trainingToUpdateDistance = await Training.find({ date: { $gt: findTraining.date}}, {date: { $gt: today } }).exec();
+    const trainingToUpdateDistance = await Training.find({ date: { $gt: findTraining!.date}}, {date: { $gt: today } }).exec();
     for (let i = 0; i < trainingToUpdateDistance.length; i++) {
       const training = trainingToUpdateDistance[i];
       const id = training._id;

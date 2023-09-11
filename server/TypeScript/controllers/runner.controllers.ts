@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
-import RunnerProfile, {
-  RunnerProfileDocument,
-} from "../models/runnerSchema.models";
+import RunnerProfile from "../models/runnerSchema.models";
 import Training from "../models/trainingSchema.models";
 
 export const createARunner = async (
@@ -10,7 +8,7 @@ export const createARunner = async (
 ): Promise<void> => {
   try {
     const newRunner = req.body;
-    const runnerProfile = await RunnerProfile.create<RunnerProfileDocument>({
+    const runnerProfile = await RunnerProfile.create({
       name: newRunner.name,
       race: {
         dateRace: newRunner.race.race.dateRace,
