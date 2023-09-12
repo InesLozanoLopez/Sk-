@@ -1,8 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 import { Link } from "react-router-dom";
 import './home.css'
 
-function Home() {
+const Home: React.FC = () => {
   return (
     <div className='buttonContainer' >
       <div>

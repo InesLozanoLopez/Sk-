@@ -1,6 +1,7 @@
 import { Types } from 'mongoose';
 
-export interface INewTraining {
+export interface ITrainings {
+    _id: string;
     date:Date;
     distance: number;
     kmToIncrease: number;
@@ -8,6 +9,7 @@ export interface INewTraining {
 }
 
 export interface IRunnerProfile {
+    _id: string;
     name: string;
     race: {
       dateRace: Date;
@@ -23,11 +25,4 @@ export interface IRunnerProfile {
       holidays: Date[];
     },
     trainings?: Types.ObjectId[];
-  }
-
-  export interface ITrainings {
-    date: Date,
-    distance: number,
-    kmToIncrease: number,
-    feedback: string
   }

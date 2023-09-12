@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import * as trainingControllers from './TypeScript/controllers/training.controllers';
-import * as runnerControllers from './TypeScript/controllers/runner.controllers';
+import * as trainingControllers from './controllers/training.controllers';
+import * as runnerControllers from './controllers/runner.controllers';
 
 const router = Router();
 

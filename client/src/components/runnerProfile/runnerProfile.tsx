@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./runnerProfile.css";
-import { useEffect, useState } from "react";
 import {
   runnerTrainings,
   deleteProfile,
@@ -8,23 +7,29 @@ import {
 } from "../../apiServices";
 import Training from "../trainings/training";
 import { useNavigate, Link } from "react-router-dom";
-import PastTrainings from "../allTrainings/allTrainings";
+// import PastTrainings from "../allTrainings/allTrainings";
 import { getDate } from "./functions";
+import {
+  ITrainings,
+  IRunnerProfile,
+} from "../../../../server/TypeScript/interfaces";
 
-function RunnerProfile() {
-  const [runnerInfo, setRunnerInfo] = useState([]);
-  const [allTrainings, setAllTrainings] = useState([]);
+const RunnerProfile: React.FC<{}> = () => {
+  const [runnerInfo, setRunnerInfo] = useState<IRunnerProfile[]>([]);
+  const [allTrainings, setAllTrainings] = useState<ITrainings[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getRunnerInfo().then((runner) => setRunnerInfo(runner));
+    getRunnerInfo().then((runner: IRunnerProfile) => setRunnerInfo([runner]));
   }, []);
 
   useEffect(() => {
-    runnerTrainings().then((training) => setAllTrainings(training));
+    runnerTrainings().then((training: ITrainings) =>
+      setAllTrainings([training])
+    );
   }, []);
 
-  const allTrainingsSorted = allTrainings.sort((a, b) => {
+  const allTrainingsSorted: ITrainings[] = allTrainings.sort((a, b) => {
     return new Date(a.date).getTime() - new Date(b.date).getTime();
   });
 
@@ -39,9 +44,18 @@ function RunnerProfile() {
     return (
       <div>
         <h2 className="hello">
-          <span className="wave" role="img" aria-label='hand waving'>👋</span> Hi {runnerInfo[0].name}❗
+          <span className="wave" role="img" aria-label="hand waving">
+            👋
+          </span>{" "}
+          Hi {runnerInfo[0].name}❗
         </h2>
-        <h2 className="readyForYourTraining"> Ready for your training<span role="img" aria-label='question mark'>⁉️ </span></h2>
+        <h2 className="readyForYourTraining">
+          {" "}
+          Ready for your training
+          <span role="img" aria-label="question mark">
+            ⁉️{" "}
+          </span>
+        </h2>
 
         <Link to="/allTrainings">
           <input
@@ -54,39 +68,46 @@ function RunnerProfile() {
         {allTrainingsSorted.some(
           (training) => today > new Date(training.date) && !training.feedback
         ) ? (
-          <div className="display-trainings">
-            <div className="attentionContainer">
-              <span className="attention" role="img" aria-label='attention emoji'> 🚫 </span>
-              <h3> Please, give a feedback to update your trainings:</h3>
+            <div className="display-trainings">
+              <div className="attentionContainer">
+                <span
+                  className="attention"
+                  role="img"
+                  aria-label="attention emoji"
+                >
+                  {" "}
+                  🚫{" "}
+                </span>
+                <h3> Please, give a feedback to update your trainings:</h3>
+              </div>
+              <div
+                className="trainingsContainer"
+                tabIndex={0}
+                role="region"
+                aria-label="Trainings without feedback"
+              >
+                {allTrainingsSorted
+                  .filter(
+                    (training) =>
+                      today >= new Date(training.date) && !training.feedback
+                  )
+                  .map((training) => (
+                    <Training
+                      key={training._id}
+                      training={training}
+                      runnerInfo={runnerInfo}
+                      setAllTrainings={setAllTrainings}
+                    />
+                  ))}
+              </div>
             </div>
-            <div
-              className="trainingsContainer"
-              tabIndex="0"
-              role="region"
-              aria-label="Trainings without feedback"
-            >
-              {allTrainingsSorted
-                .filter(
-                  (training) =>
-                    today >= new Date(training.date) && !training.feedback
-                )
-                .map((training) => (
-                  <Training
-                    key={training._id}
-                    training={training}
-                    runnerInfo={runnerInfo}
-                    setAllTrainings={setAllTrainings}
-                  />
-                ))}
-            </div>
-          </div>
-        ) : null}
+          ) : null}
 
         <div className="display-trainings">
           This month trainings:
           <div
             className="trainingsContainer"
-            tabIndex="0"
+            tabIndex={0}
             role="region"
             aria-label="All trainings of this month"
           >
@@ -111,7 +132,7 @@ function RunnerProfile() {
           This month trainings completed:
           <div
             className="trainingsContainer"
-            tabIndex="0"
+            tabIndex={0}
             role="region"
             aria-label="This month completed trainings"
           >
@@ -120,26 +141,25 @@ function RunnerProfile() {
                 today > new Date(training.date) &&
                 today.getMonth() === new Date(training.date).getMonth()
             ).length > 0 ? (
-              allTrainingsSorted
-                .filter(
-                  (training) =>
-                    today > new Date(training.date) &&
-                    today.getMonth() === new Date(training.date).getMonth()
-                )
-                .map((training) => (
-                  <Training
-                    key={training._id}
-                    training={training}
-                    getDate={getDate}
-                    runnerInfo={runnerInfo}
-                    setAllTrainings={setAllTrainings}
-                  />
-                ))
-            ) : (
-              <div className="noTrainingCompleted">
-                No trainings completed... yet
-              </div>
-            )}
+                allTrainingsSorted
+                  .filter(
+                    (training) =>
+                      today > new Date(training.date) &&
+                      today.getMonth() === new Date(training.date).getMonth()
+                  )
+                  .map((training) => (
+                    <Training
+                      key={training._id}
+                      training={training}
+                      runnerInfo={runnerInfo}
+                      setAllTrainings={setAllTrainings}
+                    />
+                  ))
+              ) : (
+                <div className="noTrainingCompleted">
+              No trainings completed... yet
+                </div>
+              )}
           </div>
         </div>
 
@@ -153,15 +173,11 @@ function RunnerProfile() {
               <div>
                 On:{" "}
                 <strong>
-                  {getDate(new Date(runnerInfo[0].race.dateRace))}
+                  {getDate(runnerInfo[0].race.dateRace.getTime())}
                 </strong>
               </div>
               <div>
                 Distance: <strong>{runnerInfo[0].race.distanceRace} km.</strong>
-              </div>
-              <div>
-                Elevation:{" "}
-                <strong>{runnerInfo[0].race.elevation} meters.</strong>
               </div>
             </div>
 
@@ -177,9 +193,9 @@ function RunnerProfile() {
             </div>
           </div>
         </div>
-        <div className="hidden">
+        {/* <div className="hidden">
           <PastTrainings getDate={getDate} runnerInfo={runnerInfo} />
-        </div>
+        </div> */}
 
         <div className="othersButtons">
           <input
@@ -192,6 +208,7 @@ function RunnerProfile() {
       </div>
     );
   }
-}
+  return null;
+};
 
 export default RunnerProfile;
