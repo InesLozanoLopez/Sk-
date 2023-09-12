@@ -23,8 +23,8 @@ const RunnerProfile: React.FC<{}> = () => {
   }, []);
 
   useEffect(() => {
-    runnerTrainings().then((training: ITrainings) =>
-      setAllTrainings([training])
+    runnerTrainings().then((training: ITrainings[]) =>
+      setAllTrainings(training)
     );
   }, []);
 
@@ -94,7 +94,7 @@ const RunnerProfile: React.FC<{}> = () => {
                     <Training
                       key={training._id}
                       training={training}
-                      runnerInfo={runnerInfo}
+                      runnerInfo={runnerInfo[0]}
                       setAllTrainings={setAllTrainings}
                     />
                   ))}
@@ -120,7 +120,7 @@ const RunnerProfile: React.FC<{}> = () => {
                 <Training
                   key={training._id}
                   training={training}
-                  runnerInfo={runnerInfo}
+                  runnerInfo={runnerInfo[0]}
                   setAllTrainings={setAllTrainings}
                 />
               ))}
@@ -150,7 +150,7 @@ const RunnerProfile: React.FC<{}> = () => {
                     <Training
                       key={training._id}
                       training={training}
-                      runnerInfo={runnerInfo}
+                      runnerInfo={runnerInfo[0]}
                       setAllTrainings={setAllTrainings}
                     />
                   ))
@@ -172,7 +172,7 @@ const RunnerProfile: React.FC<{}> = () => {
               <div>
                 On:{" "}
                 <strong>
-                  {getDate(runnerInfo[0].race.dateRace.getTime())}
+                  {getDate(new Date(runnerInfo[0].race.dateRace).getTime())}
                 </strong>
               </div>
               <div>

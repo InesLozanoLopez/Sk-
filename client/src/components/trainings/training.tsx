@@ -20,7 +20,7 @@ const Training: React.FC<ITrainingProps> = ({
 
   const today = new Date();
 
-  function clickedFeedback(value) {
+  function clickedFeedback(value: string) {
     if (value) {
       if (new Date(training.date) <= today) {
         editATraining(value, training._id)
@@ -30,11 +30,11 @@ const Training: React.FC<ITrainingProps> = ({
     }
   }
 
-  function distanceKm(km) {
+  function distanceKm(km: number) {
     return km ? km.toFixed(2) : "";
   }
 
-  function daysOfWeek(dateToConvert) {
+  function daysOfWeek(dateToConvert: number) {
     const day = new Date(dateToConvert);
     const week = [
       "Monday",
@@ -68,7 +68,7 @@ const Training: React.FC<ITrainingProps> = ({
   return (
     <div className={`training ${training.feedback}`} onClick={addClass}>
       <div className="delete">
-        <p>{daysOfWeek(training.date)}</p>{" "}
+        <p>{daysOfWeek(Number(training.date))}</p>{" "}
         {!training.feedback && (
           <span
             onClick={() => deleteTraining()}
@@ -81,7 +81,7 @@ const Training: React.FC<ITrainingProps> = ({
       </div>
 
       <div>
-        <h2>{getDate(training.date)}</h2>
+        <h2>{getDate(Number(training.date))}</h2>
       </div>
       <div>{distanceKm(training.distance)} km</div>
 
