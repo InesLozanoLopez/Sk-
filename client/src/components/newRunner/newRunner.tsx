@@ -11,7 +11,7 @@ import {
   kmsPerDay,
   daysAvailable,
 } from "./functions";
-import { IFormValues } from "./../../../interfaces";
+import { IFormValues } from "../../interfaces";
 
 const ANewRunner: React.FC = () => {
   const navigate = useNavigate();

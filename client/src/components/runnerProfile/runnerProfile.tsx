@@ -4,10 +4,9 @@ import {
   runnerTrainings,
   deleteProfile,
   getRunnerInfo,
-} from "../../apiServices";
-import Training from "../trainings/training";
+} from "./../../apiServices";
+import Training from "./../trainings/training";
 import { useNavigate, Link } from "react-router-dom";
-// import PastTrainings from "../allTrainings/allTrainings";
 import { getDate } from "./functions";
 import {
   ITrainings,
@@ -193,9 +192,6 @@ const RunnerProfile: React.FC<{}> = () => {
             </div>
           </div>
         </div>
-        {/* <div className="hidden">
-          <PastTrainings getDate={getDate} runnerInfo={runnerInfo} />
-        </div> */}
 
         <div className="othersButtons">
           <input

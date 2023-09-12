@@ -2,9 +2,10 @@ import React from 'react';
 import './training.css';
 import { editATraining, runnerTrainings, deleteATraining } from '../../apiServices';
 import {getDate} from '../runnerProfile/functions';
+import {ITrainingProps} from "./../../interfaces"
 
 
-function Training({ training, runnerInfo, setAllTrainings }) {
+const Training: React.FC<ITrainingProps> = ( {training, runnerInfo, setAllTrainings }) => {
   const daysToRace = new Date(runnerInfo[0].race.dateRace).getTime() - new Date(training.date).getTime();
   const differenceDays = Math.floor(daysToRace / (1000 * 60 * 60 * 24));
 

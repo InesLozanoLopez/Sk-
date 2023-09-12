@@ -12,7 +12,7 @@ const AllTrainings: React.FC = () => {
   const [allTrainings, setAllTrainings] = useState<ITrainings[]>([]);
 
   useEffect(() => {
-    getRunnerInfo().then((runner) => setRunnerInfo(runner));
+    getRunnerInfo().then((runner) => setRunnerInfo([runner]));
   }, []);
 
   useEffect(() => {

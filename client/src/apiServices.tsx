@@ -1,11 +1,13 @@
+import { IRunnerProfile, ITrainings } from "../../server/TypeScript/interfaces";
+
 const baseURL = 'http://localhost:3001';
 
-export async function newRunner({ runnerName, race, currentValues, trainingAvailability }) {
+export async function newRunner({ name, race, currentValues, trainingAvailability }: IRunnerProfile): Promise<any> {
   try {
     const newRunner = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: runnerName, race: race, currentValues: currentValues, trainingAvailability: trainingAvailability })
+      body: JSON.stringify({ name, race: race, currentValues: currentValues, trainingAvailability: trainingAvailability })
     }
     const runner = await fetch(baseURL + '/runner', newRunner);
     const data = await runner.json();
@@ -15,7 +17,7 @@ export async function newRunner({ runnerName, race, currentValues, trainingAvail
   }
 }
 
-export async function getRunnerInfo() {
+export async function getRunnerInfo(): Promise<IRunnerProfile> {
   try {
     const getInfo = await fetch(baseURL + '/runner');
     const data = await getInfo.json();
@@ -26,12 +28,12 @@ export async function getRunnerInfo() {
   }
 }
 
-export async function runnerCreateTrainings({trainingDate, kmToRun, kmToIncrease, runnerName}) {
+export async function runnerCreateTrainings({date, distance, kmToIncrease, _id}: ITrainings): Promise<ITrainings[]> {
   try {
     const trainingProfile = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ date: trainingDate, distance: kmToRun, kmToIncrease: kmToIncrease, runnerName: runnerName })
+      body: JSON.stringify({ date, distance, kmToIncrease: kmToIncrease, _id })
     }
     const trainingCreated = await fetch(baseURL + '/training', trainingProfile);
     const data = await trainingCreated.json();
@@ -42,7 +44,7 @@ export async function runnerCreateTrainings({trainingDate, kmToRun, kmToIncrease
   }
 }
 
-export async function runnerTrainings() {
+export async function runnerTrainings(): Promise<ITrainings[]> {
   try {
     const trainings = await fetch(baseURL + '/training');
     const data = await trainings.json();
@@ -53,14 +55,14 @@ export async function runnerTrainings() {
   }
 }
 
-export async function editATraining(feedback, id) {
+export async function editATraining(feedback: string, _id: string): Promise<ITrainings> {
   try {
     const editTrainings = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ feedback: feedback })
     }
-    const update = await fetch(baseURL + `/training/${id}`, editTrainings);
+    const update = await fetch(baseURL + `/training/${_id}`, editTrainings);
     const data = await update.json();
     return data;
 
@@ -69,13 +71,13 @@ export async function editATraining(feedback, id) {
   }
 }
 
-export async function deleteATraining(id) {
+export async function deleteATraining(_id: string): Promise<void> {
   try {
     const deletedTraining = {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' }
     }
-    const deleted = await fetch(baseURL + `/training/${id}`, deletedTraining);
+    const deleted = await fetch(baseURL + `/training/${_id}`, deletedTraining);
     const data = await deleted.json();
     return data;
   } catch (e) {
@@ -83,13 +85,13 @@ export async function deleteATraining(id) {
   }
 }
 
-export async function deleteProfile(id) {
+export async function deleteProfile(_id: string): Promise<void> {
   try {
     const deleteRunner = {
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'}
     }
-    const deleted = await fetch(baseURL + `/runner/${id}`, deleteRunner);
+    const deleted = await fetch(baseURL + `/runner/${_id}`, deleteRunner);
     const data = await deleted.json();
     return data;
   }catch(e){
