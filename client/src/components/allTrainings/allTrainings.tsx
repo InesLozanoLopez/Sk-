@@ -51,7 +51,7 @@ const AllTrainings: React.FC = () => {
                     <Training
                       key={training._id}
                       training={training}
-                      runnerInfo={runnerInfo}
+                      runnerInfo={runnerInfo[0]}
                       setAllTrainings={setAllTrainings}
                     />
                   ))}
