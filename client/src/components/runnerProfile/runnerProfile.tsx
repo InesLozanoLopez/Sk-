@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import "./runnerProfile.css";
+import React, { useEffect, useState } from 'react';
+import './runnerProfile.css';
 import {
   runnerTrainings,
   deleteProfile,
   getRunnerInfo,
-} from "./../../apiServices";
-import Training from "./../trainings/training";
-import { useNavigate, Link } from "react-router-dom";
-import { getDate } from "./functions";
+} from './../../apiServices';
+import Training from './../trainings/training';
+import { useNavigate, Link } from 'react-router-dom';
+import { getDate } from './functions';
 import {
   ITrainings,
   IRunnerProfile,
-} from "../../../../server/TypeScript/interfaces";
+} from '../../../../server/TypeScript/interfaces';
 
-const RunnerProfile: React.FC<{}> = () => {
+const RunnerProfile: React.FC = () => {
   const [runnerInfo, setRunnerInfo] = useState<IRunnerProfile[]>([]);
   const [allTrainings, setAllTrainings] = useState<ITrainings[]>([]);
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const RunnerProfile: React.FC<{}> = () => {
 
   useEffect(() => {
     runnerTrainings().then((training: ITrainings[]) =>
-      setAllTrainings(training)
+      setAllTrainings(training),
     );
   }, []);
 
@@ -34,7 +34,7 @@ const RunnerProfile: React.FC<{}> = () => {
 
   function deleteRunnerProfile() {
     deleteProfile(runnerInfo[0]._id);
-    navigate("/newrunner");
+    navigate('/newrunner');
   }
 
   const today = new Date();
@@ -45,14 +45,14 @@ const RunnerProfile: React.FC<{}> = () => {
         <h2 className="hello">
           <span className="wave" role="img" aria-label="hand waving">
             👋
-          </span>{" "}
+          </span>{' '}
           Hi {runnerInfo[0].name}❗
         </h2>
         <h2 className="readyForYourTraining">
-          {" "}
+          {' '}
           Ready for your training
           <span role="img" aria-label="question mark">
-            ⁉️{" "}
+            ⁉️{' '}
           </span>
         </h2>
 
@@ -65,42 +65,42 @@ const RunnerProfile: React.FC<{}> = () => {
         </Link>
 
         {allTrainingsSorted.some(
-          (training) => today > new Date(training.date) && !training.feedback
+          (training) => today > new Date(training.date) && !training.feedback,
         ) ? (
-            <div className="display-trainings">
-              <div className="attentionContainer">
-                <span
-                  className="attention"
-                  role="img"
-                  aria-label="attention emoji"
-                >
-                  {" "}
-                  🚫{" "}
-                </span>
-                <h3> Please, give a feedback to update your trainings:</h3>
-              </div>
-              <div
-                className="trainingsContainer"
-                tabIndex={0}
-                role="region"
-                aria-label="Trainings without feedback"
+          <div className="display-trainings">
+            <div className="attentionContainer">
+              <span
+                className="attention"
+                role="img"
+                aria-label="attention emoji"
               >
-                {allTrainingsSorted
-                  .filter(
-                    (training) =>
-                      today >= new Date(training.date) && !training.feedback
-                  )
-                  .map((training) => (
-                    <Training
-                      key={training._id}
-                      training={training}
-                      runnerInfo={runnerInfo[0]}
-                      setAllTrainings={setAllTrainings}
-                    />
-                  ))}
-              </div>
+                {' '}
+                🚫{' '}
+              </span>
+              <h3> Please, give a feedback to update your trainings:</h3>
             </div>
-          ) : null}
+            <div
+              className="trainingsContainer"
+              tabIndex={0}
+              role="region"
+              aria-label="Trainings without feedback"
+            >
+              {allTrainingsSorted
+                .filter(
+                  (training) =>
+                    today >= new Date(training.date) && !training.feedback,
+                )
+                .map((training) => (
+                  <Training
+                    key={training._id}
+                    training={training}
+                    runnerInfo={runnerInfo[0]}
+                    setAllTrainings={setAllTrainings}
+                  />
+                ))}
+            </div>
+          </div>
+        ) : null}
 
         <div className="display-trainings">
           This month trainings:
@@ -114,7 +114,7 @@ const RunnerProfile: React.FC<{}> = () => {
               .filter(
                 (training) =>
                   today < new Date(training.date) &&
-                  today.getMonth() === new Date(training.date).getMonth()
+                  today.getMonth() === new Date(training.date).getMonth(),
               )
               .map((training) => (
                 <Training
@@ -138,27 +138,27 @@ const RunnerProfile: React.FC<{}> = () => {
             {allTrainingsSorted.filter(
               (training) =>
                 today > new Date(training.date) &&
-                today.getMonth() === new Date(training.date).getMonth()
+                today.getMonth() === new Date(training.date).getMonth(),
             ).length > 0 ? (
-                allTrainingsSorted
-                  .filter(
-                    (training) =>
-                      today > new Date(training.date) &&
-                      today.getMonth() === new Date(training.date).getMonth()
-                  )
-                  .map((training) => (
-                    <Training
-                      key={training._id}
-                      training={training}
-                      runnerInfo={runnerInfo[0]}
-                      setAllTrainings={setAllTrainings}
-                    />
-                  ))
-              ) : (
-                <div className="noTrainingCompleted">
-              No trainings completed... yet
-                </div>
-              )}
+              allTrainingsSorted
+                .filter(
+                  (training) =>
+                    today > new Date(training.date) &&
+                    today.getMonth() === new Date(training.date).getMonth(),
+                )
+                .map((training) => (
+                  <Training
+                    key={training._id}
+                    training={training}
+                    runnerInfo={runnerInfo[0]}
+                    setAllTrainings={setAllTrainings}
+                  />
+                ))
+            ) : (
+              <div className="noTrainingCompleted">
+                No trainings completed... yet
+              </div>
+            )}
           </div>
         </div>
 
@@ -170,7 +170,7 @@ const RunnerProfile: React.FC<{}> = () => {
           <div className="raceDetails">
             <div className="raceInfo">
               <div>
-                On:{" "}
+                On:{' '}
                 <strong>
                   {getDate(new Date(runnerInfo[0].race.dateRace).getTime())}
                 </strong>
@@ -186,7 +186,7 @@ const RunnerProfile: React.FC<{}> = () => {
                 Total time: <strong>{runnerInfo[0].race.timeObj} hour.</strong>
               </div>
               <div>
-                Km/h including stops:{" "}
+                Km/h including stops:{' '}
                 <strong>{runnerInfo[0].race.minsPerKm} mins/km.</strong>
               </div>
             </div>

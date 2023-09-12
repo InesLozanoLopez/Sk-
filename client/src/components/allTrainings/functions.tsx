@@ -1,24 +1,25 @@
+import { ITrainings } from '../../../../server/TypeScript/interfaces';
 
-export function allTrainingByMonth(allTrainings) {
+export function allTrainingByMonth(allTrainings: ITrainings[]) {
   const trainingsByMonth = {};
 
-  allTrainings.forEach((training) => {
+  allTrainings.map((training: ITrainings) => {
     const date = new Date(training.date);
     const month = date.getMonth();
     const year = date.getFullYear();
     const monthLetter = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
     ];
     const key = `${monthLetter[month]}-${year}`;
 

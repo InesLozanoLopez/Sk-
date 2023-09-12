@@ -1,11 +1,14 @@
-import React from "react";
-import "./allTrainings.css";
-import Training from "../trainings/training";
-import { IRunnerProfile, ITrainings } from "./../../../../server/TypeScript/interfaces";
-import { useEffect, useState } from "react";
-import { runnerTrainings, getRunnerInfo } from "../../apiServices";
-import { allTrainingByMonth } from "./functions";
-import { Link } from "react-router-dom";
+import React from 'react';
+import './allTrainings.css';
+import Training from '../trainings/training';
+import {
+  IRunnerProfile,
+  ITrainings,
+} from './../../../../server/TypeScript/interfaces';
+import { useEffect, useState } from 'react';
+import { runnerTrainings, getRunnerInfo } from '../../apiServices';
+import { allTrainingByMonth } from './functions';
+import { Link } from 'react-router-dom';
 
 const AllTrainings: React.FC = () => {
   const [runnerInfo, setRunnerInfo] = useState<IRunnerProfile[]>([]);
@@ -35,7 +38,7 @@ const AllTrainings: React.FC = () => {
       <div className="allTraining">
         {Object.entries(allTrainingByMonth(allTrainingsSorted)).map(
           ([monthYear, trainings]: [string, ITrainings[]]) => {
-            const [month, year] = monthYear.split("-");
+            const [month, year] = monthYear.split('-');
             return (
               <div key={monthYear}>
                 <h2>
@@ -58,11 +61,11 @@ const AllTrainings: React.FC = () => {
                 </div>
               </div>
             );
-          }
+          },
         )}
       </div>
     </div>
   );
-}
+};
 
 export default AllTrainings;

@@ -1,9 +1,15 @@
 export function timeObjInMins(time) {
-  const [hours, minutes] = time.split(":");
+  const [hours, minutes] = time.split(':');
   return hours * 60 + parseInt(minutes, 10);
 }
 
-export function holidays({ holidaysFrom, holidaysTo }: {holidaysFrom: string, holidaysTo: string}):Date[] {
+export function holidays({
+  holidaysFrom,
+  holidaysTo,
+}: {
+  holidaysFrom: string;
+  holidaysTo: string;
+}): Date[] {
   const days = new Date(Number(holidaysFrom));
   const endDay = new Date(Number(holidaysTo));
   const holidayDays: Date[] = [];
@@ -18,10 +24,10 @@ export function increaseKm({
   distanceRace,
   ableToRun,
   daysToTraining,
-}: 
-{distanceRace: number,
-ableToRun: number,
-daysToTraining: number,
+}: {
+  distanceRace: number;
+  ableToRun: number;
+  daysToTraining: number;
 }): number {
   const kmToIncreaseIntTotal = distanceRace - ableToRun;
   const kmPerDayToIncrease = kmToIncreaseIntTotal / daysToTraining;
@@ -59,12 +65,12 @@ export function daysAvailable({
   }
 
   const trainingsDaysFilteredDaysOff = daysUntilRaceArr.filter(
-    (day) => !daysOff.includes(day.getDay().toString())
+    (day) => !daysOff.includes(day.getDay().toString()),
   );
 
   if (holidaysFrom && holidaysTo) {
     trainingsDaysFilteredHolidays = trainingsDaysFilteredDaysOff.filter(
-      (day) => day < new Date(holidaysFrom) || day > new Date(holidaysTo)
+      (day) => day < new Date(holidaysFrom) || day > new Date(holidaysTo),
     );
   } else {
     trainingsDaysFilteredHolidays = trainingsDaysFilteredDaysOff;

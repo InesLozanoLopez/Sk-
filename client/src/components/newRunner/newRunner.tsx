@@ -1,17 +1,17 @@
-import React from "react";
-import "./newRunner.css";
-import { newRunner, runnerCreateTrainings } from "../../apiServices";
-import { useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import React from 'react';
+import './newRunner.css';
+import { newRunner, runnerCreateTrainings } from '../../apiServices';
+import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import {
   timeObjInMins,
   holidays,
   increaseKm,
   kmsPerDay,
   daysAvailable,
-} from "./functions";
-import { IFormValues } from "../../interfaces";
+} from './functions';
+import { IFormValues } from '../../interfaces';
 
 const ANewRunner: React.FC = () => {
   const navigate = useNavigate();
@@ -19,21 +19,21 @@ const ANewRunner: React.FC = () => {
 
   const formik = useFormik<IFormValues>({
     initialValues: {
-      runnerName: "",
-      dateRace: "",
+      runnerName: '',
+      dateRace: '',
       distanceRace: 0,
-      timeObj: "00:00:00",
+      timeObj: '00:00:00',
       longDistance: 0,
       daysOff: [],
-      holidaysFrom: "",
-      holidaysTo: "",
+      holidaysFrom: '',
+      holidaysTo: '',
     },
     validationSchema: Yup.object({
-      runnerName: Yup.string().required("Name is required"),
-      dateRace: Yup.date().required("Race date is required"),
-      distanceRace: Yup.string().required("Race distance is required"),
-      timeObj: Yup.string().required("Time objective distance is required"),
-      longDistance: Yup.number().required("Longest distance is required"),
+      runnerName: Yup.string().required('Name is required'),
+      dateRace: Yup.date().required('Race date is required'),
+      distanceRace: Yup.string().required('Race distance is required'),
+      timeObj: Yup.string().required('Time objective distance is required'),
+      longDistance: Yup.number().required('Longest distance is required'),
     }),
     onSubmit: (values) => {
       const minsPerKm = timeObjInMins(values.timeObj) / values.distanceRace;
@@ -60,18 +60,28 @@ const ANewRunner: React.FC = () => {
   });
 
   const daysOffPerWeek = [
-    { id: "1", label: "Monday" },
-    { id: "2", label: "Tuesday" },
-    { id: "3", label: "Wednesday" },
-    { id: "4", label: "Thursday" },
-    { id: "5", label: "Friday" },
-    { id: "6", label: "Saturday" },
-    { id: "7", label: "Sunday" },
+    { id: '1', label: 'Monday' },
+    { id: '2', label: 'Tuesday' },
+    { id: '3', label: 'Wednesday' },
+    { id: '4', label: 'Thursday' },
+    { id: '5', label: 'Friday' },
+    { id: '6', label: 'Saturday' },
+    { id: '7', label: 'Sunday' },
   ];
 
   //CREATE A PROFILE
 
-  function createNewProfile(values: IFormValues, race: { dateRace: string; distanceRace: number; timeObj: string; minsPerKm: number; }, currentValues: { longDistance: number; }, trainingAvailability: { daysOff: string[]; holidays: Date[]; }) {
+  function createNewProfile(
+    values: IFormValues,
+    race: {
+      dateRace: string;
+      distanceRace: number;
+      timeObj: string;
+      minsPerKm: number;
+    },
+    currentValues: { longDistance: number },
+    trainingAvailability: { daysOff: string[]; holidays: Date[] },
+  ) {
     if (profileAtDb) {
       profileAtDb = false;
       newRunner({
@@ -101,12 +111,12 @@ const ANewRunner: React.FC = () => {
       distanceRace: formik.values.distanceRace,
       ableToRun,
       daysToTraining,
-    })
+    }),
   );
 
   function createTraining() {
     if (holidaysFiltered.length === 0) {
-      alert("No training days available");
+      alert('No training days available');
       return;
     }
     const trainingDate: Date[] = holidaysFiltered;
@@ -116,19 +126,19 @@ const ANewRunner: React.FC = () => {
         ableToRun,
         kmToIncrease,
         distanceRace: formik.values.distanceRace,
-      })
+      }),
     );
 
     while (trainingDate.length > 0) {
       const dateToRun = trainingDate.shift();
       if (dateToRun) {
         runnerCreateTrainings({
-          date: new Date(dateToRun.toISOString().split("T")[0]),
+          date: new Date(dateToRun.toISOString().split('T')[0]),
           distance: kmsToRunPerDay,
           kmToIncrease,
         }).then(() => (ableToRun = kmsToRunPerDay));
       }
-      navigate("/runner");
+      navigate('/runner');
     }
   }
 
