@@ -8,7 +8,7 @@ import { Routes, Route } from 'react-router-dom';
 
 
 
-function App() {
+const App: React.FC = () => {
   return (
     <div>
       <div className='App'>
@@ -16,7 +16,7 @@ function App() {
           <h1>Welcome to Sk-</h1>
         </section>
         <Routes>
-          <Route path='/' element={<Home />} Route={Route}></Route>
+          <Route path='/' element={<Home />}></Route>
           <Route path='/newrunner' element={<ANewRunner />}></Route>
           <Route path='/runner' element={<RunnerProfile />}></Route>
           <Route path='/allTrainings' element={<AllTrainings/>}></Route>

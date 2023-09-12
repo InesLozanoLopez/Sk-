@@ -30,7 +30,7 @@ const ANewRunner: React.FC = () => {
     },
     validationSchema: Yup.object({
       runnerName: Yup.string().required("Name is required"),
-      dateRace: Yup.string().required("Race date is required"),
+      dateRace: Yup.date().required("Race date is required"),
       distanceRace: Yup.string().required("Race distance is required"),
       timeObj: Yup.string().required("Time objective distance is required"),
       longDistance: Yup.number().required("Longest distance is required"),
@@ -71,11 +71,11 @@ const ANewRunner: React.FC = () => {
 
   //CREATE A PROFILE
 
-  function createNewProfile(values, race, currentValues, trainingAvailability) {
+  function createNewProfile(values: IFormValues, race: { dateRace: string; distanceRace: number; timeObj: string; minsPerKm: number; }, currentValues: { longDistance: number; }, trainingAvailability: { daysOff: string[]; holidays: Date[]; }) {
     if (profileAtDb) {
       profileAtDb = false;
       newRunner({
-        runnerName: values.runnerName,
+        name: values.runnerName,
         race,
         currentValues,
         trainingAvailability,
@@ -123,10 +123,9 @@ const ANewRunner: React.FC = () => {
       const dateToRun = trainingDate.shift();
       if (dateToRun) {
         runnerCreateTrainings({
-          trainingDate: dateToRun.toISOString().split("T")[0],
-          kmToRun: kmsToRunPerDay,
+          date: new Date(dateToRun.toISOString().split("T")[0]),
+          distance: kmsToRunPerDay,
           kmToIncrease,
-          runnerName: formik.values.runnerName,
         }).then(() => (ableToRun = kmsToRunPerDay));
       }
       navigate("/runner");

@@ -1,18 +1,18 @@
 import { Types } from 'mongoose';
 
 export interface ITrainings {
-    _id: string;
-    date: number;
+    _id?: string;
+    date: Date;
     distance: number;
     kmToIncrease: number;
-    feedback: string | null;
+    feedback?: string;
 }
 
 export interface IRunnerProfile {
-    _id: string;
+    _id?: string;
     name: string;
     race: {
-      dateRace: number;
+      dateRace: string;
       distanceRace: number;
       timeObj: string;
       minsPerKm: number;
@@ -22,7 +22,7 @@ export interface IRunnerProfile {
     },
     trainingAvailability: {
       daysOff: string[];
-      holidays: number[];
+      holidays: Date[];
     },
     trainings?: Types.ObjectId[];
   }

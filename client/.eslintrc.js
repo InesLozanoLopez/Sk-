@@ -1,18 +1,22 @@
 module.exports = {
-  "env": {
-    "browser": true,
-    "es2021": true
+  env: {
+    browser: true,
+    es2021: true,
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended"
-  ],
-  "parserOptions": {
-    "ecmaVersion": "latest",
-    "sourceType": "module"
+  extends: "react-app",
+  parser: "@typescript-eslint/parser",
+
+  parserOptions: {
+    ecmaVersion: 7,
+    ecmaFeatures: {
+      modules: true,
+      jsx: true,
+    },
   },
-  "rules": {
-    "indent": ["error", 2],
-    'react/prop-types': ['off']
-  }
-}
+  rules: {
+    indent: ["error", 2],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
+  },
+  plugins: ["@typescript-eslint"],
+};

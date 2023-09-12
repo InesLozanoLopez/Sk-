@@ -3,9 +3,9 @@ export function timeObjInMins(time) {
   return hours * 60 + parseInt(minutes, 10);
 }
 
-export function holidays({ holidaysFrom, holidaysTo }) {
-  const days = new Date(holidaysFrom);
-  const endDay = new Date(holidaysTo);
+export function holidays({ holidaysFrom, holidaysTo }: {holidaysFrom: string, holidaysTo: string}):Date[] {
+  const days = new Date(Number(holidaysFrom));
+  const endDay = new Date(Number(holidaysTo));
   const holidayDays: Date[] = [];
   while (days <= endDay) {
     holidayDays.push(new Date(days));
@@ -18,6 +18,10 @@ export function increaseKm({
   distanceRace,
   ableToRun,
   daysToTraining,
+}: 
+{distanceRace: number,
+ableToRun: number,
+daysToTraining: number,
 }): number {
   const kmToIncreaseIntTotal = distanceRace - ableToRun;
   const kmPerDayToIncrease = kmToIncreaseIntTotal / daysToTraining;

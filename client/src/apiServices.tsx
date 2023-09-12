@@ -2,12 +2,12 @@ import { IRunnerProfile, ITrainings } from "../../server/TypeScript/interfaces";
 
 const baseURL = 'http://localhost:3001';
 
-export async function newRunner({ name, race, currentValues, trainingAvailability }: IRunnerProfile): Promise<any> {
+export async function newRunner({ name, race, currentValues, trainingAvailability }: IRunnerProfile): Promise<IRunnerProfile> {
   try {
     const newRunner = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, race: race, currentValues: currentValues, trainingAvailability: trainingAvailability })
+      body: JSON.stringify({ name, race, currentValues: currentValues, trainingAvailability: trainingAvailability })
     }
     const runner = await fetch(baseURL + '/runner', newRunner);
     const data = await runner.json();
@@ -28,12 +28,12 @@ export async function getRunnerInfo(): Promise<IRunnerProfile> {
   }
 }
 
-export async function runnerCreateTrainings({date, distance, kmToIncrease, _id}: ITrainings): Promise<ITrainings[]> {
+export async function runnerCreateTrainings({date, distance, kmToIncrease}: ITrainings): Promise<ITrainings[]> {
   try {
     const trainingProfile = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ date, distance, kmToIncrease: kmToIncrease, _id })
+      body: JSON.stringify({ date, distance, kmToIncrease: kmToIncrease })
     }
     const trainingCreated = await fetch(baseURL + '/training', trainingProfile);
     const data = await trainingCreated.json();
