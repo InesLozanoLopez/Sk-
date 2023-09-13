@@ -172,22 +172,41 @@ const RunnerProfile: React.FC = () => {
               <div>
                 On:{' '}
                 <strong>
-                  {getDate(new Date(runnerInfo[0].race.dateRace).getTime())}
+                  {runnerInfo[0]?.race?.dateRace
+                    ? getDate(new Date(runnerInfo[0].race.dateRace).getTime())
+                    : null}
                 </strong>
               </div>
               <div>
-                Distance: <strong>{runnerInfo[0].race.distanceRace} km.</strong>
+                Distance:{' '}
+                <strong>
+                  {runnerInfo[0]?.race?.distanceRace
+                    ? runnerInfo[0].race.distanceRace
+                    : null}{' '}
+                  km.
+                </strong>
               </div>
             </div>
 
             <div className="raceObjectives">
               <p>Objectives</p>
               <div>
-                Total time: <strong>{runnerInfo[0].race.timeObj} hour.</strong>
+                Total time:{' '}
+                <strong>
+                  {runnerInfo[0]?.race?.timeObj
+                    ? runnerInfo[0].race.timeObj
+                    : null}{' '}
+                  hour.
+                </strong>
               </div>
               <div>
                 Km/h including stops:{' '}
-                <strong>{runnerInfo[0].race.minsPerKm} mins/km.</strong>
+                <strong>
+                  {runnerInfo[0]?.race?.minsPerKm
+                    ? runnerInfo[0].race.minsPerKm
+                    : null}{' '}
+                  mins/km.
+                </strong>
               </div>
             </div>
           </div>

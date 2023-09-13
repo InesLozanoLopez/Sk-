@@ -19,7 +19,7 @@ const ANewRunner: React.FC = () => {
 
   const formik = useFormik<IFormValues>({
     initialValues: {
-      runnerName: '',
+      name: '',
       dateRace: '',
       distanceRace: 0,
       timeObj: '00:00:00',
@@ -29,33 +29,14 @@ const ANewRunner: React.FC = () => {
       holidaysTo: '',
     },
     validationSchema: Yup.object({
-      runnerName: Yup.string().required('Name is required'),
+      name: Yup.string().required('Name is required'),
       dateRace: Yup.date().required('Race date is required'),
       distanceRace: Yup.string().required('Race distance is required'),
       timeObj: Yup.string().required('Time objective distance is required'),
       longDistance: Yup.number().required('Longest distance is required'),
     }),
     onSubmit: (values) => {
-      const minsPerKm = timeObjInMins(values.timeObj) / values.distanceRace;
-      const dateRange = {
-        holidaysFrom: values.holidaysFrom,
-        holidaysTo: values.holidaysTo,
-      };
-
-      const race = {
-        dateRace: formik.values.dateRace,
-        distanceRace: formik.values.distanceRace,
-        timeObj: formik.values.timeObj,
-        minsPerKm: minsPerKm,
-      };
-      const currentValues = {
-        longDistance: formik.values.longDistance,
-      };
-      const trainingAvailability = {
-        daysOff: formik.values.daysOff,
-        holidays: holidays(dateRange),
-      };
-      createNewProfile(values, race, currentValues, trainingAvailability);
+      createNewProfile(values);
     },
   });
 
@@ -71,24 +52,34 @@ const ANewRunner: React.FC = () => {
 
   //CREATE A PROFILE
 
-  function createNewProfile(
-    values: IFormValues,
-    race: {
-      dateRace: string;
-      distanceRace: number;
-      timeObj: string;
-      minsPerKm: number;
-    },
-    currentValues: { longDistance: number },
-    trainingAvailability: { daysOff: string[]; holidays: Date[] },
-  ) {
+  function createNewProfile(values: IFormValues) {
+    const minsPerKm = timeObjInMins(values.timeObj) / values.distanceRace;
+    const dateRange = {
+      holidaysFrom: values.holidaysFrom,
+      holidaysTo: values.holidaysTo,
+    };
+    const holidaysRange = holidays(dateRange);
+
+    const race = {
+      dateRace: values.dateRace,
+      distanceRace: values.distanceRace,
+      timeObj: values.timeObj,
+      minsPerKm,
+    };
+
+    const currentValues = { longDistance: values.longDistance };
+    const trainingAvailability = {
+      daysOff: values.daysOff,
+      holidays: holidaysRange,
+    };
+
     if (profileAtDb) {
       profileAtDb = false;
       newRunner({
-        name: values.runnerName,
-        race,
-        currentValues,
-        trainingAvailability,
+        name: values.name,
+        race: race,
+        currentValues: currentValues,
+        trainingAvailability: trainingAvailability,
       }).then(() => {
         createTraining();
       });
@@ -149,11 +140,11 @@ const ANewRunner: React.FC = () => {
         <input
           type="text"
           aria-label="Your name"
-          id="runnerName"
-          name="runnerName"
+          id="name"
+          name="name"
           placeholder="Your name..."
           pattern="[A-Za-z]+"
-          value={formik.values.runnerName}
+          value={formik.values.name}
           onChange={formik.handleChange}
         />
 

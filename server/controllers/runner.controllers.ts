@@ -11,19 +11,17 @@ export const createARunner = async (
     const runnerProfile = await RunnerProfile.create({
       name: newRunner.name,
       race: {
-        dateRace: newRunner.race.race.dateRace,
-        distanceRace: newRunner.race.race.distanceRace,
-        timeObj: newRunner.race.race.timeObj,
-        minsPerKm: newRunner.race.race.minsPerKm,
+        dateRace: newRunner.race.dateRace,
+        distanceRace: newRunner.race.distanceRace,
+        timeObj: newRunner.race.timeObj,
+        minsPerKm: newRunner.race.minsPerKm,
       },
       currentValues: {
-        longDistance: newRunner.currentValues.currentValues.longDistance,
+        longDistance: newRunner.currentValues.longDistance,
       },
       trainingAvailability: {
-        daysPerWeek:
-          newRunner.trainingAvailability.trainingAvailability.daysPerWeek,
-        daysOff: newRunner.trainingAvailability.trainingAvailability.daysOff,
-        holidays: newRunner.trainingAvailability.trainingAvailability.holidays,
+        daysOff: newRunner.trainingAvailability.daysOff,
+        holidays: newRunner.trainingAvailability.holidays,
       },
     });
     res.status(201).send(runnerProfile);

@@ -1,11 +1,12 @@
 import {Request, Response } from 'express';
 import RunnerProfile from '../models/runnerSchema.models';
 import Training from '../models/trainingSchema.models';
-import { INewTraining } from '../interfaces';
+import { ITrainings } from '../interfaces';
 
 
 export const createTraining = async (req: Request, res: Response): Promise<void> => {
   try {
+    console.log(req);
     const newTraining = req.body;
     const trainings = await Training.create({
       date: newTraining.date,
@@ -23,7 +24,8 @@ export const createTraining = async (req: Request, res: Response): Promise<void>
     res.status(201).send(trainings);
 
   } catch (e) {
-    console.log('Error from controllers', e)
+    console.log('Error from controllers', e);
+    res.status(500).json({error: 'Internal server error'});
   }
 };
 
@@ -55,7 +57,7 @@ export const editTrainings = async (req: Request, res: Response): Promise<void> 
       );
     }
 
-    function updatedDistance(distance: number, string: INewTraining) {
+    function updatedDistance(distance: number, string: ITrainings) {
       if (string.feedback === 'light') {
         return distance * 1.1;
       } else if (string.feedback === 'hard') {

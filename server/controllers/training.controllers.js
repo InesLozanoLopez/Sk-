@@ -17,6 +17,7 @@ const runnerSchema_models_1 = __importDefault(require("../models/runnerSchema.mo
 const trainingSchema_models_1 = __importDefault(require("../models/trainingSchema.models"));
 const createTraining = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(req);
         const newTraining = req.body;
         const trainings = yield trainingSchema_models_1.default.create({
             date: newTraining.date,
@@ -30,6 +31,7 @@ const createTraining = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
     catch (e) {
         console.log('Error from controllers', e);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 exports.createTraining = createTraining;

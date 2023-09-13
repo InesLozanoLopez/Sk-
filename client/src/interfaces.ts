@@ -1,7 +1,7 @@
 import { IRunnerProfile, ITrainings } from "../../server/TypeScript/interfaces";
 
 export interface IFormValues {
-  runnerName: string;
+  name: string;
   dateRace: string;
   distanceRace: number;
   timeObj: string;
