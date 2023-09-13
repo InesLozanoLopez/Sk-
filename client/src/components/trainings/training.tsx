@@ -14,7 +14,7 @@ const Training: React.FC<ITrainingProps> = ({
   setAllTrainings,
 }) => {
   const daysToRace =
-    new Date(runnerInfo[0].race.dateRace).getTime() -
+    new Date(runnerInfo.race.dateRace).getTime() -
     new Date(training.date).getTime();
   const differenceDays = Math.floor(daysToRace / (1000 * 60 * 60 * 24));
 

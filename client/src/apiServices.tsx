@@ -26,7 +26,6 @@ export async function newRunner({
     const runner = await fetch(baseURL + '/runner', newRunner);
     console.log('runner', runner);
     const data = await runner.json();
-    console.log('data', data);
     return data;
   } catch (e) {
     console.log('Error from apiServices', e);

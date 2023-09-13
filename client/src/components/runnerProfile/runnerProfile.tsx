@@ -14,12 +14,12 @@ import {
 } from '../../../../server/TypeScript/interfaces';
 
 const RunnerProfile: React.FC = () => {
-  const [runnerInfo, setRunnerInfo] = useState<IRunnerProfile[]>([]);
+  const [runnerInfo, setRunnerInfo] = useState<IRunnerProfile | null>(null);
   const [allTrainings, setAllTrainings] = useState<ITrainings[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getRunnerInfo().then((runner: IRunnerProfile) => setRunnerInfo([runner]));
+    getRunnerInfo().then((runner: IRunnerProfile) => setRunnerInfo(runner));
   }, []);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const RunnerProfile: React.FC = () => {
 
   const today = new Date();
 
-  if (runnerInfo.length > 0) {
+  if (runnerInfo !== null) {
     return (
       <div>
         <h2 className="hello">
@@ -172,41 +172,22 @@ const RunnerProfile: React.FC = () => {
               <div>
                 On:{' '}
                 <strong>
-                  {runnerInfo[0]?.race?.dateRace
-                    ? getDate(new Date(runnerInfo[0].race.dateRace).getTime())
-                    : null}
+                  {getDate(new Date(runnerInfo[0].race.dateRace).getTime())}
                 </strong>
               </div>
               <div>
-                Distance:{' '}
-                <strong>
-                  {runnerInfo[0]?.race?.distanceRace
-                    ? runnerInfo[0].race.distanceRace
-                    : null}{' '}
-                  km.
-                </strong>
+                Distance: <strong>{runnerInfo[0].race.distanceRace} km.</strong>
               </div>
             </div>
 
             <div className="raceObjectives">
               <p>Objectives</p>
               <div>
-                Total time:{' '}
-                <strong>
-                  {runnerInfo[0]?.race?.timeObj
-                    ? runnerInfo[0].race.timeObj
-                    : null}{' '}
-                  hour.
-                </strong>
+                Total time: <strong>{runnerInfo[0].race.timeObj} hour.</strong>
               </div>
               <div>
                 Km/h including stops:{' '}
-                <strong>
-                  {runnerInfo[0]?.race?.minsPerKm
-                    ? runnerInfo[0].race.minsPerKm
-                    : null}{' '}
-                  mins/km.
-                </strong>
+                <strong>{runnerInfo[0].race.minsPerKm} mins/km.</strong>
               </div>
             </div>
           </div>
