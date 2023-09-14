@@ -8,8 +8,9 @@ const Home: React.FC = () => {
 
   const getProfileCreated = async () => {
     const profileCreated = await getRunnerInfo();
-    console.log('profileCreated', profileCreated);
-    runnerInfo = true;
+    if (profileCreated) {
+      runnerInfo = true;
+    }
   };
   getProfileCreated();
 
