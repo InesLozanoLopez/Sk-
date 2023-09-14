@@ -1,7 +1,4 @@
-import {
-  IRunnerProfile,
-  ITrainings,
-} from './../../server/TypeScript/interfaces';
+import { IRunnerProfile, ITrainings } from './../../server/interfaces';
 
 const baseURL = 'http://localhost:3001';
 
