@@ -1,8 +1,18 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import './home.css';
+import { getRunnerInfo } from './../../apiServices';
 
 const Home: React.FC = () => {
+  let runnerInfo = false;
+
+  const getProfileCreated = async () => {
+    const profileCreated = await getRunnerInfo();
+    console.log('profileCreated', profileCreated);
+    runnerInfo = true;
+  };
+  getProfileCreated();
+
   return (
     <div className="buttonContainer">
       <div>
@@ -11,13 +21,15 @@ const Home: React.FC = () => {
         </Link>
       </div>
       <div>
-        <Link to="/runner">
-          <input
-            className="homeButton"
-            type="button"
-            value="Training programme"
-          />
-        </Link>
+        {runnerInfo ? (
+          <Link to="/runner">
+            <input
+              className="homeButton"
+              type="button"
+              value="Training programme"
+            />
+          </Link>
+        ) : null}
       </div>
     </div>
   );

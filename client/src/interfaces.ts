@@ -1,4 +1,4 @@
-import { IRunnerProfile, ITrainings } from "../../server/TypeScript/interfaces";
+import { IRunnerProfile, ITrainings } from "../../server/interfaces";
 
 export interface IFormValues {
   name: string;

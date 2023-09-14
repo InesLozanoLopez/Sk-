@@ -1,4 +1,4 @@
-export function getDate(dates: number): string {
+export function formatDate(dates: number): string {
   const date: Date = new Date(dates);
   const day: number = date.getDate();
   const month: number = date.getMonth();

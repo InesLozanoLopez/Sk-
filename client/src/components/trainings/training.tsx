@@ -5,7 +5,7 @@ import {
   runnerTrainings,
   deleteATraining,
 } from '../../apiServices';
-import { getDate } from '../runnerProfile/functions';
+import { formatDate } from '../runnerProfile/functions';
 import { ITrainingProps } from './../../interfaces';
 
 const Training: React.FC<ITrainingProps> = ({
@@ -20,12 +20,19 @@ const Training: React.FC<ITrainingProps> = ({
 
   const today = new Date();
 
-  function clickedFeedback(value: string) {
-    if (value) {
-      if (new Date(training.date) <= today) {
-        editATraining(value, training._id)
-          .then(runnerTrainings)
-          .then((training) => setAllTrainings([...training]));
+  function clickedFeedback(feedback: string) {
+    if (feedback) {
+      try {
+        if (new Date(training.date) <= today) {
+          editATraining(feedback, training._id)
+            .then(runnerTrainings)
+            .then((training) => {
+              console.log(training);
+              setAllTrainings([...training]);
+            });
+        }
+      } catch (e) {
+        console.log('Error from ApiServices', e);
       }
     }
   }
@@ -81,7 +88,7 @@ const Training: React.FC<ITrainingProps> = ({
       </div>
 
       <div>
-        <h2>{getDate(Number(training.date))}</h2>
+        <h2>{formatDate(new Date(training.date).getDate())}</h2>
       </div>
       <div>{distanceKm(training.distance)} km</div>
 

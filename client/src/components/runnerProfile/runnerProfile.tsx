@@ -7,11 +7,8 @@ import {
 } from './../../apiServices';
 import Training from './../trainings/training';
 import { useNavigate, Link } from 'react-router-dom';
-import { getDate } from './functions';
-import {
-  ITrainings,
-  IRunnerProfile,
-} from '../../../../server/TypeScript/interfaces';
+import { formatDate } from './functions';
+import { ITrainings, IRunnerProfile } from '../../../../server/interfaces';
 
 const RunnerProfile: React.FC = () => {
   const [runnerInfo, setRunnerInfo] = useState<IRunnerProfile | null>(null);
@@ -172,7 +169,8 @@ const RunnerProfile: React.FC = () => {
               <div>
                 On:{' '}
                 <strong>
-                  {getDate(new Date(runnerInfo[0].race.dateRace).getTime())}
+                  {formatDate(new Date(runnerInfo[0].race.dateRace).getTime())}
+                  {'.'}
                 </strong>
               </div>
               <div>
@@ -183,11 +181,19 @@ const RunnerProfile: React.FC = () => {
             <div className="raceObjectives">
               <p>Objectives</p>
               <div>
-                Total time: <strong>{runnerInfo[0].race.timeObj} hour.</strong>
+                Total time:{' '}
+                <strong>
+                  {runnerInfo[0].race.timeObj}
+                  {parseFloat(runnerInfo[0].race.timeObj) > 1
+                    ? ' hours.'
+                    : ' hour.'}
+                </strong>
               </div>
               <div>
                 Km/h including stops:{' '}
-                <strong>{runnerInfo[0].race.minsPerKm} mins/km.</strong>
+                <strong>
+                  {runnerInfo[0].race.minsPerKm.toFixed(2)} mins/km.
+                </strong>
               </div>
             </div>
           </div>

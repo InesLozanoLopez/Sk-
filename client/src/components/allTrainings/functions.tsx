@@ -1,4 +1,4 @@
-import { ITrainings } from '../../../../server/TypeScript/interfaces';
+import { ITrainings } from '../../../../server/interfaces';
 
 export function allTrainingByMonth(allTrainings: ITrainings[]) {
   const trainingsByMonth = {};

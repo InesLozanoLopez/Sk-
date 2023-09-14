@@ -3,6 +3,21 @@ import RunnerProfile from '../models/runnerSchema.models';
 import Training from '../models/trainingSchema.models';
 import { ITrainings } from '../interfaces';
 
+function updateDistance(distance: number, string: ITrainings) {
+  if (string.feedback === 'light') {
+    return distance * 1.1;
+  } else if (string.feedback === 'hard') {
+    return distance / 1.1;
+  } else {
+    return distance
+  }
+}
+
+function newDistance(distance: number, kmToIncrease: number, length: number) {
+  const addDistance = kmToIncrease / (length -1);
+  return addDistance + distance;
+}
+
 
 export const createTraining = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -57,24 +72,20 @@ export const editTrainings = async (req: Request, res: Response): Promise<void> 
       );
     }
 
-    function updatedDistance(distance: number, string: ITrainings) {
-      if (string.feedback === 'light') {
-        return distance * 1.1;
-      } else if (string.feedback === 'hard') {
-        return distance / 1.1;
-      } else {
-        return distance
-      }
-    }
     const today = new Date()
 
-    const trainingToUpdateDistance = await Training.find({ date: { $gt: findTraining!.date}}, {date: { $gt: today } }).exec();
+    const trainingToUpdateDistance = await Training.find({ 
+      date: { 
+        $gt: findTraining!.date, 
+        $lt: today,
+      },
+       }).exec();
     for (let i = 0; i < trainingToUpdateDistance.length; i++) {
       const training = trainingToUpdateDistance[i];
       const id = training._id;
       await Training.updateOne(
         { _id: id },
-        { $set: { distance: updatedDistance(training.distance, newFeedback) } }
+        { $set: { distance: updateDistance(training.distance, newFeedback) } }
       );
     }
     res.status(201).send([{ editedFeedback }]);
@@ -96,10 +107,6 @@ export const deleteTraining = async (req: Request, res: Response): Promise<void>
 
     const trainingToUpdateDistance = await Training.find({ date: { $gt: toDelete.date } }).exec();
 
-    function newDistance(distance: number, kmToIncrease: number, length: number) {
-      const addDistance = kmToIncrease / (length -1);
-      return addDistance + distance;
-    }
 
     for (let i = 0; i < trainingToUpdateDistance.length; i++) {
       const training = trainingToUpdateDistance[i];

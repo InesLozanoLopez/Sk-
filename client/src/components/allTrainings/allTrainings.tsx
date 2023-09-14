@@ -1,10 +1,7 @@
 import React from 'react';
 import './allTrainings.css';
 import Training from '../trainings/training';
-import {
-  IRunnerProfile,
-  ITrainings,
-} from './../../../../server/TypeScript/interfaces';
+import { IRunnerProfile, ITrainings } from './../../../../server/interfaces';
 import { useEffect, useState } from 'react';
 import { runnerTrainings, getRunnerInfo } from '../../apiServices';
 import { allTrainingByMonth } from './functions';

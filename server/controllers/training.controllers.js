@@ -15,6 +15,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTraining = exports.editTrainings = exports.runnerTrainings = exports.createTraining = void 0;
 const runnerSchema_models_1 = __importDefault(require("../models/runnerSchema.models"));
 const trainingSchema_models_1 = __importDefault(require("../models/trainingSchema.models"));
+function updateDistance(distance, string) {
+    if (string.feedback === 'light') {
+        return distance * 1.1;
+    }
+    else if (string.feedback === 'hard') {
+        return distance / 1.1;
+    }
+    else {
+        return distance;
+    }
+}
+function newDistance(distance, kmToIncrease, length) {
+    const addDistance = kmToIncrease / (length - 1);
+    return addDistance + distance;
+}
 const createTraining = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log(req);
@@ -54,23 +69,17 @@ const editTrainings = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         if (newFeedback.feedback !== 'hard') {
             yield runnerSchema_models_1.default.updateOne({}, { $set: { 'currentValues.longDistance': findTraining.distance } });
         }
-        function updatedDistance(distance, string) {
-            if (string.feedback === 'light') {
-                return distance * 1.1;
-            }
-            else if (string.feedback === 'hard') {
-                return distance / 1.1;
-            }
-            else {
-                return distance;
-            }
-        }
         const today = new Date();
-        const trainingToUpdateDistance = yield trainingSchema_models_1.default.find({ date: { $gt: findTraining.date } }, { date: { $gt: today } }).exec();
+        const trainingToUpdateDistance = yield trainingSchema_models_1.default.find({
+            date: {
+                $gt: findTraining.date,
+                $lt: today,
+            },
+        }).exec();
         for (let i = 0; i < trainingToUpdateDistance.length; i++) {
             const training = trainingToUpdateDistance[i];
             const id = training._id;
-            yield trainingSchema_models_1.default.updateOne({ _id: id }, { $set: { distance: updatedDistance(training.distance, newFeedback) } });
+            yield trainingSchema_models_1.default.updateOne({ _id: id }, { $set: { distance: updateDistance(training.distance, newFeedback) } });
         }
         res.status(201).send([{ editedFeedback }]);
     }
@@ -88,10 +97,6 @@ const deleteTraining = (req, res) => __awaiter(void 0, void 0, void 0, function*
             return;
         }
         const trainingToUpdateDistance = yield trainingSchema_models_1.default.find({ date: { $gt: toDelete.date } }).exec();
-        function newDistance(distance, kmToIncrease, length) {
-            const addDistance = kmToIncrease / (length - 1);
-            return addDistance + distance;
-        }
         for (let i = 0; i < trainingToUpdateDistance.length; i++) {
             const training = trainingToUpdateDistance[i];
             const id = training._id;
