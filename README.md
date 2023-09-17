@@ -27,15 +27,17 @@ Additionally, the app has achieved high accessibility and SEO scores in Lighthou
 7. Install the necessary dependencies for the client:
     `npm install`
 8. Run the client application:
-    `npm run start`
+    `npm start`
 
 ## Tech Stack
 ### FRONT-END
   - React
+  - TypeScript
   - Formik
 
 ### BACK-END
   - Node.js
   - Express
   - Mongo-DB - Mongoose
+  - TypeScript
 
