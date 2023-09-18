@@ -12,13 +12,19 @@ const AllTrainings: React.FC = () => {
   const [allTrainings, setAllTrainings] = useState<ITrainings[]>([]);
 
   useEffect(() => {
-    getRunnerInfo().then((runner: IRunnerProfile) => setRunnerInfo(runner));
-  }, []);
-
-  useEffect(() => {
-    runnerTrainings().then((training: ITrainings[]) =>
-      setAllTrainings(training),
-    );
+    const fetchData = async () => {
+      try {
+        const [runnerData, trainingData] = await Promise.all([
+          getRunnerInfo(),
+          runnerTrainings(),
+        ]);
+        setRunnerInfo(runnerData);
+        setAllTrainings(trainingData);
+      } catch (e) {
+        console.log('Error fetching data', e);
+      }
+    };
+    fetchData();
   }, []);
 
   const allTrainingsSorted: ITrainings[] = allTrainings.sort((a, b) => {

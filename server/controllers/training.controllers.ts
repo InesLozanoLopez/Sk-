@@ -48,7 +48,6 @@ export const runnerTrainings = async (req: Request, res: Response): Promise<void
   try {
     const trainingInfo = await Training.find();
     res.status(201).send(trainingInfo);
-
   } catch (e) {
     console.log('Error from controllers', e)
   }

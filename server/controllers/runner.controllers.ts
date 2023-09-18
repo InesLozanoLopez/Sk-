@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import RunnerProfile from "../models/runnerSchema.models";
-import Training from "../models/trainingSchema.models";
+import Trainings from "../models/trainingSchema.models";
 
 export const createARunner = async (
   req: Request,
@@ -66,10 +66,9 @@ export const deleteRunner = async (
     }
 
     const trainingsId = toDelete.trainings || [];
-    await Training.deleteMany({ _id: { $in: trainingsId } });
+    await Trainings.deleteMany({ _id: { $in: trainingsId } });
 
     await RunnerProfile.findByIdAndDelete(toDeleteId);
-
     res.status(201).send({ toDelete });
   } catch (e) {
     console.log("Error from controllers", e);
