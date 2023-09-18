@@ -27,7 +27,6 @@ const Training: React.FC<ITrainingProps> = ({
           editATraining(feedback, training._id)
             .then(runnerTrainings)
             .then((training) => {
-              console.log(training);
               setAllTrainings([...training]);
             });
         }

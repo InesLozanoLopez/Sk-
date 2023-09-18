@@ -112,26 +112,29 @@ const ANewRunner: React.FC = () => {
     }
     const trainingDate: Date[] = holidaysFiltered;
 
-    const kmsToRunPerDay: number = Number(
-      kmsPerDay({
-        ableToRun,
-        kmToIncrease,
-        distanceRace: formik.values.distanceRace,
-      }),
-    );
-
-    while (trainingDate.length > 0) {
+    function creatingTrainings(): void {
       const dateToRun = trainingDate.shift();
       if (dateToRun) {
         runnerCreateTrainings({
           runnerName: formik.values.name,
           date: new Date(dateToRun.toISOString().split('T')[0]),
-          distance: kmsToRunPerDay,
+          distance: kmsPerDay({
+            ableToRun,
+            kmToIncrease,
+            distanceRace: formik.values.distanceRace,
+          }),
           kmToIncrease,
-        }).then(() => (ableToRun += kmsToRunPerDay));
+        }).then(() => {
+          ableToRun += kmToIncrease;
+          if (trainingDate.length > 0) {
+            creatingTrainings();
+          } else {
+            navigate('/runner');
+          }
+        });
       }
-      navigate('/runner');
     }
+    creatingTrainings();
   }
 
   return (
