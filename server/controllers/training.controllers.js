@@ -98,8 +98,10 @@ const editTrainings = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.editTrainings = editTrainings;
 const deleteTraining = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
         const toDeleteId = req.params.id;
+        const runnerId = req.params.runnerId;
         const toDelete = yield trainingSchema_models_1.default.findById(toDeleteId).exec();
         if (!toDelete) {
             res.status(404).send({ message: "Training not found" });
@@ -118,8 +120,10 @@ const deleteTraining = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 },
             });
         }
-        const TrainingDeleted = yield trainingSchema_models_1.default.findByIdAndDelete(toDeleteId);
-        res.status(201).send({ TrainingDeleted });
+        const trainingDeleted = yield trainingSchema_models_1.default.findByIdAndDelete(toDeleteId);
+        const runnerToUpdated = yield runnerSchema_models_1.default.findById(runnerId);
+        (_a = runnerToUpdated === null || runnerToUpdated === void 0 ? void 0 : runnerToUpdated.trainings) === null || _a === void 0 ? void 0 : _a.filter((ids) => ids !== toDeleteId);
+        res.status(201).send({ trainingDeleted });
     }
     catch (e) {
         console.log("Error from controllers", e);

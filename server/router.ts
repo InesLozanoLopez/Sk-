@@ -11,7 +11,7 @@ router.delete('/runner/:id', runnerControllers.deleteRunner);
 router.get('/training', trainingControllers.runnerTrainings);
 router.post('/training', trainingControllers.createTraining);
 router.put('/training/:id', trainingControllers.editTrainings);
-// router.delete('/training/:id', trainingControllers.deleteTraining);
+router.delete('/training/:id/:runnerId', trainingControllers.deleteTraining);
 
 
 

@@ -128,7 +128,7 @@ const ANewRunner: React.FC = () => {
           date: new Date(dateToRun.toISOString().split('T')[0]),
           distance: kmsToRunPerDay,
           kmToIncrease,
-        }).then(() => (ableToRun = kmsToRunPerDay));
+        }).then(() => (ableToRun += kmsToRunPerDay));
       }
       navigate('/runner');
     }

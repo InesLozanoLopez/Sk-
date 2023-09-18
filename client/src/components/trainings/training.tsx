@@ -56,7 +56,7 @@ const Training: React.FC<ITrainingProps> = ({
   }
 
   function deleteTraining() {
-    deleteATraining(training._id)
+    deleteATraining(training._id, runnerInfo._id)
       .then(runnerTrainings)
       .then((training) => setAllTrainings([...training]));
   }

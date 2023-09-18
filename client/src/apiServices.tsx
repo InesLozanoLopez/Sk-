@@ -90,13 +90,19 @@ export async function editATraining(
   }
 }
 
-export async function deleteATraining(_id: string): Promise<void> {
+export async function deleteATraining(
+  _id: string,
+  runnerId: string,
+): Promise<void> {
   try {
     const deletedTraining = {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
     };
-    const deleted = await fetch(baseURL + `/training/${_id}`, deletedTraining);
+    const deleted = await fetch(
+      baseURL + `/training/${_id}/${runnerId}`,
+      deletedTraining,
+    );
     const data = await deleted.json();
     return data;
   } catch (e) {

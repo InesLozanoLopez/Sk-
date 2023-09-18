@@ -115,6 +115,7 @@ export const deleteTraining = async (
 ): Promise<void> => {
   try {
     const toDeleteId = req.params.id;
+    const runnerId = req.params.runnerId;
     const toDelete = await Training.findById(toDeleteId).exec();
 
     if (!toDelete) {
@@ -144,9 +145,11 @@ export const deleteTraining = async (
         }
       );
     }
-    const TrainingDeleted = await Training.findByIdAndDelete(toDeleteId);
+    const trainingDeleted = await Training.findByIdAndDelete(toDeleteId);
+    const runnerToUpdated = await RunnerProfile.findById(runnerId);
+    runnerToUpdated?.trainings?.filter((ids) => ids !== toDeleteId);
 
-    res.status(201).send({ TrainingDeleted });
+    res.status(201).send({ trainingDeleted });
   } catch (e) {
     console.log("Error from controllers", e);
   }
