@@ -124,6 +124,7 @@ const ANewRunner: React.FC = () => {
       const dateToRun = trainingDate.shift();
       if (dateToRun) {
         runnerCreateTrainings({
+          runnerName: formik.values.name,
           date: new Date(dateToRun.toISOString().split('T')[0]),
           distance: kmsToRunPerDay,
           kmToIncrease,

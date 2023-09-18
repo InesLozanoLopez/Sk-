@@ -16,10 +16,10 @@ exports.deleteTraining = exports.editTrainings = exports.runnerTrainings = expor
 const runnerSchema_models_1 = __importDefault(require("../models/runnerSchema.models"));
 const trainingSchema_models_1 = __importDefault(require("../models/trainingSchema.models"));
 function updateDistance(distance, string) {
-    if (string.feedback === 'light') {
+    if (string.feedback === "light") {
         return distance * 1.1;
     }
-    else if (string.feedback === 'hard') {
+    else if (string.feedback === "hard") {
         return distance / 1.1;
     }
     else {
@@ -32,21 +32,30 @@ function newDistance(distance, kmToIncrease, length) {
 }
 const createTraining = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(req);
         const newTraining = req.body;
         const trainings = yield trainingSchema_models_1.default.create({
             date: newTraining.date,
             distance: newTraining.distance,
             kmToIncrease: newTraining.kmToIncrease,
-            feedback: null
+            feedback: null,
         });
         const runnerName = newTraining.runnerName;
-        yield runnerSchema_models_1.default.findOneAndUpdate({ name: runnerName }, { $push: { trainings: trainings._id } }, { new: true });
+        const runnerProfile = yield runnerSchema_models_1.default.findOne({
+            name: runnerName,
+        });
+        if (!runnerProfile) {
+            res.status(404).json({ error: "Runner profile not found" });
+            return;
+        }
+        if (runnerProfile.trainings === undefined) {
+            runnerProfile.trainings = [];
+        }
+        yield runnerSchema_models_1.default.findOneAndUpdate({ name: runnerName }, { $push: { trainings: trainings._id } });
         res.status(201).send(trainings);
     }
     catch (e) {
-        console.log('Error from controllers', e);
-        res.status(500).json({ error: 'Internal server error' });
+        console.log("Error from controllers", e);
+        res.status(500).json({ error: "Internal server error" });
     }
 });
 exports.createTraining = createTraining;
@@ -56,7 +65,7 @@ const runnerTrainings = (req, res) => __awaiter(void 0, void 0, void 0, function
         res.status(201).send(trainingInfo);
     }
     catch (e) {
-        console.log('Error from controllers', e);
+        console.log("Error from controllers", e);
     }
 });
 exports.runnerTrainings = runnerTrainings;
@@ -66,8 +75,8 @@ const editTrainings = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const newFeedback = req.body;
         const findTraining = yield trainingSchema_models_1.default.findById(IdToEdit).exec();
         const editedFeedback = yield trainingSchema_models_1.default.updateOne({ _id: IdToEdit }, { feedback: newFeedback.feedback });
-        if (newFeedback.feedback !== 'hard') {
-            yield runnerSchema_models_1.default.updateOne({}, { $set: { 'currentValues.longDistance': findTraining.distance } });
+        if (newFeedback.feedback !== "hard") {
+            yield runnerSchema_models_1.default.updateOne({}, { $set: { "currentValues.longDistance": findTraining.distance } });
         }
         const today = new Date();
         const trainingToUpdateDistance = yield trainingSchema_models_1.default.find({
@@ -84,7 +93,7 @@ const editTrainings = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(201).send([{ editedFeedback }]);
     }
     catch (e) {
-        console.log('Error from controllers', e);
+        console.log("Error from controllers", e);
     }
 });
 exports.editTrainings = editTrainings;
@@ -93,21 +102,27 @@ const deleteTraining = (req, res) => __awaiter(void 0, void 0, void 0, function*
         const toDeleteId = req.params.id;
         const toDelete = yield trainingSchema_models_1.default.findById(toDeleteId).exec();
         if (!toDelete) {
-            res.status(404).send({ message: 'Training not found' });
+            res.status(404).send({ message: "Training not found" });
             return;
         }
-        const trainingToUpdateDistance = yield trainingSchema_models_1.default.find({ date: { $gt: toDelete.date } }).exec();
+        const trainingToUpdateDistance = yield trainingSchema_models_1.default.find({
+            date: { $gt: toDelete.date },
+        }).exec();
         for (let i = 0; i < trainingToUpdateDistance.length; i++) {
             const training = trainingToUpdateDistance[i];
             const id = training._id;
             const currentDistance = training.distance;
-            yield trainingSchema_models_1.default.updateOne({ _id: id }, { $set: { distance: newDistance(currentDistance, training.kmToIncrease, trainingToUpdateDistance.length) } });
+            yield trainingSchema_models_1.default.updateOne({ _id: id }, {
+                $set: {
+                    distance: newDistance(currentDistance, training.kmToIncrease, trainingToUpdateDistance.length),
+                },
+            });
         }
         const TrainingDeleted = yield trainingSchema_models_1.default.findByIdAndDelete(toDeleteId);
         res.status(201).send({ TrainingDeleted });
     }
     catch (e) {
-        console.log('Error from controllers', e);
+        console.log("Error from controllers", e);
     }
 });
 exports.deleteTraining = deleteTraining;

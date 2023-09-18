@@ -38,6 +38,7 @@ export async function getRunnerInfo(): Promise<IRunnerProfile> {
 }
 
 export async function runnerCreateTrainings({
+  runnerName,
   date,
   distance,
   kmToIncrease,
@@ -46,7 +47,12 @@ export async function runnerCreateTrainings({
     const trainingProfile = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ date, distance, kmToIncrease: kmToIncrease }),
+      body: JSON.stringify({
+        runnerName,
+        date,
+        distance,
+        kmToIncrease: kmToIncrease,
+      }),
     };
     const trainingCreated = await fetch(baseURL + '/training', trainingProfile);
     const data = await trainingCreated.json();
