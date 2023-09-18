@@ -8,18 +8,20 @@ import { allTrainingByMonth } from './functions';
 import { Link } from 'react-router-dom';
 
 const AllTrainings: React.FC = () => {
-  const [runnerInfo, setRunnerInfo] = useState<IRunnerProfile[]>([]);
+  const [runnerInfo, setRunnerInfo] = useState<IRunnerProfile | null>(null);
   const [allTrainings, setAllTrainings] = useState<ITrainings[]>([]);
 
   useEffect(() => {
-    getRunnerInfo().then((runner) => setRunnerInfo([runner]));
+    getRunnerInfo().then((runner: IRunnerProfile) => setRunnerInfo(runner));
   }, []);
 
   useEffect(() => {
-    runnerTrainings().then((training) => setAllTrainings(training));
+    runnerTrainings().then((training: ITrainings[]) =>
+      setAllTrainings(training),
+    );
   }, []);
 
-  const allTrainingsSorted = allTrainings.sort((a, b) => {
+  const allTrainingsSorted: ITrainings[] = allTrainings.sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
 

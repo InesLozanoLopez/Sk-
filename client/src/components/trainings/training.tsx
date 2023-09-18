@@ -37,8 +37,6 @@ const Training: React.FC<ITrainingProps> = ({
     }
   }
 
-  console.log('training', new Date(training.date));
-
   function distanceKm(km: number) {
     return km ? km.toFixed(2) : '';
   }

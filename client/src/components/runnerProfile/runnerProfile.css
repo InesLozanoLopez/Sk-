@@ -38,6 +38,9 @@
   }
 }
 
+.readyForYourTraining{
+  padding-left: 5%
+}
 .attentionContainer {
   display: flex;
   flex-direction: row;
