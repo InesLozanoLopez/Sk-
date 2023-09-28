@@ -4,12 +4,12 @@ import './home.css';
 import { getRunnerInfo } from './../../apiServices';
 
 const Home: React.FC = () => {
-  let runnerInfo = false;
+  let runnerInfo = true;
 
   const getProfileCreated = async () => {
     const profileCreated = await getRunnerInfo();
     if (profileCreated) {
-      runnerInfo = true;
+      runnerInfo = false;
     }
   };
   getProfileCreated();
@@ -17,9 +17,11 @@ const Home: React.FC = () => {
   return (
     <div className="buttonContainer">
       <div>
-        <Link to="/newrunner">
-          <input className="homeButton" type="button" value="New Runner" />
-        </Link>
+        {runnerInfo ? null : (
+          <Link to="/newrunner">
+            <input className="homeButton" type="button" value="New Runner" />
+          </Link>
+        )}
       </div>
       <div>
         {runnerInfo ? (
