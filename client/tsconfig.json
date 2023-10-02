@@ -2,6 +2,6 @@
   "compilerOptions": {
     "jsx": "react",
     "esModuleInterop": true
-
-  }
+  },
+  "types": ["testing-library__jest-dom"]
 }
